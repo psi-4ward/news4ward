@@ -98,13 +98,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"',
 			),
-			'toggle' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']['toggle'],
-				'icon'                => 'visible.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
-				'button_callback'     => array('tl_news4ward_article', 'toggleIcon')
-			),
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']['show'],
@@ -117,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,category,author,date,time,status;{layout_legend},keywords;{teaser_legend:hide},teaserCssID,showTeaser,teaser;{expert_legend:hide},printable,cssID,space;{publish_legend},start,stop'
+		'default'                     => '{title_legend},title,alias,category,author,date,time,status,highlight;{layout_legend},keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},printable,cssID,space;{publish_legend},start,stop'
 	),
 
 	// Fields
@@ -189,19 +182,20 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'search'                  => true,
 			'eval'                    => array('style'=>'height:60px;')
 		),
+		'highlight' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'],
+			'inputType'               => 'checkbox',
+			'filter'                  => true,
+			'eval'                    => array('tl_class'=>'w50')
+		),
+
 		'teaserCssID' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['teaserCssID'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
 			'eval'                    => array('multiple'=>true, 'size'=>2, 'tl_class'=>'w50')
-		),
-		'showTeaser' => array
-		(
-			'exclude'                 => true,
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['showTeaser'],
-			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'w50 m12')
 		),
 		'teaser' => array
 		(
@@ -241,7 +235,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'inputType'               => 'select',
 			'filter'                  => true,
 			'options'                 => array('published','review','draft'),
-			'eval'                    => array('doNotCopy'=>true)
+			'reference'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'],
+			'eval'                    => array('doNotCopy'=>true,'tl_class'=>'w50')
 		),
 		'start' => array
 		(
@@ -298,8 +293,14 @@ class tl_news4ward_article extends Backend
 	 */
 	public function addIcon($row, $label)
 	{
+		if($row['status'] == 'draft')
+			return $this->generateImage('system/modules/news4ward/html/draft.gif') .' '. $label;
+		else if($row['status'] == 'review')
+			return $this->generateImage('system/modules/news4ward/html/review.gif') .' '. $label;
+
+
 		$time = time();
-		$published = ($row['published'] && ($row['start'] == '' || $row['start'] < $time) && ($row['stop'] == '' || $row['stop'] > $time));
+		$published = ($row['status'] == 'published' && ($row['start'] == '' || $row['start'] < $time) && ($row['stop'] == '' || $row['stop'] > $time));
 
 		return $this->generateImage('articles'.($published ? '' : '_').'.gif') .' '. $label;
 	}
@@ -396,88 +397,6 @@ class tl_news4ward_article extends Backend
 
 
 
-
-	/**
-	 * Return the "toggle visibility" button
-	 * @param array
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @return string
-	 */
-	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
-	{
-		if (strlen($this->Input->get('tid')))
-		{
-			$this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 1));
-			$this->redirect($this->getReferer());
-		}
-
-		// Check permissions AFTER checking the tid, so hacking attempts are logged
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_news4ward_article::published', 'alexf'))
-		{
-			return '';
-		}
-
-		$href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
-
-		if (!$row['published'])
-		{
-			$icon = 'invisible.gif';
-		}		
-
-		$objPage = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")
-								  ->limit(1)
-								  ->execute($row['pid']);
-
-		if (!$this->User->isAdmin && !$this->User->isAllowed(4, $objPage->row()))
-		{
-			return $this->generateImage($icon) . ' ';
-		}
-
-		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
-	}
-
-
-	/**
-	 * Disable/enable a user group
-	 * @param integer
-	 * @param boolean
-	 */
-	public function toggleVisibility($intId, $blnVisible)
-	{
-		// Check permissions to edit
-		$this->Input->setGet('id', $intId);
-		$this->Input->setGet('act', 'toggle');
-		$this->checkPermission();
-
-		// Check permissions to publish
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_news4ward_article::published', 'alexf'))
-		{
-			$this->log('Not enough permissions to publish/unpublish article ID "'.$intId.'"', 'tl_news4ward_article toggleVisibility', TL_ERROR);
-			$this->redirect('contao/main.php?act=error');
-		}
-
-		$this->createInitialVersion('tl_news4ward_article', $intId);
-	
-		// Trigger the save_callback
-		if (is_array($GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['published']['save_callback']))
-		{
-			foreach ($GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['published']['save_callback'] as $callback)
-			{
-				$this->import($callback[0]);
-				$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, $this);
-			}
-		}
-
-		// Update the database
-		$this->Database->prepare("UPDATE tl_news4ward_article SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
-					   ->execute($intId);
-
-		$this->createNewVersion('tl_news4ward_article', $intId);
-	}
 }
 
 ?>
