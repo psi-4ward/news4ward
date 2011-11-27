@@ -1,16 +1,23 @@
 <?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
-
-
 /**
- * Load class tl_page
+ * News4ward
+ * a contentelement driven news/blog-system
+ *
+ * @author Christoph Wiechert <wio@psitrax.de>
+ * @copyright 4ward.media GbR <http://www.4wardmedia.de>
+ * @package news4ward
+ * @filesource
+ * @licence LGPL
  */
+
+
+
+
+// Load class tl_page
 $this->loadDataContainer('tl_page');
 
 
-/**
- * Table tl_news4ward_article
- */
 $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 (
 
@@ -110,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,category,author,date,time,status,highlight;{layout_legend},keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},printable,cssID,space;{publish_legend},start,stop'
+		'default'                     => '{title_legend},title,alias,category,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID,space,noComments;{publish_legend},start,stop,status'
 	),
 
 	// Fields
@@ -182,6 +189,14 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'search'                  => true,
 			'eval'                    => array('style'=>'height:60px;')
 		),
+        'description' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['description'],
+			'exclude'                 => true,
+			'inputType'               => 'textarea',
+			'search'                  => true,
+			'eval'                    => array('style'=>'height:60px;')
+		),
 		'highlight' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'],
@@ -205,13 +220,13 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'search'                  => true,
 			'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr')
 		),
-		'printable' => array
+		'social' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['printable'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['social'],
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
-			'options'                 => array('print', 'pdf', 'facebook', 'twitter'),
-			'eval'                    => array('multiple'=>true),
+			'options'                 => array('facebook', 'twitter'),
+			'eval'                    => array('multiple'=>true,'tl_class'=>''),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']
 		),
 		'cssID' => array
@@ -251,6 +266,20 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['stop'],
 			'inputType'               => 'text',
 			'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
+		),
+		'noComments' => array
+		(
+			'exclude'                 => true,
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['noComments'],
+			'inputType'               => 'checkbox',
+			'eval'                    => array('tl_class'=>'w50')
+		),
+		'sticky' => array
+		(
+			'exclude'                 => true,
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'],
+			'inputType'               => 'checkbox',
+			'eval'                    => array('tl_class'=>'w50')
 		)
 	)
 );

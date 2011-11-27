@@ -5,6 +5,12 @@ CREATE TABLE `tl_news4ward` (
   `jumpTo` int(10) unsigned NOT NULL default '0',
   `allowComments` char(1) NOT NULL default '',
   `notify` varchar(32) NOT NULL default '',
+  `sortOrder` varchar(32) NOT NULL default '',
+  `perPage` smallint(5) unsigned NOT NULL default '0',
+  `moderate` char(1) NOT NULL default '',
+  `bbcode` char(1) NOT NULL default '',
+  `requireLogin` char(1) NOT NULL default '',
+  `disableCaptcha` char(1) NOT NULL default '',
   `protected` char(1) NOT NULL default '',
   `groups` blob NULL,
   `categories` blob NULL,
@@ -27,22 +33,39 @@ CREATE TABLE `tl_news4ward_article` (
   `category` varchar(255) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `status` varchar(128) NOT NULL default '',
-  `date` int(10) unsigned NOT NULL default '0',
-  `time` int(10) unsigned NOT NULL default '0',
   `alias` varbinary(128) NOT NULL default '',
   `author` int(10) unsigned NOT NULL default '0',
   `keywords` text NULL,
+  `description` text NULL,
   `highlight` char(1) NOT NULL default '',
   `teaserCssID` varchar(255) NOT NULL default '',
   `teaser` text NULL,
-  `printable` varchar(255) NOT NULL default '',
+  `social` varchar(255) NOT NULL default '',
   `cssID` varchar(255) NOT NULL default '',
   `space` varchar(64) NOT NULL default '',
   `published` char(1) NOT NULL default '',
   `start` varchar(10) NOT NULL default '',
   `stop` varchar(10) NOT NULL default '',
+  `noComments` char(1) NOT NULL default '',
+  `sticky` char(1) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`),
   KEY `alias` (`alias`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 
+-- Table `tl_module`
+-- 
+
+CREATE TABLE `tl_module` (
+  `news4ward_archives` blob NULL,
+  `news4ward_featured` varchar(16) NOT NULL default '',
+  `news4ward_numberOfItems` smallint(5) unsigned NOT NULL default '0',
+  `news4ward_jumpToCurrent` varchar(16) NOT NULL default '',
+  `news4ward_metaFields` varchar(255) NOT NULL default '',
+  `news4ward_template` varchar(32) NOT NULL default '',
+  `news4ward_format` varchar(32) NOT NULL default '',
+  `news4ward_startDay` smallint(5) unsigned NOT NULL default '0'
+  `news4ward_order` varchar(32) NOT NULL default '',
+  `news4ward_showQuantity` char(1) NOT NULL default ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

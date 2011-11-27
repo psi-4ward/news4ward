@@ -1,4 +1,17 @@
-<?php
+<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+
+/**
+ * News4ward
+ * a contentelement driven news/blog-system
+ *
+ * @author Christoph Wiechert <wio@psitrax.de>
+ * @copyright 4ward.media GbR <http://www.4wardmedia.de>
+ * @package news4ward
+ * @filesource
+ * @licence LGPL
+ */
+
+
 
 /**
  * Fields
@@ -7,19 +20,20 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['title']       = array('Titel', 'Bit
 $GLOBALS['TL_LANG']['tl_news4ward_article']['alias']       = array('Beitragalias', 'Der Beitragalias ist eine eindeutige Referenz, die anstelle der numerischen Beitrag-ID aufgerufen werden kann.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['author']      = array('Autor', 'Hier können Sie den Autor des Beitrags ändern.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['keywords']    = array('Suchbegriffe', 'Hier können Sie eine Liste kommagetrennter Suchbegriffe eingeben, die von Suchmaschinen wie Google oder Yahoo ausgewertet werden. Suchmaschinen indizieren normalerweise bis zu 800 Zeichen.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['description'] = array('Beschreibung', 'Hier können Sie die Meta-Description eingeben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['teaserCssID'] = array('Teaser-CSS-ID/Klasse', 'Hier können Sie eine ID und beliebig viele Klassen für das Teaser-Element eingeben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['teaser']      = array('Teasertext', 'Der Teasertext kann auch mit dem Inhaltselement "Beitragteaser" dargestellt werden.');
-$GLOBALS['TL_LANG']['tl_news4ward_article']['printable']   = array('Syndikation', 'Hier legen Sie fest, welche Optionen verfügbar sind.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['social']      = array('Syndikation', 'Hier legen Sie fest, welche Optionen verfügbar sind.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['cssID']       = array('CSS-ID/Klasse', 'Hier können Sie eine ID und beliebig viele Klassen eingeben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['space']       = array('Abstand davor und dahinter', 'Hier können Sie den Abstand vor und nach dem Beitrag in Pixeln eingeben. Sie sollten Inline-Styles jedoch nach Möglichkeit vermeiden und den Abstand in einem Stylesheet definieren.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['status']      = array('Status', 'Den Beitrag auf der Webseite anzeigen.');
-$GLOBALS['TL_LANG']['tl_news4ward_article']['start']       = array('Anzeigen ab', 'Den Beitrag erst ab diesem Tag auf der Webseite anzeigen.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['start']       = array('Anzeigen ab', 'Den Beitrag erst ab diesem Tag auf der Webseite anzeigen. Dieser Wert wird als Veröffentlichungsdatum genutzt.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['stop']        = array('Anzeigen bis', 'Den Beitrag nur bis zu diesem Tag auf der Webseite anzeigen.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['tstamp']      = array('Änderungsdatum', 'Datum und Uhrzeit der letzten Änderung');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['category']    = array('Kategorie', 'Dieser Kategorie gehört der Beitrag an.');
-$GLOBALS['TL_LANG']['tl_news4ward_article']['date']        = array('Datum','Hier kann das Datum der Veröffentlichung angpasst werden.');
-$GLOBALS['TL_LANG']['tl_news4ward_article']['time']        = array('Zeit','Hier kann die Zeit der Veröffentlichung angpasst werden.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['highlight']   = array('Beitrag hervorheben','Dieser Beitrag wird hervorgehoben.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['noComments']  = array('Kommentare dekativieren','Für diesen Beitrag wird die Kommentarfunktion ausgeschalten.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky']      = array('Beitrag obenhalten','Dieser Beitrag wird bei der Sortierung nach oben gestellt.');
 
 $GLOBALS['TL_LANG']['tl_news4ward_article']['stati'] = array('published'=>'veröffentlicht','review'=>'Review ausstehend','draft'=>'Entwurf');
 
