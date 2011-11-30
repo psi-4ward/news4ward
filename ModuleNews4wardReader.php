@@ -11,13 +11,13 @@
  * @licence LGPL
  */
  
-class ModuleNews4wardList extends News4ward
+class ModuleNews4wardReader extends News4ward
 {
     /**
    	 * Template
    	 * @var string
    	 */
-   	protected $strTemplate = 'mod_news4ward_list';
+   	protected $strTemplate = 'mod_news4ward_reader';
 
 
     /**
@@ -30,7 +30,7 @@ class ModuleNews4wardList extends News4ward
 		{
 			$objTemplate = new BackendTemplate('be_wildcard');
 
-			$objTemplate->wildcard = '### News4ward LIST ###';
+			$objTemplate->wildcard = '### News4ward READER ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
 			$objTemplate->link = $this->name;
@@ -46,6 +46,13 @@ class ModuleNews4wardList extends News4ward
 		{
 			return '';
 		}
+
+		// Read the alias from the url
+		if(!preg_match("~.*/".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9_-]+).*~i",$this->Environment->request,$erg))
+		{
+			return '';
+		}
+		$this->alias = $erg[1];
 
 		return parent::generate();
 	}
@@ -70,96 +77,38 @@ class ModuleNews4wardList extends News4ward
 			$where[] = "(tl_news4ward_article.start='' OR tl_news4ward_article.start<".$time.") AND (tl_news4ward_article.stop='' OR tl_news4ward_article.stop>".$time.") AND tl_news4ward_article.status='published'";
 		}
 
-		// show only highlighted items?
-		if($this->news4ward_featured == 'featured')
-			$where[] = 'tl_news4ward_article.highlight="1"';
-		elseif($this->news4ward_featured == 'unfeatured')
-			$where[] = 'tl_news4ward_article.highlight<>"1"';
-
-
-		/* Ordering */
-		$ordering = array('tl_news4ward_article.sticky DESC');
-
-		switch($this->news4ward_order)
-		{
-			case 'title ASC':	$ordering[] = 'tl_news4ward_article.title'; 			break;
-			case 'title DESC':	$ordering[] = 'tl_news4ward_article.title DESC'; 		break;
-			case 'start ASC':	$ordering[] = 'tl_news4ward_article.start'; 			break;
-			case 'start DESC':	$ordering[] = 'tl_news4ward_article.start DESC'; 		break;
-		}
+		// alias
+		$where[] = 'tl_news4ward_article.alias = "'.($this->alias).'"';
 
 		// @todo filter protected
 
 
-		/* Pagination */
-		$skipFirst = intval($this->skipFirst);
-		$offset = 0;
-		$limit = null;
-
-		// Maximum number of items
-		if ($this->news4ward_numberOfItems > 0)	$limit = $this->news4ward_numberOfItems;
-
-		// Get the total number of items
-		$objTotal = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_news4ward_article WHERE ".implode(' AND ',$where));
-		$total = $objTotal->total - $skipFirst;
-
-		// Split the results
-		if ($this->perPage > 0 && (!isset($limit) || $this->news_numberOfItems > $this->perPage))
-		{
-			// Adjust the overall limit
-			if (isset($limit))
-			{
-				$total = min($limit, $total);
-			}
-
-			$page = $this->Input->get('page') ? $this->Input->get('page') : 1;
-
-			// Check the maximum page number
-			if ($page > ($total/$this->perPage))
-			{
-				$page = ceil($total/$this->perPage);
-			}
-
-			// Limit and offset
-			$limit = $this->perPage;
-			$offset = (max($page, 1) - 1) * $this->perPage;
-
-			// Overall limit
-			if ($offset + $limit > $total)
-			{
-				$limit = $total - $offset;
-			}
-
-			// Add the pagination menu
-			$objPagination = new Pagination($total, $this->perPage);
-			$this->Template->pagination = $objPagination->generate("\n  ");
-		}
-
-
-		/* get the items */
-		$objArticlesStmt = $this->Database->prepare("
+		/* get the item */
+		$objArticle = $this->Database->prepare("
 			SELECT *, author AS authorId,
 				(SELECT title FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS archive,
 				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo,
 				(SELECT name FROM tl_user WHERE id=author) AS author
 			FROM tl_news4ward_article
-			WHERE ".implode(' AND ',$where));
+			WHERE ".implode(' AND ',$where))->execute();
 
-		// Limit the result
-		if (isset($limit))
+
+		$article = $this->parseArticles($objArticle);
+		$article = $article[0];
+
+		$this->Template->articles = $article;
+
+
+		/* generate the content-elements */
+
+		$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticle->id);
+		$strContent = '';
+		while($objContentelements->next())
 		{
-			$objArticlesStmt->limit($limit, $offset + $skipFirst);
-		}
-		elseif ($skipFirst > 0)
-		{
-			$objArticlesStmt->limit(max($total, 1), $skipFirst);
+			$strContent .= $this->getContentElement($objContentelements->id);
 		}
 
-		$objArticles = $objArticlesStmt->execute();
-
-		$this->Template->articles = $this->parseArticles($objArticles);
-		$this->Template->archives = $this->news_archives;
-		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
+		$this->Template->content = $strContent;
 
     }
 

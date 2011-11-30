@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'sorting' => array
 		(
 			'mode'                    => 2,
-			'fields'                  => array('date'),
+			'fields'                  => array('start'),
 			'panelLayout'             => 'filter,limit;search,sort'
 		),
 		'label' => array
@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,category,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID,space,noComments;{publish_legend},start,stop,status'
+		'default'                     => '{title_legend},title,alias,category,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID,noComments;{publish_legend},start,stop,status'
 	),
 
 	// Fields
@@ -151,25 +151,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_news4ward_article','getCategories'),
 			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50')
-		),
-		'date' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['date'],
-			'default'                 => time(),
-			'exclude'                 => true,
-			'filter'                  => true,
-			'sorting'                 => true,
-			'flag'                    => 8,
-			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'date', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
-		),
-		'time' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['time'],
-			'default'                 => time(),
-			'exclude'                 => true,
-			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'time', 'tl_class'=>'w50')
 		),
 		'author' => array
 		(
@@ -236,13 +217,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('multiple'=>true, 'size'=>2, 'tl_class'=>'w50')
 		),
-		'space' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['space'],
-			'exclude'                 => true,
-			'inputType'               => 'text',
-			'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'nospace'=>true, 'tl_class'=>'w50')
-		),
 		'status' => array
 		(
 			'exclude'                 => true,
@@ -258,7 +232,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['start'],
 			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
+			'default'				  => date('Y-m-d H:i'),
+			'eval'                    => array('mandatory'=>true,'rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
 		),
 		'stop' => array
 		(

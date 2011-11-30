@@ -42,7 +42,6 @@ CREATE TABLE `tl_news4ward_article` (
   `teaser` text NULL,
   `social` varchar(255) NOT NULL default '',
   `cssID` varchar(255) NOT NULL default '',
-  `space` varchar(64) NOT NULL default '',
   `published` char(1) NOT NULL default '',
   `start` varchar(10) NOT NULL default '',
   `stop` varchar(10) NOT NULL default '',

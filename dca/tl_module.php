@@ -15,7 +15,7 @@
 /**
  * Add palettes to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,perPage,skipFirst;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,perPage,skipFirst,news4ward_order;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 
@@ -110,11 +110,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_startDay'] = array
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_order'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_order'],
-	'default'                 => 'descending',
+	'default'                 => 'start DESC',
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => array('ascending', 'descending'),
-	'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+	'options'                 => array('start ASC', 'start DESC', 'title ASC', 'title DESC'),
+	'reference'               => &$GLOBALS['tl_module']['news4ward_order_ref'],
 	'eval'                    => array('tl_class'=>'w50')
 );
 

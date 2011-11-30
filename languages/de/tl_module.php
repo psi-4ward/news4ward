@@ -39,4 +39,12 @@ $GLOBALS['TL_LANG']['tl_module']['all_items']    = 'Alle Beiträge anzeigen';
 $GLOBALS['TL_LANG']['tl_module']['featured']     = 'Nur hervorgehobene Beiträge anzeigen';
 $GLOBALS['TL_LANG']['tl_module']['unfeatured']   = 'Hervorgehobene Beiträge überspringen';
 
+$GLOBALS['tl_module']['news4ward_order_ref']	= array
+(
+	'start ASC'		=> 'Anzeigedatum aufsteigend',
+	'start DESC'	=> 'Anzeigedatum absteigend',
+	'title ASC'		=> 'Beitragstitel aufsteigend',
+	'title DESC'	=> 'Beitragstitel absteigend'
+);
+
 ?>
