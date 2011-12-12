@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 		'enableVersioning'            => true,
 		'onload_callback' => array
 		(
-			// array('tl_news4ward', 'checkPermission'),
+			array('tl_news4ward', 'checkPermission'),
 			// 	array('tl_news4ward', 'generateFeed')
 		),
 		'onsubmit_callback' => array
@@ -144,8 +144,7 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 					'category' => array
 					(
 						'label'     => array('&nbsp;'),
-						'inputType' => 'text',
-						'eval'      => array('mandatory'=>true)
+						'inputType' => 'text'
 					)
 				)
 			)
@@ -345,19 +344,19 @@ class tl_news4ward extends Backend
 		}
 
 		// Set root IDs
-		if (!is_array($this->User->news) || count($this->User->news) < 1)
+		if (!is_array($this->User->news4ward) || count($this->User->news4ward) < 1)
 		{
 			$root = array(0);
 		}
 		else
 		{
-			$root = $this->User->news;
+			$root = $this->User->news4ward;
 		}
 
 		$GLOBALS['TL_DCA']['tl_news4ward']['list']['sorting']['root'] = $root;
 
-		// Check permissions to add archives
-		if (!$this->User->hasAccess('create', 'newp'))
+		//Check permissions to add archives
+		if (!$this->User->hasAccess('create', 'news4ward_newp'))
 		{
 			$GLOBALS['TL_DCA']['tl_news4ward']['config']['closed'] = true;
 		}
@@ -379,20 +378,22 @@ class tl_news4ward extends Backend
 					if (is_array($arrNew['tl_news4ward']) && in_array($this->Input->get('id'), $arrNew['tl_news4ward']))
 					{
 						// Add permissions on user level
-						if ($this->User->inherit == 'custom' || !$this->User->groups[0])
+						// @todo if rights are extended, add to group instead!
+						// but BackendUser inherits no rights for news4ward-row
+						if ($this->User->inherit == 'custom' || !$this->User->groups[0] || $this->User->inherit == 'extend')
 						{
-							$objUser = $this->Database->prepare("SELECT news, newp FROM tl_user WHERE id=?")
+							$objUser = $this->Database->prepare("SELECT news4ward, news4ward_newp FROM tl_user WHERE id=?")
 													   ->limit(1)
 													   ->execute($this->User->id);
 
-							$arrNewp = deserialize($objUser->newp);
+							$arrNewp = deserialize($objUser->news4ward_newp);
 
 							if (is_array($arrNewp) && in_array('create', $arrNewp))
 							{
-								$arrNews = deserialize($objUser->news);
+								$arrNews = deserialize($objUser->news4ward);
 								$arrNews[] = $this->Input->get('id');
 
-								$this->Database->prepare("UPDATE tl_user SET news=? WHERE id=?")
+								$this->Database->prepare("UPDATE tl_user SET news4ward=? WHERE id=?")
 											   ->execute(serialize($arrNews), $this->User->id);
 							}
 						}
@@ -400,25 +401,25 @@ class tl_news4ward extends Backend
 						// Add permissions on group level
 						elseif ($this->User->groups[0] > 0)
 						{
-							$objGroup = $this->Database->prepare("SELECT news, newp FROM tl_user_group WHERE id=?")
+							$objGroup = $this->Database->prepare("SELECT news4ward, news4ward_newp FROM tl_user_group WHERE id=?")
 													   ->limit(1)
 													   ->execute($this->User->groups[0]);
 
-							$arrNewp = deserialize($objGroup->newp);
+							$arrNewp = deserialize($objGroup->news4ward_newp);
 
 							if (is_array($arrNewp) && in_array('create', $arrNewp))
 							{
-								$arrNews = deserialize($objGroup->news);
+								$arrNews = deserialize($objGroup->news4ward);
 								$arrNews[] = $this->Input->get('id');
 
-								$this->Database->prepare("UPDATE tl_user_group SET news=? WHERE id=?")
+								$this->Database->prepare("UPDATE tl_user_group SET news4ward=? WHERE id=?")
 											   ->execute(serialize($arrNews), $this->User->groups[0]);
 							}
 						}
 
 						// Add new element to the user object
 						$root[] = $this->Input->get('id');
-						$this->User->news = $root;
+						$this->User->news4ward = $root;
 					}
 				}
 				// No break;
@@ -426,9 +427,9 @@ class tl_news4ward extends Backend
 			case 'copy':
 			case 'delete':
 			case 'show':
-				if (!in_array($this->Input->get('id'), $root) || ($this->Input->get('act') == 'delete' && !$this->User->hasAccess('delete', 'newp')))
+				if (!in_array($this->Input->get('id'), $root) || ($this->Input->get('act') == 'delete' && !$this->User->hasAccess('delete', 'news4ward_newp')))
 				{
-					$this->log('Not enough permissions to '.$this->Input->get('act').' news archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
+					$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
 					$this->redirect('contao/main.php?act=error');
 				}
 				break;
@@ -437,7 +438,7 @@ class tl_news4ward extends Backend
 			case 'deleteAll':
 			case 'overrideAll':
 				$session = $this->Session->getData();
-				if ($this->Input->get('act') == 'deleteAll' && !$this->User->hasAccess('delete', 'newp'))
+				if ($this->Input->get('act') == 'deleteAll' && !$this->User->hasAccess('delete', 'news4ward_newp'))
 				{
 					$session['CURRENT']['IDS'] = array();
 				}
@@ -451,7 +452,7 @@ class tl_news4ward extends Backend
 			default:
 				if (strlen($this->Input->get('act')))
 				{
-					$this->log('Not enough permissions to '.$this->Input->get('act').' news archives', 'tl_news4ward checkPermission', TL_ERROR);
+					$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archives', 'tl_news4ward checkPermission', TL_ERROR);
 					$this->redirect('contao/main.php?act=error');
 				}
 				break;

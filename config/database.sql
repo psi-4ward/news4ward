@@ -68,3 +68,24 @@ CREATE TABLE `tl_module` (
   `news4ward_order` varchar(32) NOT NULL default '',
   `news4ward_showQuantity` char(1) NOT NULL default ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Table `tl_user`
+--
+
+CREATE TABLE `tl_user` (
+  `news4ward` blob NULL,
+  `news4ward_newp` blob NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table `tl_user_group`
+--
+
+CREATE TABLE `tl_user_group` (
+  `news4ward` blob NULL,
+  `news4ward_newp` blob NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

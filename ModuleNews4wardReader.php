@@ -93,14 +93,19 @@ class ModuleNews4wardReader extends News4ward
 			WHERE ".implode(' AND ',$where))->execute();
 
 
-		$article = $this->parseArticles($objArticle);
-		$article = $article[0];
+		$arrMeta = $this->getMetaFields($objArticle);
 
-		$this->Template->articles = $article;
+		// Add meta information
+		$this->Template->date = $arrMeta['date'];
+		$this->Template->hasMetaFields = count($arrMeta) ? true : false;
+		$this->Template->numberOfComments = $arrMeta['ccount'];
+		$this->Template->commentCount = $arrMeta['comments'];
+		$this->Template->timestamp = $objArticles->date;
+		$this->Template->author = $arrMeta['author'];
+		$this->Template->datetime = date('Y-m-d\TH:i:sP', $objArticles->date);
 
 
 		/* generate the content-elements */
-
 		$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticle->id);
 		$strContent = '';
 		while($objContentelements->next())

@@ -31,7 +31,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'enableVersioning'            => true,
 		'onload_callback' => array
 		(
-	//		array('tl_news4ward_article', 'checkPermission'),
+			array('tl_news4ward_article', 'checkPermission'),
 	//		array('tl_page', 'addBreadcrumb')
 		)
 	),
@@ -232,7 +232,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['start'],
 			'inputType'               => 'text',
-			'default'				  => date('Y-m-d H:i'),
+			'default'				  => time(),
 			'eval'                    => array('mandatory'=>true,'rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
 		),
 		'stop' => array
@@ -399,7 +399,24 @@ class tl_news4ward_article extends Backend
 	}
 
 
+	/**
+	 * Check permissions to edit table tl_news4ward_article
+	 */
+	public function checkPermission()
+	{
+		if ($this->User->isAdmin)
+		{
+			return;
+		}
 
+		// Set root IDs
+		if (!is_array($this->User->news4ward) || count($this->User->news4ward) < 1 || !in_array($this->Input->get('id'),$this->User->news4ward))
+		{
+			$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
+			$this->redirect('contao/main.php?act=error');
+		}
+
+	}
 
 }
 
