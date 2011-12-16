@@ -48,7 +48,7 @@ class ModuleNews4wardReader extends News4ward
 		}
 
 		// Read the alias from the url
-		if(!preg_match("~.*/".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9_-]+).*~i",$this->Environment->request,$erg))
+		if(!preg_match("~.*".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9_-]+).*~i",$this->Environment->request,$erg))
 		{
 			return '';
 		}

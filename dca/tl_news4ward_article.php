@@ -42,12 +42,12 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'sorting' => array
 		(
 			'mode'                    => 2,
-			'fields'                  => array('start'),
+			'fields'                  => array('start DESC'),
 			'panelLayout'             => 'filter,limit;search,sort'
 		),
 		'label' => array
 		(
-			'fields'                  => array('title', 'inColumn'),
+			'fields'                  => array('title', 'inColumn','start'),
 			'format'                  => '%s <span style="color:#b3b3b3; padding-left:3px;">[%s]</span>',
 			'label_callback'          => array('tl_news4ward_article', 'addIcon')
 		),
@@ -233,7 +233,9 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['start'],
 			'inputType'               => 'text',
 			'default'				  => time(),
-			'eval'                    => array('mandatory'=>true,'rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
+			'sorting'				  => true,
+			'flag'					  => 8,
+			'eval'                    => array('mandatory'=>true,'rgxp'=>'date', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
 		),
 		'stop' => array
 		(
