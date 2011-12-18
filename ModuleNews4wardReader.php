@@ -93,6 +93,9 @@ class ModuleNews4wardReader extends News4ward
 			WHERE ".implode(' AND ',$where))->execute();
 
 
+		$this->Template->setData($objArticle->row());
+		$objArticle->reset();
+			
 		$arrMeta = $this->getMetaFields($objArticle);
 
 		// Add meta information
@@ -100,9 +103,9 @@ class ModuleNews4wardReader extends News4ward
 		$this->Template->hasMetaFields = count($arrMeta) ? true : false;
 		$this->Template->numberOfComments = $arrMeta['ccount'];
 		$this->Template->commentCount = $arrMeta['comments'];
-		$this->Template->timestamp = $objArticles->date;
+		$this->Template->timestamp = $objArticles->start;
 		$this->Template->author = $arrMeta['author'];
-		$this->Template->datetime = date('Y-m-d\TH:i:sP', $objArticles->date);
+		$this->Template->datetime = date('Y-m-d\TH:i:sP', $objArticles->start);
 
 
 		/* generate the content-elements */
