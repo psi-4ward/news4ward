@@ -412,6 +412,7 @@ class tl_news4ward_article extends Backend
 		}
 
 		if($this->Input->get('act'))
+<<<<<<< HEAD
 		{
 			// get archive ID
 			 $objArchive = $this->Database->prepare('SELECT pid FROM tl_news4ward_article WHERE id=?')->execute($this->Input->get('id'));
@@ -422,7 +423,23 @@ class tl_news4ward_article extends Backend
 		{
 			// allow listing
 			if(is_array($this->User->news4ward) && count($this->User->news4ward) > 1 && in_array($this->Input->get('id'),$this->User->news4ward)) return;
+=======
+		{
+			// get archive ID
+			 $objArchive = $this->Database->prepare('SELECT pid FROM tl_news4ward_article WHERE id=?')->execute($this->Input->get('id'));
+			// allow actions
+			if(is_array($this->User->news4ward) && count($this->User->news4ward) > 1 && $objArchive->numRows > 0 && in_array($objArchive->pid,$this->User->news4ward)) return;
+>>>>>>> 4d4ec1f6a7881f2245665ad0c65632c8d3229a04
 		}
+		else
+		{
+			// allow listing
+			if(is_array($this->User->news4ward) && count($this->User->news4ward) > 1 && in_array($this->Input->get('id'),$this->User->news4ward)) return;
+		}
+
+
+		$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
+		$this->redirect('contao/main.php?act=error');
 
 
 		$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
