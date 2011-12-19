@@ -18,13 +18,8 @@ if($this->Input->get('do') == 'news4ward')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_news4ward_article';
 	
-	// unset tl_content::checkPermission and set news4wards function
-	foreach($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'] as $k => $v)
-	{
-		if($v[0] == 'tl_content' && $v[1] == 'checkPermission')
-			unset($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][$k]);
-	}
-	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_news4ward', 'checkPermission');
+// set news4wards checkPermissions function
+$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_news4ward', 'checkPermission');
 }
 
 class tl_content_news4ward extends Backend

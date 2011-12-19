@@ -26,3 +26,8 @@ array_insert($GLOBALS['FE_MOD'], 2, array
 		'news4wardReader'  => 'ModuleNews4wardReader',
 	)
 ));
+
+
+// add news archive permissions
+$GLOBALS['TL_PERMISSIONS'][] = 'news4ward';
+$GLOBALS['TL_PERMISSIONS'][] = 'news4ward_newp';
