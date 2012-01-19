@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID,noComments;{publish_legend},start,stop,status'
+		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
 	),
 
 	// Fields
@@ -237,13 +237,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'exclude'                 => true,
 			'inputType'               => 'text',
 			'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
-		),
-		'noComments' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['noComments'],
-			'inputType'               => 'checkbox',
-			'exclude'                 => true,
-			'eval'                    => array('tl_class'=>'w50')
 		),
 		'sticky' => array
 		(

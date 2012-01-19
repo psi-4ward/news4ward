@@ -103,13 +103,12 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('allowComments', 'protected', 'makeFeed'),
-		'default'                     => '{title_legend},title,jumpTo;{comments_legend:hide},allowComments;{protected_legend:hide},protected;{feed_legend:hide},makeFeed'
+		'default'                     => '{title_legend},title,jumpTo;{protected_legend:hide},protected;{feed_legend:hide},makeFeed'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-        'allowComments'               => 'notify,sortOrder,perPage,moderate,bbcode,requireLogin,disableCaptcha',
 		'protected'                   => 'groups',
 		'makeFeed'                    => 'format,language,source,maxItems,feedBase,alias,description'
 	),
@@ -132,69 +131,6 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 			'inputType'               => 'pageTree',
 			'eval'                    => array('fieldType'=>'radio')
 		),
-        'allowComments' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['allowComments'],
-            'exclude'                 => true,
-            'filter'                  => true,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange'=>true)
-        ),
-        'notify' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['notify'],
-            'default'                 => 'notify_admin',
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options'                 => array('notify_admin', 'notify_author', 'notify_both'),
-            'reference'               => &$GLOBALS['TL_LANG']['tl_news4ward'],
-            'eval'                    => array('includeBlankOption'=>true)
-        ),
-        'sortOrder' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['sortOrder'],
-            'default'                 => 'ascending',
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options'                 => array('ascending', 'descending'),
-            'reference'               => &$GLOBALS['TL_LANG']['MSC'],
-            'eval'                    => array('tl_class'=>'w50')
-        ),
-        'perPage' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['perPage'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
-        ),
-        'moderate' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['moderate'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50')
-        ),
-        'bbcode' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['bbcode'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50')
-        ),
-        'requireLogin' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['requireLogin'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50')
-        ),
-        'disableCaptcha' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['disableCaptcha'],
-            'exclude'                 => true,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50')
-        ),
 		'protected' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['protected'],

@@ -18,14 +18,6 @@
  */
 $GLOBALS['TL_LANG']['tl_news4ward']['title']          = array('Titel', 'Bitte geben Sie den Archiv-Titel ein.');
 $GLOBALS['TL_LANG']['tl_news4ward']['jumpTo']         = array('Weiterleitungsseite', 'Bitte wählen Sie die Nachrichtenleser-Seite aus, zu der Besucher weitergeleitet werden, wenn Sie einen Beitrag anklicken.');
-$GLOBALS['TL_LANG']['tl_news4ward']['allowComments']  = array('Kommentare aktivieren', 'Besuchern das Kommentieren von Nachrichtenbeiträgen erlauben.');
-$GLOBALS['TL_LANG']['tl_news4ward']['notify']         = array('Benachrichtigung an', 'Bitte legen Sie fest, wer beim Hinzufügen neuer Kommentare benachrichtigt wird.');
-$GLOBALS['TL_LANG']['tl_news4ward']['sortOrder']      = array('Sortierung', 'Standardmäßig werden Kommentare aufsteigend sortiert, beginnend mit dem ältesten.');
-$GLOBALS['TL_LANG']['tl_news4ward']['perPage']        = array('Kommentare pro Seite', 'Anzahl an Kommentaren pro Seite. Geben Sie 0 ein, um den automatischen Seitenumbruch zu deaktivieren.');
-$GLOBALS['TL_LANG']['tl_news4ward']['moderate']       = array('Kommentare moderieren', 'Kommentare erst nach Bestätigung auf der Webseite veröffentlichen.');
-$GLOBALS['TL_LANG']['tl_news4ward']['bbcode']         = array('BBCode erlauben', 'Besuchern das Formatieren ihrer Kommentare mittels BBCode erlauben.');
-$GLOBALS['TL_LANG']['tl_news4ward']['requireLogin']   = array('Login zum Kommentieren benötigt', 'Nur angemeldeten Benutzern das Erstellen von Kommentaren erlauben.');
-$GLOBALS['TL_LANG']['tl_news4ward']['disableCaptcha'] = array('Sicherheitsfrage deaktivieren', 'Wählen Sie diese Option nur, wenn das Erstellen von Kommentaren auf authentifizierte Benutzer beschränkt ist.');
 $GLOBALS['TL_LANG']['tl_news4ward']['protected']      = array('Archiv schützen', 'Nachrichten nur bestimmten Frontend-Gruppen anzeigen.');
 $GLOBALS['TL_LANG']['tl_news4ward']['groups']         = array('Erlaubte Mitgliedergruppen', 'Diese Mitgliedergruppen können die Nachrichten des Archivs sehen.');
 $GLOBALS['TL_LANG']['tl_news4ward']['makeFeed']       = array('Feed erstellen', 'Einen RSS- oder Atom-Feed aus dem Nachrichtenarchiv generieren.');
@@ -43,7 +35,6 @@ $GLOBALS['TL_LANG']['tl_news4ward']['tstamp']         = array('Änderungsdatum',
  * Legends
  */
 $GLOBALS['TL_LANG']['tl_news4ward']['title_legend']     = 'Titel und Weiterleitung';
-$GLOBALS['TL_LANG']['tl_news4ward']['comments_legend']  = 'Kommentare';
 $GLOBALS['TL_LANG']['tl_news4ward']['protected_legend'] = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_news4ward']['feed_legend']      = 'RSS/Atom-Feed';
 
@@ -67,4 +58,5 @@ $GLOBALS['TL_LANG']['tl_news4ward']['edit']       = array('Archiv bearbeiten', '
 $GLOBALS['TL_LANG']['tl_news4ward']['editheader'] = array('Archiv-Einstellungen bearbeiten', 'Einstellungen des Archivs ID %s bearbeiten');
 $GLOBALS['TL_LANG']['tl_news4ward']['copy']       = array('Archiv duplizieren', 'Archiv ID %s duplizieren');
 $GLOBALS['TL_LANG']['tl_news4ward']['delete']     = array('Archiv löschen', 'Archiv ID %s löschen');
-$GLOBALS['TL_LANG']['tl_news4ward']['comments']   = array('Kommentare', 'Kommentare des Archivs ID %s anzeigen');
+
+?>

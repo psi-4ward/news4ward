@@ -116,49 +116,20 @@ class ModuleNews4wardReader extends News4ward
 			$strContent .= $this->getContentElement($objContentelements->id);
 		}
 
+		// HOOK: add content like comments or related articles
+		if(isset($GLOBALS['TL_HOOKS']['News4wardReader']) && is_array($GLOBALS['TL_HOOKS']['News4wardReader']))
+		{
+			foreach ($GLOBALS['TL_HOOKS']['News4wardReader'] as $callback)
+			{
+				$this->import($callback[0]);
+				$strContent = $this->$callback[0]->$callback[1]($strContent,$objArticle,$this);
+			}
+		}
 		$this->Template->content = $strContent;
 
     }
 
 
-    /**
-   	 * Sort out protected archives
-   	 * @param array $arrArchives
-   	 * @return array
-   	 */
-   	protected function sortOutProtected($arrArchives)
-   	{
-   		if (BE_USER_LOGGED_IN || !is_array($arrArchives) || count($arrArchives) < 1)
-   		{
-   			return $arrArchives;
-   		}
-
-   		$this->import('FrontendUser', 'User');
-   		$objArchive = $this->Database->execute("SELECT id, protected, groups FROM tl_news4ward WHERE id IN(" . implode(',', array_map('intval', $arrArchives)) . ")");
-   		$arrArchives = array();
-
-   		while ($objArchive->next())
-   		{
-   			if ($objArchive->protected)
-   			{
-   				if (!FE_USER_LOGGED_IN)
-   				{
-   					continue;
-   				}
-
-   				$groups = deserialize($objArchive->groups);
-
-   				if (!is_array($groups) || count($groups) < 1 || count(array_intersect($groups, $this->User->groups)) < 1)
-   				{
-   					continue;
-   				}
-   			}
-
-   			$arrArchives[] = $objArchive->id;
-   		}
-
-   		return $arrArchives;
-   	}
 }
 
 ?>
