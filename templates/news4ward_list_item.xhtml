@@ -3,11 +3,10 @@
 <?php if ($this->hasMetaFields): ?>
 <p class="info"><?php echo $this->date; ?> <?php echo $this->author; ?> <?php echo $this->commentCount; ?></p>
 <?php endif; ?>
-<h2><?php echo $this->text ? $this->linkHeadline : $this->newsHeadline; ?></h2>
+<h2><?php echo $this->title; ?></h2>
 <div class="teaser">
-<?php echo $this->teaser; ?> 
+<?php echo $this->description; ?>
 </div>
 
 	<a href="<?php echo $this->link; ?>">Weiterlesen...</a>
-
 </div>

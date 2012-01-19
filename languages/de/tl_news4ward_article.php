@@ -30,7 +30,6 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['status']      = array('Status', 'De
 $GLOBALS['TL_LANG']['tl_news4ward_article']['start']       = array('Anzeigen ab', 'Den Beitrag erst ab diesem Tag auf der Webseite anzeigen. Dieser Wert wird als Veröffentlichungsdatum genutzt.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['stop']        = array('Anzeigen bis', 'Den Beitrag nur bis zu diesem Tag auf der Webseite anzeigen.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['tstamp']      = array('Änderungsdatum', 'Datum und Uhrzeit der letzten Änderung');
-$GLOBALS['TL_LANG']['tl_news4ward_article']['category']    = array('Kategorie', 'Dieser Kategorie gehört der Beitrag an.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['highlight']   = array('Beitrag hervorheben','Dieser Beitrag wird hervorgehoben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['noComments']  = array('Kommentare dekativieren','Für diesen Beitrag wird die Kommentarfunktion ausgeschalten.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['sticky']      = array('Beitrag obenhalten','Dieser Beitrag wird bei der Sortierung nach oben gestellt.');

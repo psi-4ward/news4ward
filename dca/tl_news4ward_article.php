@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,category,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID,noComments;{publish_legend},start,stop,status'
+		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser;{expert_legend:hide},social,cssID,noComments;{publish_legend},start,stop,status'
 	),
 
 	// Fields
@@ -144,14 +144,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 				array('tl_news4ward_article', 'generateAlias')
 			)
 
-		),
-		'category' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['category'],
-			'inputType'               => 'select',
-			'exclude'                 => true,
-			'options_callback'        => array('tl_news4ward_article','getCategories'),
-			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50')
 		),
 		'author' => array
 		(
@@ -276,21 +268,6 @@ class tl_news4ward_article extends Backend
 		$this->import('BackendUser', 'User');
 		$this->import('Database');
 	}
-
-
-	public function getCategories($dc)
-	{
-		$arrCategories = array();
-		$categories = $this->Database->prepare('SELECT categories FROM tl_news4ward WHERE id=?')->execute($dc->activeRecord->pid);
-		$categories = deserialize($categories->categories,true);
-		foreach($categories as $v)
-		{
-			$arrCategories[] = $v['category'];
-		}
-		return $arrCategories;
-	}
-
-
 
 
 	/**

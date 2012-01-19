@@ -37,7 +37,6 @@ $GLOBALS['TL_LANG']['tl_news4ward']['feedBase']       = array('Basis-URL', 'Bitt
 $GLOBALS['TL_LANG']['tl_news4ward']['alias']          = array('Feed-Alias', 'Hier können Sie einen eindeutigen Dateinamen (ohne Endung) eingeben. Die XML-Datei wird automatisch im Wurzelverzeichnis Ihrer Contao-Installation erstellt, z.B. als <em>name.xml</em>.');
 $GLOBALS['TL_LANG']['tl_news4ward']['description']    = array('Feed-Beschreibung', 'Bitte geben Sie eine kurze Beschreibung des Nachrichten-Feeds ein.');
 $GLOBALS['TL_LANG']['tl_news4ward']['tstamp']         = array('Änderungsdatum', 'Datum und Uhrzeit der letzten Änderung');
-$GLOBALS['TL_LANG']['tl_news4ward']['categories']     = array('Kagegorien', 'Diese Kategorien stehen in einem Betrag zur Auswahl');
 
 
 /**
@@ -46,7 +45,6 @@ $GLOBALS['TL_LANG']['tl_news4ward']['categories']     = array('Kagegorien', 'Die
 $GLOBALS['TL_LANG']['tl_news4ward']['title_legend']     = 'Titel und Weiterleitung';
 $GLOBALS['TL_LANG']['tl_news4ward']['comments_legend']  = 'Kommentare';
 $GLOBALS['TL_LANG']['tl_news4ward']['protected_legend'] = 'Zugriffsschutz';
-$GLOBALS['TL_LANG']['tl_news4ward']['categories_legend'] = 'Kategorien';
 $GLOBALS['TL_LANG']['tl_news4ward']['feed_legend']      = 'RSS/Atom-Feed';
 
 
