@@ -126,8 +126,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'title' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['title'],
-			'exclude'                 => true,
 			'inputType'               => 'text',
+			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
 			'flag'                    => 1,
@@ -136,8 +136,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'alias' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['alias'],
-			'exclude'                 => true,
 			'inputType'               => 'text',
+			'exclude'                 => true,
 			'eval'                    => array('rgxp'=>'alnum', 'doNotCopy'=>true, 'spaceToUnderscore'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
 			'save_callback' => array
 			(
@@ -156,9 +156,9 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'author' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['author'],
+			'inputType'               => 'select',
 			'default'                 => $this->User->id,
 			'exclude'                 => true,
-			'inputType'               => 'select',
 			'foreignKey'              => 'tl_user.name',
 			'filter'                  => 'true',
 			'eval'                    => array('doNotCopy'=>true, 'mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50')
@@ -166,16 +166,16 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'keywords' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['keywords'],
-			'exclude'                 => true,
 			'inputType'               => 'textarea',
+			'exclude'                 => true,
 			'search'                  => true,
 			'eval'                    => array('style'=>'height:60px;')
 		),
         'description' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['description'],
-			'exclude'                 => true,
 			'inputType'               => 'textarea',
+			'exclude'                 => true,
 			'search'                  => true,
 			'eval'                    => array('style'=>'height:60px;')
 		),
@@ -191,23 +191,23 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'teaserCssID' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['teaserCssID'],
-			'exclude'                 => true,
 			'inputType'               => 'text',
+			'exclude'                 => true,
 			'eval'                    => array('multiple'=>true, 'size'=>2, 'tl_class'=>'w50')
 		),
 		'teaser' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['teaser'],
-			'exclude'                 => true,
 			'inputType'               => 'textarea',
+			'exclude'                 => true,
 			'search'                  => true,
 			'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr')
 		),
 		'social' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['social'],
-			'exclude'                 => true,
 			'inputType'               => 'checkbox',
+			'exclude'                 => true,
 			'options'                 => array('facebook', 'twitter'),
 			'eval'                    => array('multiple'=>true,'tl_class'=>''),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']
@@ -221,9 +221,9 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		),
 		'status' => array
 		(
-			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['status'],
 			'inputType'               => 'select',
+			'exclude'                 => true,
 			'filter'                  => true,
 			'options'                 => array('published','review','draft'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'],
@@ -231,9 +231,9 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		),
 		'start' => array
 		(
-			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['start'],
 			'inputType'               => 'text',
+			'exclude'                 => true,
 			'default'				  => time(),
 			'sorting'				  => true,
 			'flag'					  => 8,
@@ -241,23 +241,23 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		),
 		'stop' => array
 		(
-			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['stop'],
+			'exclude'                 => true,
 			'inputType'               => 'text',
 			'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
 		),
 		'noComments' => array
 		(
-			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['noComments'],
 			'inputType'               => 'checkbox',
+			'exclude'                 => true,
 			'eval'                    => array('tl_class'=>'w50')
 		),
 		'sticky' => array
 		(
-			'exclude'                 => true,
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'],
 			'inputType'               => 'checkbox',
+			'exclude'                 => true,
 			'eval'                    => array('tl_class'=>'w50')
 		)
 	)
@@ -412,7 +412,6 @@ class tl_news4ward_article extends Backend
 		}
 
 		if($this->Input->get('act'))
-<<<<<<< HEAD
 		{
 			// get archive ID
 			 $objArchive = $this->Database->prepare('SELECT pid FROM tl_news4ward_article WHERE id=?')->execute($this->Input->get('id'));
@@ -423,23 +422,7 @@ class tl_news4ward_article extends Backend
 		{
 			// allow listing
 			if(is_array($this->User->news4ward) && count($this->User->news4ward) > 1 && in_array($this->Input->get('id'),$this->User->news4ward)) return;
-=======
-		{
-			// get archive ID
-			 $objArchive = $this->Database->prepare('SELECT pid FROM tl_news4ward_article WHERE id=?')->execute($this->Input->get('id'));
-			// allow actions
-			if(is_array($this->User->news4ward) && count($this->User->news4ward) > 1 && $objArchive->numRows > 0 && in_array($objArchive->pid,$this->User->news4ward)) return;
->>>>>>> 4d4ec1f6a7881f2245665ad0c65632c8d3229a04
 		}
-		else
-		{
-			// allow listing
-			if(is_array($this->User->news4ward) && count($this->User->news4ward) > 1 && in_array($this->Input->get('id'),$this->User->news4ward)) return;
-		}
-
-
-		$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
-		$this->redirect('contao/main.php?act=error');
 
 
 		$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);

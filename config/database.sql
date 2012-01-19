@@ -1,3 +1,16 @@
+-- ********************************************************
+-- *                                                      *
+-- * IMPORTANT NOTE                                       *
+-- *                                                      *
+-- * Do not import this file manually but use the Contao  *
+-- * install tool to create and maintain database tables! *
+-- *                                                      *
+-- ********************************************************
+
+--
+-- Table `tl_news4ward_article`
+--
+
 CREATE TABLE `tl_news4ward` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `tstamp` int(10) unsigned NOT NULL default '0',
@@ -24,6 +37,9 @@ CREATE TABLE `tl_news4ward` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Table `tl_news4ward_article`
+--
 
 CREATE TABLE `tl_news4ward_article` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -52,6 +68,19 @@ CREATE TABLE `tl_news4ward_article` (
   KEY `alias` (`alias`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Table `tl_news4ward_tag`
+--
+
+CREATE TABLE `tl_news4ward_tag` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `pid` int(10) unsigned NOT NULL default '0',
+  `tstamp` int(10) unsigned NOT NULL default '0',
+  `tag` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `pid` (`pid`),
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- 
 -- Table `tl_module`
 -- 
@@ -78,8 +107,6 @@ CREATE TABLE `tl_user` (
   `news4ward_newp` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
--- --------------------------------------------------------
 
 --
 -- Table `tl_user_group`

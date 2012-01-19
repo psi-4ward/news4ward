@@ -186,4 +186,45 @@ abstract class News4ward extends Module
 		}
 
 	}
+
+
+
+	/**
+	 * Sort out protected archives
+	 * @param array $arrArchives
+	 * @return array
+	 */
+	protected function sortOutProtected($arrArchives)
+	{
+		if (BE_USER_LOGGED_IN || !is_array($arrArchives) || count($arrArchives) < 1)
+		{
+			return $arrArchives;
+		}
+
+		$this->import('FrontendUser', 'User');
+		$objArchive = $this->Database->execute("SELECT id, protected, groups FROM tl_news4ward WHERE id IN(" . implode(',', array_map('intval', $arrArchives)) . ")");
+		$arrArchives = array();
+
+		while ($objArchive->next())
+		{
+			if ($objArchive->protected)
+			{
+				if (!FE_USER_LOGGED_IN)
+				{
+					continue;
+				}
+
+				$groups = deserialize($objArchive->groups);
+
+				if (!is_array($groups) || count($groups) < 1 || count(array_intersect($groups, $this->User->groups)) < 1)
+				{
+					continue;
+				}
+			}
+
+			$arrArchives[] = $objArchive->id;
+		}
+
+		return $arrArchives;
+	}
 }

@@ -24,7 +24,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_template']      = array('Beitragtemp
 $GLOBALS['TL_LANG']['tl_module']['news4ward_format']        = array('Archivformat', 'Hier können Sie das Archivformat auswählen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_startDay']      = array('Erster Wochentag', 'Hier können Sie den ersten Tag der Woche festlegen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_order']         = array('Sortierreihenfolge', 'Hier können Sie die Sortierreihenfolge festlegen.');
-$GLOBALS['TL_LANG']['tl_module']['news4ward_showQuantity']  = array('Anzahl der Beiträge anzeigen', 'Die Anzahl der Beiträge jedes Monats anzeigen.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_showQuantity']  = array('Anzahl der Beiträge', 'Die Anzahl der Beiträge pro Seite.');
 
 
 /**
