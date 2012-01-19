@@ -20,12 +20,14 @@ contao deletes all your contentelements!
 
 ### Required extenion
 First install these extensions via repository
+
 * GlobalContentelements
 * multicolumnwizard
 * autocompleterPlugin
 * autocompleterTextfield
 
 ### news4ward
+
 * Download or clone the news4ward to `system/modules`
 * and optionally news4ward_tags, news4ward_comments and news4ward_categories if you like
 * update the database
