@@ -157,7 +157,8 @@ class ModuleNews4wardList extends News4ward
 				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo,
 				(SELECT name FROM tl_user WHERE id=author) AS author
 			FROM tl_news4ward_article
-			WHERE ".implode(' AND ',$where));
+			WHERE ".implode(' AND ',$where)
+			.((count($ordering)) ? ' ORDER BY '.implode(',',$ordering) : ''));
 
 		// Limit the result
 		if (isset($limit))
