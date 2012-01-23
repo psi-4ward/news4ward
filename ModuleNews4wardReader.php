@@ -78,7 +78,7 @@ class ModuleNews4wardReader extends News4ward
 		}
 
 		// alias
-		$where[] = 'tl_news4ward_article.alias = "'.($this->alias).'"';
+		$where[] = 'tl_news4ward_article.alias = "'.mysql_real_escape_string($this->alias).'"';
 
 		// @todo filter protected
 
