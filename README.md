@@ -9,6 +9,8 @@ Features
 * [Tagcloud] (https://github.com/psi-4ward/news4ward_tags)
 * [Comments] (https://github.com/psi-4ward/news4ward_comments)
 * [Categories] (https://github.com/psi-4ward/news4ward_categories)
+* [RelatedArticles] (https://github.com/psi-4ward/news4ward_related)
+* [ArchiveMenu] (https://github.com/psi-4ward/news4ward_archiveMenu)
 * and of course some more improvements compared to core-news module
 
 Installation
