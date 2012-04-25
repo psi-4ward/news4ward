@@ -17,7 +17,7 @@
  * Extend default palette
  */
 $GLOBALS['TL_DCA']['tl_user']['palettes']['extend'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward,news4ward_newp;', $GLOBALS['TL_DCA']['tl_user']['palettes']['extend']);
-$GLOBALS['TL_DCA']['tl_user']['palettes']['custom'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward;,news4ward_newp', $GLOBALS['TL_DCA']['tl_user']['palettes']['custom']);
+$GLOBALS['TL_DCA']['tl_user']['palettes']['custom'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward,news4ward_newp;', $GLOBALS['TL_DCA']['tl_user']['palettes']['custom']);
 
 
 /**
@@ -31,6 +31,7 @@ $GLOBALS['TL_DCA']['tl_user']['fields']['news4ward'] = array
 	'foreignKey'              => 'tl_news4ward.title',
 	'eval'                    => array('multiple'=>true)
 );
+
 $GLOBALS['TL_DCA']['tl_user']['fields']['news4ward_newp'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_user']['news4ward_newp'],

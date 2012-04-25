@@ -29,6 +29,7 @@ $GLOBALS['TL_DCA']['tl_user_group']['fields']['news4ward'] = array
 	'foreignKey'              => 'tl_news4ward.title',
 	'eval'                    => array('multiple'=>true)
 );
+
 $GLOBALS['TL_DCA']['tl_user_group']['fields']['news4ward_newp'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_user_group']['news4ward_newp'],
@@ -38,5 +39,4 @@ $GLOBALS['TL_DCA']['tl_user_group']['fields']['news4ward_newp'] = array
 	'reference'               => &$GLOBALS['TL_LANG']['MSC'],
 	'eval'                    => array('multiple'=>true)
 );
-
 ?>

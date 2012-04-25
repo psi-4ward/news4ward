@@ -249,12 +249,6 @@ class tl_news4ward extends Backend
 	 */
 	public function checkPermission()
 	{
-		// HOOK: comments extension required
-		if (!in_array('comments', $this->Config->getActiveModules()))
-		{
-			unset($GLOBALS['TL_DCA']['tl_news4ward']['fields']['allowComments']);
-		}
-
 		if ($this->User->isAdmin)
 		{
 			return;
@@ -272,10 +266,12 @@ class tl_news4ward extends Backend
 
 		$GLOBALS['TL_DCA']['tl_news4ward']['list']['sorting']['root'] = $root;
 
-		//Check permissions to add archives
+		// Check permissions to add archives
+		// if a no add-permissions, implict no edit-permission
 		if (!$this->User->hasAccess('create', 'news4ward_newp'))
 		{
 			$GLOBALS['TL_DCA']['tl_news4ward']['config']['closed'] = true;
+			unset($GLOBALS['TL_DCA']['tl_news4ward']['list']['operations']['editheader']);
 		}
 
 		// Check current action
@@ -352,8 +348,20 @@ class tl_news4ward extends Backend
 				break;
 
 			case 'editAll':
-			case 'deleteAll':
 			case 'overrideAll':
+				$session = $this->Session->getData();
+				if (!$this->User->hasAccess('create', 'news4ward_newp'))
+				{
+					$session['CURRENT']['IDS'] = array();
+				}
+				else
+				{
+					$session['CURRENT']['IDS'] = array_intersect($session['CURRENT']['IDS'], $root);
+				}
+				$this->Session->setData($session);
+				break;
+
+			case 'deleteAll':
 				$session = $this->Session->getData();
 				if ($this->Input->get('act') == 'deleteAll' && !$this->User->hasAccess('delete', 'news4ward_newp'))
 				{
@@ -475,7 +483,7 @@ class tl_news4ward extends Backend
 	 */
 	public function copyArchive($row, $href, $label, $title, $icon, $attributes)
 	{
-		return ($this->User->isAdmin || $this->User->hasAccess('create', 'newp')) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : $this->generateImage(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($this->User->isAdmin || $this->User->hasAccess('create', 'news4ward_newp')) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : ' ';
 	}
 
 
@@ -491,7 +499,7 @@ class tl_news4ward extends Backend
 	 */
 	public function deleteArchive($row, $href, $label, $title, $icon, $attributes)
 	{
-		return ($this->User->isAdmin || $this->User->hasAccess('delete', 'newp')) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : $this->generateImage(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($this->User->isAdmin || $this->User->hasAccess('delete', 'news4ward_newp')) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : ' ';
 	}
 }
 
