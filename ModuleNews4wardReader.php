@@ -95,7 +95,7 @@ class ModuleNews4wardReader extends News4ward
 
 		$this->Template->setData($objArticle->row());
 		$objArticle->reset();
-			
+
 		$arrMeta = $this->getMetaFields($objArticle);
 
 		// Add meta information
@@ -106,6 +106,17 @@ class ModuleNews4wardReader extends News4ward
 		$this->Template->timestamp = $objArticles->start;
 		$this->Template->author = $arrMeta['author'];
 		$this->Template->datetime = date('Y-m-d\TH:i:sP', $objArticles->start);
+
+
+		// Add keywords and description
+		if ($this->keywords != '')
+		{
+			$GLOBALS['TL_KEYWORDS'] .= (strlen($GLOBALS['TL_KEYWORDS']) ? ', ' : '') . $this->keywords;
+		}
+		if ($this->description != '')
+		{
+			$GLOBALS['objPage']->description .= (!empty($GLOBALS['objPage']->description) ? ' ': '') . $this->description;
+		}
 
 
 		/* generate the content-elements */
