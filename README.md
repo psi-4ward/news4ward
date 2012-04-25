@@ -9,8 +9,6 @@ Features
 * [Tagcloud] (https://github.com/psi-4ward/news4ward_tags)
 * [Comments] (https://github.com/psi-4ward/news4ward_comments)
 * [Categories] (https://github.com/psi-4ward/news4ward_categories)
-* [RelatedArticles] (https://github.com/psi-4ward/news4ward_related)
-* [ArchiveMenu] (https://github.com/psi-4ward/news4ward_archiveMenu)
 * and of course some more improvements compared to core-news module
 
 Installation
@@ -22,14 +20,12 @@ contao deletes all your contentelements!
 
 ### Required extenion
 First install these extensions via repository
-
 * GlobalContentelements
 * multicolumnwizard
 * autocompleterPlugin
 * autocompleterTextfield
 
 ### news4ward
-
 * Download or clone the news4ward to `system/modules`
 * and optionally news4ward_tags, news4ward_comments and news4ward_categories if you like
 * update the database
