@@ -81,6 +81,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_template'] = array
 	'eval'                    => array('tl_class'=>'w50')
 );
 
+// do we need this for an archive-module?
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_format'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_format'],
@@ -95,7 +96,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_format'] = array
 		array('tl_module_news4ward', 'hideStartDay')
 	)
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_startDay'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_startDay'],
@@ -106,6 +106,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_startDay'] = array
 	'reference'               => &$GLOBALS['TL_LANG']['DAYS'],
 	'eval'                    => array('tl_class'=>'w50')
 );
+
+
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_order'] = array
 (
