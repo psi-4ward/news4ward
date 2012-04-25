@@ -56,8 +56,6 @@ class ModuleNews4wardList extends News4ward
 	 */
 	protected function compile()
     {
-
-
 		$time = time();
 
 		/* build where */
