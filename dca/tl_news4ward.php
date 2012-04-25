@@ -65,7 +65,6 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_news4ward']['edit'],
 				'href'                => 'table=tl_news4ward_article',
 				'icon'                => 'edit.gif',
-				'attributes'          => 'class="contextmenu"'
 			),
 			'editheader' => array
 			(
@@ -73,7 +72,6 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'header.gif',
 				'button_callback'     => array('tl_news4ward', 'editHeader'),
-				'attributes'          => 'class="edit-header"'
 			),
 			'copy' => array
 			(
