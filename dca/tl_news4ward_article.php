@@ -74,7 +74,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']['edit'],
 				'href'                => 'table=tl_content',
 				'icon'                => 'edit.gif',
-				'attributes'          => 'class="contextmenu"'
 			),
 			'editheader' => array
 			(
@@ -82,7 +81,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'header.gif',
 				'button_callback'     => array('tl_news4ward_article', 'editHeader'),
-				'attributes'          => 'class="edit-header"'
 			),
 			'copy' => array
 			(
@@ -229,7 +227,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'default'				  => time(),
 			'sorting'				  => true,
 			'flag'					  => 8,
-			'eval'                    => array('mandatory'=>true,'rgxp'=>'date', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
+			'eval'                    => array('mandatory'=>true,'rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard')
 		),
 		'stop' => array
 		(
