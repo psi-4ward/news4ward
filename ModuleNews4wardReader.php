@@ -63,6 +63,12 @@ class ModuleNews4wardReader extends News4ward
 	 */
 	protected function compile()
     {
+		// Set the item from the auto_item parameter
+		if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
+		{
+			$this->Input->setGet('items', $this->Input->get('auto_item'));
+		}
+
 		$time = time();
 
 		/* build where */
@@ -111,12 +117,14 @@ class ModuleNews4wardReader extends News4ward
 		// Add keywords and description
 		if ($this->keywords != '')
 		{
-			$GLOBALS['TL_KEYWORDS'] .= (strlen($GLOBALS['TL_KEYWORDS']) ? ', ' : '') . $this->keywords;
+			$GLOBALS['TL_KEYWORDS'] .= (strlen($GLOBALS['TL_KEYWORDS']) ? ', ' : '') . $objArticle->keywords;
 		}
 		if ($this->description != '')
 		{
-			$GLOBALS['objPage']->description .= (!empty($GLOBALS['objPage']->description) ? ' ': '') . $this->description;
+			$GLOBALS['objPage']->description .= (!empty($GLOBALS['objPage']->description) ? ' ': '') . $objArticle->description;
 		}
+		// Add Page Title
+		$GLOBALS['objPage']->title = $objArticle->title;
 
 
 		/* generate the content-elements */

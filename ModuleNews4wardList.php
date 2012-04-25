@@ -56,6 +56,8 @@ class ModuleNews4wardList extends News4ward
 	 */
 	protected function compile()
     {
+
+
 		$time = time();
 
 		/* build where */
@@ -101,9 +103,6 @@ class ModuleNews4wardList extends News4ward
 			case 'start ASC':	$ordering[] = 'tl_news4ward_article.start'; 			break;
 			case 'start DESC':	$ordering[] = 'tl_news4ward_article.start DESC'; 		break;
 		}
-
-		// @todo filter protected
-
 
 		/* Pagination */
 		$skipFirst = intval($this->skipFirst);

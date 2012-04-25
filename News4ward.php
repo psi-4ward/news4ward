@@ -13,8 +13,6 @@
 abstract class News4ward extends Module
 {
 
-	protected static $objPageCache = array();
-
 	/**
 	 * Return the meta fields of a news article as array
 	 * @param Database_Result $objArticle
@@ -78,6 +76,7 @@ abstract class News4ward extends Module
 
 		global $objPage;
 		$this->import('String');
+		$this->import('News4wardHelper');
 
 		$arrArticles = array();
 		$limit = $objArticles->numRows;
@@ -102,7 +101,7 @@ abstract class News4ward extends Module
 
 			$objTemplate->count = ++$count;
 			$objTemplate->class = (strlen($objArticles->cssClass) ? ' ' . $objArticles->cssClass : '') . (($count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even');
-			$objTemplate->link = $this->generateUrl($objArticles);
+			$objTemplate->link = $this->News4wardHelper->generateUrl($objArticles);
 			$objTemplate->archive = $objArticles->archive;
 
 			// Clean the RTE output
@@ -160,39 +159,6 @@ abstract class News4ward extends Module
 	}
 
 
-	/**
-	 * Return the link of a news article
-	 * @param Database_Result $objArticle
-	 * @return string
-	 */
-	protected function generateUrl(Database_Result $objArticle)
-	{
-		if($objArticle->parentJumpTo)
-		{
-			if(!isset(self::$objPageCache[$objArticle->parentJumpTo]))
-			{
-				self::$objPageCache[$objArticle->parentJumpTo] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($objArticle->parentJumpTo);
-			}
-			return $this->generateFrontendUrl(self::$objPageCache[$objArticle->parentJumpTo]->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($objArticle->alias)) ? $objArticle->alias : $objArticle->id));
-		}
-		else
-		{
-			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($objArticle->alias)) ? $objArticle->alias : $objArticle->id));
-		}
-
-		// Link to an article
-		$objParent = $this->Database->prepare("SELECT a.id AS aId, a.alias AS aAlias, a.title, p.id, p.alias FROM tl_article a, tl_page p WHERE a.pid=p.id AND a.id=?")
-									->limit(1)
-									->execute($objArticle->articleId);
-
-		if ($objParent->numRows)
-		{
-			return $this->generateFrontendUrl($objParent->row(), '/articles/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($objParent->aAlias)) ? $objParent->aAlias : $objParent->aId));
-		}
-
-	}
-
-
 
 	/**
 	 * Sort out protected archives
@@ -232,4 +198,5 @@ abstract class News4ward extends Module
 
 		return $arrArchives;
 	}
+
 }
