@@ -32,7 +32,11 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'onload_callback' => array
 		(
 			array('tl_news4ward_article', 'checkPermission'),
-	//		array('tl_page', 'addBreadcrumb')
+			array('tl_news4ward_article', 'generateFeed')
+		),
+		'onsubmit_callback' => array
+		(
+			array('tl_news4ward_article', 'scheduleUpdate')
 		)
 	),
 
@@ -396,6 +400,52 @@ class tl_news4ward_article extends Backend
 		$this->redirect('contao/main.php?act=error');
 	}
 
+
+/**
+	 * Check for modified news feeds and update the XML files if necessary
+	 */
+	public function generateFeed()
+	{
+		$session = $this->Session->get('news4ward_feed_updater');
+
+		if (!is_array($session) || count($session) < 1)
+		{
+			return;
+		}
+
+		$this->import('News4wardHelper');
+
+		foreach ($session as $id)
+		{
+			$this->News4wardHelper->generateFeed($id);
+		}
+
+		$this->Session->set('news4ward_feed_updater', NULL);
+	}
+
+
+	/**
+	 * Schedule a news feed update
+	 *
+	 * This method is triggered when a single news archive or multiple news
+	 * archives are modified (edit/editAll).
+	 *
+	 * @param \DataContainer $dc
+	 * @return void
+	 */
+	public function scheduleUpdate(DataContainer $dc)
+	{
+		// Return if there is no PID
+		if (!$dc->activeRecord->pid)
+		{
+			return;
+		}
+
+		// Store the ID in the session
+		$session = $this->Session->get('news4ward_feed_updater');
+		$session[] = $dc->activeRecord->pid;
+		$this->Session->set('news4ward_feed_updater', array_unique($session));
+	}
 }
 
 ?>

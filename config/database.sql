@@ -25,6 +25,7 @@ CREATE TABLE `tl_news4ward` (
   `maxItems` smallint(5) unsigned NOT NULL default '0',
   `feedBase` varchar(255) NOT NULL default '',
   `alias` varbinary(128) NOT NULL default '',
+  `description` text NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

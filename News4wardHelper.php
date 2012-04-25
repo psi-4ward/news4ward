@@ -122,4 +122,163 @@ class News4wardHelper extends Frontend
 	}
 
 
+
+	/**
+	 * Update a particular RSS feed
+	 * @param integer
+	 */
+	public function generateFeed($intId)
+	{
+		$objArchive = $this->Database->prepare("SELECT * FROM tl_news4ward WHERE id=? AND makeFeed=?")
+									 ->limit(1)
+									 ->execute($intId, 1);
+
+		if ($objArchive->numRows < 1)
+		{
+			return;
+		}
+
+		$objArchive->feedName = ($objArchive->alias != '') ? $objArchive->alias : 'news4ward' . $objArchive->id;
+
+		// Delete XML file
+		if ($this->Input->get('act') == 'delete' || $objArchive->protected)
+		{
+			$this->import('Files');
+			$this->Files->delete($objArchive->feedName . '.xml');
+		}
+
+		// Update XML file
+		else
+		{
+			$this->generateFiles($objArchive->row());
+			$this->log('Generated news4ward feed "' . $objArchive->feedName . '.xml"', 'News4wardHelper generateFeed()', TL_CRON);
+		}
+	}
+
+
+	/**
+	 * Delete old files and generate all feeds
+	 */
+	public function generateFeeds()
+	{
+		$this->removeOldFeeds();
+		$objArchive = $this->Database->execute("SELECT * FROM tl_news4ward WHERE makeFeed=1 AND protected!=1");
+
+		while ($objArchive->next())
+		{
+			$objArchive->feedName = ($objArchive->alias != '') ? $objArchive->alias : 'news4ward' . $objArchive->id;
+
+			$this->generateFiles($objArchive->row());
+			$this->log('Generated news4ward feed "' . $objArchive->feedName . '.xml"', 'News4wardHelper generateFeeds()', TL_CRON);
+		}
+	}
+
+
+	/**
+	 * Generate an XML files and save them to the root directory
+	 * @param array
+	 */
+	protected function generateFiles($arrArchive)
+	{
+		$time = time();
+		$strType = ($arrArchive['format'] == 'atom') ? 'generateAtom' : 'generateRss';
+		$strLink = ($arrArchive['feedBase'] != '') ? $arrArchive['feedBase'] : $this->Environment->base;
+		$strFile = $arrArchive['feedName'];
+
+		$objFeed = new Feed($strFile);
+
+		$objFeed->link = $strLink;
+		$objFeed->title = $arrArchive['title'];
+		$objFeed->description = $arrArchive['description'];
+		$objFeed->language = $arrArchive['language'];
+		$objFeed->published = $arrArchive['tstamp'];
+
+		// Get items
+		$objArticleStmt = $this->Database->prepare("SELECT *, (SELECT name FROM tl_user u WHERE u.id=n.author) AS authorName
+													FROM tl_news4ward_article n
+													WHERE pid=? AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND status='published'
+													ORDER BY start DESC");
+
+		if ($arrArchive['maxItems'] > 0)
+		{
+			$objArticleStmt->limit($arrArchive['maxItems']);
+		}
+
+		$objArticle = $objArticleStmt->execute($arrArchive['id']);
+
+		// Get the default URL
+		$objParent = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+									->limit(1)
+									->execute($arrArchive['jumpTo']);
+
+		if ($objParent->numRows < 1)
+		{
+			return;
+		}
+
+		$objParent = $this->getPageDetails($objParent->id);
+		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
+
+		// Parse items
+		while ($objArticle->next())
+		{
+			$objItem = new FeedItem();
+
+			$objItem->title = $objArticle->title;
+			$objItem->link = $this->generateUrl($objArticle, $strUrl);
+			$objItem->published = $objArticle->start;
+			$objItem->author = $objArticle->authorName;
+
+			// Prepare the description
+			if($arrArchive['source'] == 'source_text')
+			{
+				/* generate the content-elements */
+				$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" AND invisible="" ORDER BY sorting')->execute($objArticle->id);
+				$strDescription = '';
+				while($objContentelements->next())
+				{
+					$strDescription .= $this->getContentElement($objContentelements->id);
+				}
+			}
+			else
+			{
+				$strDescription = $objArticle->teaser;
+			}
+			$strDescription = $this->replaceInsertTags($strDescription);
+			$objItem->description = $this->convertRelativeUrls($strDescription, $strLink);
+
+
+			// Add the article image as enclosure
+			if ($objArticle->addImage)
+			{
+				$objItem->addEnclosure($objArticle->singleSRC);
+			}
+
+			// Enclosure
+			if ($objArticle->addEnclosure)
+			{
+				$arrEnclosure = deserialize($objArticle->enclosure, true);
+
+				if (is_array($arrEnclosure))
+				{
+					foreach ($arrEnclosure as $strEnclosure)
+					{
+						if (is_file(TL_ROOT . '/' . $strEnclosure))
+						{
+							$objItem->addEnclosure($strEnclosure);
+						}
+					}
+				}
+			}
+
+			$objFeed->addItem($objItem);
+		}
+
+		// Create file
+		$objRss = new File($strFile . '.xml');
+		$objRss->write($this->replaceInsertTags($objFeed->$strType()));
+		$objRss->close();
+	}
+
+
 }

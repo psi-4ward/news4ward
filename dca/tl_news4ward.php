@@ -25,11 +25,11 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 		'onload_callback' => array
 		(
 			array('tl_news4ward', 'checkPermission'),
-			// 	array('tl_news4ward', 'generateFeed')
+			array('tl_news4ward', 'generateFeed')
 		),
 		'onsubmit_callback' => array
 		(
-			// array('tl_news4ward', 'scheduleUpdate')
+			array('tl_news4ward', 'scheduleUpdate')
 		)
 	),
 
@@ -390,30 +390,32 @@ class tl_news4ward extends Backend
 	 */
 	public function generateFeed()
 	{
-		$session = $this->Session->get('news_feed_updater');
+		$session = $this->Session->get('news4ward_feed_updater');
 
 		if (!is_array($session) || count($session) < 1)
 		{
 			return;
 		}
 
-		$this->import('News');
+		$this->import('News4wardHelper');
 
 		foreach ($session as $id)
 		{
-			$this->News->generateFeed($id);
+			$this->News4wardHelper->generateFeed($id);
 		}
 
-		$this->Session->set('news_feed_updater', null);
+		$this->Session->set('news4ward_feed_updater', NULL);
 	}
 
 
 	/**
 	 * Schedule a news feed update
-	 * 
+	 *
 	 * This method is triggered when a single news archive or multiple news
 	 * archives are modified (edit/editAll).
-	 * @param object
+	 *
+	 * @param \DataContainer $dc
+	 * @return void
 	 */
 	public function scheduleUpdate(DataContainer $dc)
 	{
@@ -424,16 +426,19 @@ class tl_news4ward extends Backend
 		}
 
 		// Store the ID in the session
-		$session = $this->Session->get('news_feed_updater');
+		$session = $this->Session->get('news4ward_feed_updater');
 		$session[] = $dc->id;
-		$this->Session->set('news_feed_updater', array_unique($session));
+		$this->Session->set('news4ward_feed_updater', array_unique($session));
 	}
 
 
 	/**
 	 * Check the RSS-feed alias
-	 * @param object
+	 *
+	 * @param $varValue
+	 * @param DataContainer $dc
 	 * @throws Exception
+	 * @return
 	 */
 	public function checkFeedAlias($varValue, DataContainer $dc)
 	{
