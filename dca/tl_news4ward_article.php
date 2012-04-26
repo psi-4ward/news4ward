@@ -13,11 +13,6 @@
 
 
 
-
-// Load class tl_page
-$this->loadDataContainer('tl_page');
-
-
 $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 (
 
@@ -45,15 +40,11 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	(
 		'sorting' => array
 		(
-			'mode'                    => 2,
+			'mode'                    => 4,
 			'fields'                  => array('start DESC'),
-			'panelLayout'             => 'filter,limit;search,sort'
-		),
-		'label' => array
-		(
-			'fields'                  => array('title', 'inColumn','start'),
-			'format'                  => '%s <span style="color:#b3b3b3; padding-left:3px;">[%s]</span>',
-			'label_callback'          => array('tl_news4ward_article', 'addIcon')
+			'panelLayout'             => 'filter,limit;search,sort',
+			'headerFields'            => array('title','protected'),
+			'child_record_callback'   => array('tl_news4ward_article', 'listItem')
 		),
 		'global_operations' => array
 		(
@@ -254,6 +245,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 class tl_news4ward_article extends Backend
 {
 
+	protected static $authorCache = array();
+
 	/**
 	 * Import the back end user object
 	 */
@@ -266,24 +259,84 @@ class tl_news4ward_article extends Backend
 
 
 	/**
-	 * Add an image to each page in the tree
+	 * Generate listItem
 	 * @param array
-	 * @param string
 	 * @return string
 	 */
-	public function addIcon($row, $label)
+	public function listItem($arrRow)
 	{
-		if($row['status'] == 'draft')
-			return $this->generateImage('system/modules/news4ward/html/draft.gif') .' '. $label;
-		else if($row['status'] == 'review')
-			return $this->generateImage('system/modules/news4ward/html/review.gif') .' '. $label;
+		// the title
+		$strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">'.$this->generateImage('articles.gif','','style="vertical-align:bottom;"').' '.$arrRow['title'].'</div>';
 
+		// show the autor
+		if(!empty($arrRow['author']))
+		{
+			if(!isset(self::$authorCache[$arrRow['author']]))
+			{
+				$objAuthor = $this->Database->prepare('SELECT name FROM tl_user WHERE id=?')->execute($arrRow['author']);
+				if($objAuthor->numRows)
+				{
+					self::$authorCache[$arrRow['author']] = $objAuthor->name;
+				}
+				else
+				{
+					self::$authorCache[$arrRow['author']] = false;
+				}
+			}
+			if(self::$authorCache[$arrRow['author']])
+			{
+				$strReturn .= '<div style="color:#999;margin-bottom:5px;">'.$GLOBALS['TL_LANG']['tl_news4ward_article']['author'][0].': '.self::$authorCache[$arrRow['author']].'</div>';
+			}
+		}
 
-		$time = time();
-		$published = ($row['status'] == 'published' && ($row['start'] == '' || $row['start'] < $time) && ($row['stop'] == '' || $row['stop'] > $time));
+		// generate the status icons
+		$strReturn .= '<div style="margin-bottom:5px;">'.$GLOBALS['TL_LANG']['tl_news4ward_article']['status'][0].': ';
+		if($arrRow['status'] == 'draft')
+		{
+			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/draft.png',
+												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']],
+												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']].'"');
+		}
+		else if($arrRow['status'] == 'review')
+		{
+			$strReturn .= $this->generateImage('system/modules/news4ward/html/review.png',
+												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']],
+												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']].'"');
+		}
+		else
+		{
+			$published = ($arrRow['status'] == 'published' && ($arrRow['start'] == '' || $arrRow['start'] < time()) && ($arrRow['stop'] == '' || $arrRow['stop'] > time()));
+			$strReturn .= $this->generateImage('system/modules/news4ward/html/published'.($published ? '' : '_').'.png','','');
+		}
+		if($arrRow['highlight'])
+		{
+			$strReturn .= ' '.$this->generateImage('system/modules/news4ward/html/highlight.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0].'"');
+		}
+		if($arrRow['sticky'])
+		{
+			$strReturn .= ' '.$this->generateImage('system/modules/news4ward/html/sticky.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0].'"');
+		}
+		$strReturn .= '</div>';
 
-		return $this->generateImage('articles'.($published ? '' : '_').'.gif') .' '. $label;
+		// generate start / end date
+		$strReturn .= '<div style="color:#999;">';
+		$strReturn .= $GLOBALS['TL_LANG']['tl_news4ward_article']['start'][0].': '.$this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'],$arrRow['start']);
+		if(!empty($arrRow['stop'])) $strReturn .= ' <br> '	.$GLOBALS['TL_LANG']['tl_news4ward_article']['stop'][0].': '.$this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'],$arrRow['stop']);
+		$strReturn .= '</div>';
+
+		// HOOK: add custom logic
+		if (isset($GLOBALS['TL_HOOKS']['news4ward_article_generateListItem']) && is_array($GLOBALS['TL_HOOKS']['news4ward_article_generateListItem']))
+		{
+			foreach ($GLOBALS['TL_HOOKS']['news4ward_article_generateListItem'] as $callback)
+			{
+				$this->import($callback[0]);
+				$strReturn = $this->$callback[0]->$callback[1]($strReturn,$arrRow);
+			}
+		}
+
+		return $strReturn;
 	}
+
 
 
 	/**
@@ -342,32 +395,6 @@ class tl_news4ward_article extends Backend
 		}
 
 		return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
-	}
-
-
-	/**
-	 * Return the copy article button
-	 * @param array
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @return string
-	 */
-	public function copyArticle($row, $href, $label, $title, $icon, $attributes, $table)
-	{
-		if ($GLOBALS['TL_DCA'][$table]['config']['closed'])
-		{
-			return '';
-		}
-
-		$objPage = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")
-								  ->limit(1)
-								  ->execute($row['pid']);
-
-		return ($this->User->isAdmin || $this->User->isAllowed(5, $objPage->row())) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : $this->generateImage(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 
 
