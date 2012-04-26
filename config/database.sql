@@ -47,6 +47,7 @@ CREATE TABLE `tl_news4ward_article` (
   `highlight` char(1) NOT NULL default '',
   `teaserCssID` varchar(255) NOT NULL default '',
   `teaser` text NULL,
+  `teaserImage` varchar(255) NOT NULL default '',
   `social` varchar(255) NOT NULL default '',
   `cssID` varchar(255) NOT NULL default '',
   `published` char(1) NOT NULL default '',
@@ -85,7 +86,8 @@ CREATE TABLE `tl_module` (
   `news4ward_format` varchar(32) NOT NULL default '',
   `news4ward_startDay` smallint(5) unsigned NOT NULL default '0'
   `news4ward_order` varchar(32) NOT NULL default '',
-  `news4ward_showQuantity` char(1) NOT NULL default ''
+  `news4ward_showQuantity` char(1) NOT NULL default '',
+  `news4ward_useTeaserImageForFacebook` char(1) NOT NULL default ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

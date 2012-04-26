@@ -152,6 +152,22 @@ abstract class News4ward extends Module
 			$objTemplate->author = $arrMeta['author'];
 			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->date);
 
+			// Add teaser image
+			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
+			{
+				$imgSize = deserialize($this->imgSize,true);
+				if(count($imgSize)>1)
+				{
+					$objTemplate->teaserImage = $this->getImage($objArticles->teaserImage,$imgSize[0],$imgSize[1],$imgSize[2]);
+				}
+				else
+				{
+					$objTemplate->teaserImage = $objArticles->teaserImage;
+				}
+				$objTemplate->teaserImageRaw = $objTemplate->teaserImag;
+			}
+
+
 			$arrArticles[] = $objTemplate->parse();
 		}
 

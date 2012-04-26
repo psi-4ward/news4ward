@@ -5,7 +5,12 @@
 <?php endif; ?>
 <h2><a href="<?php echo $this->link; ?>"><?php echo $this->title; ?></a></h2>
 <div class="teaser">
-<?php echo $this->teaser; ?>
+	<?php if(!empty($this->teaserImage)): ?>
+		<div class="image_container">
+			<img src="<?php echo $this->teaserImage; ?>" alt="<?php echo $this->title; ?>"/>
+		</div>
+	<?php endif; ?>
+	<?php echo $this->teaser; ?>
 </div>
 <a href="<?php echo $this->link; ?>" class="more">Weiterlesen...</a>
 </div>

@@ -23,6 +23,7 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['keywords']    = array('Suchbegriffe
 $GLOBALS['TL_LANG']['tl_news4ward_article']['description'] = array('Beschreibung', 'Hier können Sie die Meta-Description eingeben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['teaserCssID'] = array('Teaser-CSS-ID/Klasse', 'Hier können Sie eine ID und beliebig viele Klassen für das Teaser-Element eingeben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['teaser']      = array('Teasertext', 'Der Teasertext kann auch mit dem Inhaltselement "Beitragteaser" dargestellt werden.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['teaserImage'] = array('Teaserbild', 'Das Teaserbild kann in der Listenansicht dargestellt werden.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['social']      = array('Syndikation', 'Hier legen Sie fest, welche Optionen verfügbar sind.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['cssID']       = array('CSS-ID/Klasse', 'Hier können Sie eine ID und beliebig viele Klassen eingeben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['space']       = array('Abstand davor und dahinter', 'Hier können Sie den Abstand vor und nach dem Beitrag in Pixeln eingeben. Sie sollten Inline-Styles jedoch nach Möglichkeit vermeiden und den Abstand in einem Stylesheet definieren.');

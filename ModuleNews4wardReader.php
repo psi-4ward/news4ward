@@ -123,9 +123,15 @@ class ModuleNews4wardReader extends News4ward
 		{
 			$GLOBALS['objPage']->description .= (!empty($GLOBALS['objPage']->description) ? ' ': '') . $objArticle->description;
 		}
+
 		// Add Page Title
 		$GLOBALS['objPage']->title = $objArticle->title;
 
+		// Add facebook meta for the teaserimage
+		if($this->news4ward_useTeaserImageForFacebook && $objArticle->teaserImage &&  is_file(TL_ROOT.'/'.$objArticle->teaserImage))
+		{
+			$GLOBALS['TL_HEAD'][] = '<link rel="image_src" href="'.$this->getImage($objArticle->teaserImage,50,50,'proportional').'" />';
+		}
 
 		/* generate the content-elements */
 		$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticle->id);

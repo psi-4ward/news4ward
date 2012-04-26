@@ -25,6 +25,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_format']        = array('Archivforma
 $GLOBALS['TL_LANG']['tl_module']['news4ward_startDay']      = array('Erster Wochentag', 'Hier können Sie den ersten Tag der Woche festlegen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_order']         = array('Sortierreihenfolge', 'Hier können Sie die Sortierreihenfolge festlegen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_showQuantity']  = array('Anzahl der Beiträge', 'Die Anzahl der Beiträge pro Seite.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_useTeaserImageForFacebook']  = array('Teaserbild für Facebook nutzen', 'Fügt der HTML-Struktur eine Anweisung hinzu, damit bei einer Facebook-Verlinkung das Teaserbild in der Timeline erscheint.');
 
 
 /**
