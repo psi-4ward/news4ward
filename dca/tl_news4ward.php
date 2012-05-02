@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('allowComments', 'protected', 'makeFeed'),
-		'default'                     => '{title_legend},title,jumpTo;{protected_legend:hide},protected;{feed_legend:hide},makeFeed'
+		'default'                     => '{title_legend},title,jumpTo,jumpToList;{protected_legend:hide},protected;{feed_legend:hide},makeFeed'
 	),
 
 	// Subpalettes
@@ -125,6 +125,13 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 		'jumpTo' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['jumpTo'],
+			'exclude'                 => true,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('fieldType'=>'radio')
+		),
+		'jumpToList' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['jumpToList'],
 			'exclude'                 => true,
 			'inputType'               => 'pageTree',
 			'eval'                    => array('fieldType'=>'radio')

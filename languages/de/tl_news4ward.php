@@ -18,6 +18,7 @@
  */
 $GLOBALS['TL_LANG']['tl_news4ward']['title']          = array('Titel', 'Bitte geben Sie den Archiv-Titel ein.');
 $GLOBALS['TL_LANG']['tl_news4ward']['jumpTo']         = array('Weiterleitungsseite', 'Bitte wählen Sie die Nachrichtenleser-Seite aus, zu der Besucher weitergeleitet werden, wenn Sie einen Beitrag anklicken.');
+$GLOBALS['TL_LANG']['tl_news4ward']['jumpToList']     = array('Listen-Seite', 'Bitte wählen Sie die Nachrichtenliste-Seite aus, welche die Beiträge dieses Archivs darstellt.');
 $GLOBALS['TL_LANG']['tl_news4ward']['protected']      = array('Archiv schützen', 'Nachrichten nur bestimmten Frontend-Gruppen anzeigen.');
 $GLOBALS['TL_LANG']['tl_news4ward']['groups']         = array('Erlaubte Mitgliedergruppen', 'Diese Mitgliedergruppen können die Nachrichten des Archivs sehen.');
 $GLOBALS['TL_LANG']['tl_news4ward']['makeFeed']       = array('Feed erstellen', 'Einen RSS- oder Atom-Feed aus dem Nachrichtenarchiv generieren.');

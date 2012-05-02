@@ -16,6 +16,7 @@ CREATE TABLE `tl_news4ward` (
   `tstamp` int(10) unsigned NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
   `jumpTo` int(10) unsigned NOT NULL default '0',
+  `jumpToList` int(10) unsigned NOT NULL default '0',
   `protected` char(1) NOT NULL default '',
   `groups` blob NULL,
   `makeFeed` char(1) NOT NULL default '',
