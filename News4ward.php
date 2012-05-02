@@ -168,6 +168,16 @@ abstract class News4ward extends Module
 			}
 
 
+			// HOOK: add custom logic
+			if(isset($GLOBALS['TL_HOOKS']['News4wardParseArticle']) && is_array($GLOBALS['TL_HOOKS']['News4wardParseArticle']))
+			{
+				foreach ($GLOBALS['TL_HOOKS']['News4wardParseArticle'] as $callback)
+				{
+					$this->import($callback[0]);
+					$this->$callback[0]->$callback[1]($this,$objArticles,$objTemplate);
+				}
+			}
+
 			$arrArticles[] = $objTemplate->parse();
 		}
 
