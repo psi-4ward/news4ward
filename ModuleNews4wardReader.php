@@ -69,10 +69,10 @@ class ModuleNews4wardReader extends News4ward
 			$this->Input->setGet('items', $this->Input->get('auto_item'));
 		}
 
-		$time = time();
 
 		/* build where */
 		$where = array();
+		$time = time();
 
 		// news archives
 		$where[] = 'tl_news4ward_article.pid IN('. implode(',', array_map('intval', $this->news_archives)) . ')';
@@ -121,6 +121,7 @@ class ModuleNews4wardReader extends News4ward
 		}
 
 		// HOOK: add content like comments or related articles
+		// todo: who needs this hook? theres also News4wardParseArticles HOOK
 		if(isset($GLOBALS['TL_HOOKS']['News4wardReader']) && is_array($GLOBALS['TL_HOOKS']['News4wardReader']))
 		{
 			foreach ($GLOBALS['TL_HOOKS']['News4wardReader'] as $callback)
