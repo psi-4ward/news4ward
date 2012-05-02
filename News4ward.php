@@ -61,13 +61,14 @@ abstract class News4ward extends Module
 	}
 
 
-
 	/**
 	 * Parse one or more items and return them as array
+	 *
 	 * @param Database_Result $objArticles
+	 * @param bool|Template $objTemplate
 	 * @return array
 	 */
-	protected function parseArticles(Database_Result $objArticles)
+	protected function parseArticles(Database_Result $objArticles, $objTemplate=false)
 	{
 		if ($objArticles->numRows < 1)
 		{
@@ -81,22 +82,14 @@ abstract class News4ward extends Module
 		$arrArticles = array();
 		$limit = $objArticles->numRows;
 		$count = 0;
-		$imgSize = false;
-
-		// Override the default image size
-		if ($this->imgSize != '')
-		{
-			$size = deserialize($this->imgSize);
-
-			if ($size[0] > 0 || $size[1] > 0)
-			{
-				$imgSize = $this->imgSize;
-			}
-		}
 
 		while ($objArticles->next())
 		{
-			$objTemplate = new FrontendTemplate($this->news4ward_template);
+			// init FrontendTemplate if theres no object given
+			if(!$objTemplate)
+			{
+				$objTemplate = new FrontendTemplate($this->news4ward_template);
+			}
 			$objTemplate->setData($objArticles->row());
 
 			$objTemplate->count = ++$count;
@@ -104,7 +97,7 @@ abstract class News4ward extends Module
 			$objTemplate->link = $this->News4wardHelper->generateUrl($objArticles);
 			$objTemplate->archive = $objArticles->archive;
 
-			// Clean the RTE output
+			// Clean the RTE output for the TEASER
 			if ($objArticles->teaser != '')
 			{
 				if ($objPage->outputFormat == 'xhtml')
@@ -119,31 +112,36 @@ abstract class News4ward extends Module
 				$objTemplate->teaser = $this->String->encodeEmail($objArticles->teaser);
 			}
 
-			// Display the "read more" button for external/article links
-			if (($objArticles->source == 'external' || $objArticles->source == 'article') && !strlen($objArticles->text))
+
+			// Generate ContentElements
+			$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticles->id);
+			$strContent = '';
+			while($objContentelements->next())
 			{
-				$objTemplate->text = true;
+				$strContent .= $this->getContentElement($objContentelements->id);
 			}
 
-			// Encode e-mail addresses
-			else
+			// Clean the RTE output for the CONTENT
+			if ($strContent != '')
 			{
 				// Clean the RTE output
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$objArticles->text = $this->String->toXhtml($objArticles->text);
+					$strContent = $this->String->toXhtml($strContent);
 				}
 				else
 				{
-					$objArticles->text = $this->String->toHtml5($objArticles->text);
+					$strContent = $this->String->toHtml5($strContent);
 				}
 
-				$objTemplate->text = $this->String->encodeEmail($objArticles->text);
+				$strContent = $this->String->encodeEmail($strContent);
 			}
 
-			$arrMeta = $this->getMetaFields($objArticles);
+			$this->Template->content = $strContent;
+
 
 			// Add meta information
+			$arrMeta = $this->getMetaFields($objArticles);
 			$objTemplate->date = $arrMeta['date'];
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
 			$objTemplate->numberOfComments = $arrMeta['ccount'];
