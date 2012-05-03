@@ -48,10 +48,16 @@ class ModuleNews4wardReader extends News4ward
 		}
 
 		// Read the alias from the url
-		if(!preg_match("~.*".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9_-\.]+).*~i",$this->Environment->request,$erg))
+		if(!preg_match("~.*".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9\._-]+).*~i",$this->Environment->request,$erg))
 		{
 			return '';
 		}
+		// strip suffix
+		if(substr($erg[1],-strlen($GLOBALS['TL_CONFIG']['urlSuffix'])) == $GLOBALS['TL_CONFIG']['urlSuffix'])
+		{
+			$erg[1] = substr($erg[1],0,-strlen($GLOBALS['TL_CONFIG']['urlSuffix']));
+		}
+
 		$this->alias = $erg[1];
 
 		return parent::generate();
