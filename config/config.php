@@ -34,3 +34,7 @@ $GLOBALS['TL_PERMISSIONS'][] = 'news4ward_newp';
 
 // Register hook to add items to the indexer
 $GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('News4wardHelper', 'getSearchablePages');
+
+// Cronjob for feed generation
+$GLOBALS['TL_CRON']['daily'][] = array('News4wardHelper', 'generateFeeds');
+

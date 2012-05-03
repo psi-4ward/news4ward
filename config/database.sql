@@ -100,7 +100,6 @@ CREATE TABLE `tl_user` (
   `news4ward_newp` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 --
 -- Table `tl_user_group`
 --
@@ -108,4 +107,12 @@ CREATE TABLE `tl_user` (
 CREATE TABLE `tl_user_group` (
   `news4ward` blob NULL,
   `news4ward_newp` blob NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Table `tl_layout`
+--
+
+CREATE TABLE `tl_layout` (
+  `news4ward_feeds` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

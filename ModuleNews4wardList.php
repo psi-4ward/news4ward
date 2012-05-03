@@ -173,8 +173,42 @@ class ModuleNews4wardList extends News4ward
 		$this->Template->archives = $this->news_archives;
 		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
 
+
+		// add newsfeeds to page
+		$this->addNewsfeedsToLayout();
     }
 
-}
 
-?>
+	/**
+	 * Add Newsfeeds links to the page
+	 * @return void
+	 */
+	protected function addNewsfeedsToLayout()
+	{
+		if(!$GLOBALS['objPage']->layout)
+		{
+			$objLayout = $this->Database->prepare('SELECT news4ward_feeds FROM tl_layout WHERE fallback="1"')->limit(1)->execute();
+		}
+		else
+		{
+			$objLayout = $this->Database->prepare('SELECT news4ward_feeds FROM tl_layout WHERE id=?')->limit(1)->execute($GLOBALS['objPage']->layout);
+		}
+
+		if(!$objLayout->numRows) return;
+
+		$arrNews4wardIDs = deserialize($objLayout->news4ward_feeds,true);
+		if(empty($arrNews4wardIDs)) return;
+
+		$objNews4ward = $this->Database->prepare('SELECT feedBase,alias,format,title FROM tl_news4ward WHERE FIND_IN_SET(id,?) AND makeFeed="1"')->execute(implode(',',$arrNews4wardIDs));
+		if(!$objNews4ward->numRows) return;
+
+		$strTagEnding = ($GLOBALS['objPage']->outputFormat == 'xhtml') ? ' />' : '>';
+
+		while($objNews4ward->next())
+		{
+			$base = strlen($objNews4ward->feedBase) ? $objNews4ward->feedBase : $this->Environment->base;
+			$GLOBALS['TL_HEAD'][] = '<link rel="alternate" href="' . $base . $objNews4ward->alias . '.xml" type="application/' . $objNews4ward->format . '+xml" title="' . $objNews4ward->title . '"' . $strTagEnding . "\n";
+		}
+
+	}
+}
