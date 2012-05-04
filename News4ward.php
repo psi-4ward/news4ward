@@ -43,17 +43,6 @@ abstract class News4ward extends Module
 						$return['author'] = $GLOBALS['TL_LANG']['MSC']['by'] . ' ' . $objArticle->author;
 					}
 					break;
-
-				case 'comments':
-					$objComments = $this->Database->prepare("SELECT COUNT(*) AS total FROM tl_comments WHERE source='tl_news4ward_article' AND parent=?" . (!BE_USER_LOGGED_IN ? " AND published=1" : ""))
-												  ->execute($objArticle->id);
-
-					if ($objComments->numRows)
-					{
-						$return['ccount'] = $objComments->total;
-						$return['comments'] = sprintf($GLOBALS['TL_LANG']['MSC']['commentCount'], $objComments->total);
-					}
-					break;
 			}
 		}
 
@@ -144,8 +133,6 @@ abstract class News4ward extends Module
 			$arrMeta = $this->getMetaFields($objArticles);
 			$objTemplate->date = $arrMeta['date'];
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
-			$objTemplate->numberOfComments = $arrMeta['ccount'];
-			$objTemplate->commentCount = $arrMeta['comments'];
 			$objTemplate->timestamp = $objArticles->date;
 			$objTemplate->author = $arrMeta['author'];
 			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->date);
