@@ -133,9 +133,9 @@ abstract class News4ward extends Module
 			$arrMeta = $this->getMetaFields($objArticles);
 			$objTemplate->date = $arrMeta['date'];
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
-			$objTemplate->timestamp = $objArticles->date;
+			$objTemplate->timestamp = $objArticles->start;
 			$objTemplate->author = $arrMeta['author'];
-			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->date);
+			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->start);
 
 			// Add teaser image
 			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
