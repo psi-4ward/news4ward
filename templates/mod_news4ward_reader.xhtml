@@ -12,4 +12,29 @@
 
 <?php echo $this->content; ?>
 
+<?php if(!empty($this->socialButtons)): ?>
+<div class="socialButtons">
+	<?php if(in_array('facebook',$this->socialButtons)): ?>
+	<span class="facebook">
+		<a href="https://www.facebook.com/sharer.php?display=popup&u=<?php echo urlencode($this->Environment->base . $this->Environment->request); ?>&t=<?php echo urlencode($this->title); ?>" rel="nofollow" title="Auf Facebook teilen" target="blank"  onclick="window.open(this.href, '', 'width=760,height=570,modal=yes,left=100,top=50,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no'); return false;"><img src="system/modules/news4ward/html/social/facebook.png" alt="Facebook" width="30" height="30"/></a>
+	</span>
+	<?php endif; ?>
+	<?php if(in_array('twitter',$this->socialButtons)): ?>
+	<span class="twitter">
+		<a href="http://twitter.com/share?url=<?php echo urlencode($this->Environment->base . $this->Environment->request); ?>&text=<?php echo urlencode($this->title); ?>" rel="nofollow" title="twittern" target="blank" onclick="window.open(this.href, '', 'width=800,height=600,modal=yes,left=100,top=50,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no'); return false;"><img src="system/modules/news4ward/html/social/twitter.png" alt="Twitter" width="30" height="30"/></a>
+	</span>
+	<?php endif; ?>
+	<?php if(in_array('google',$this->socialButtons)): ?>
+	<span class="googleplus">
+		<a href="https://plusone.google.com/_/+1/confirm?hl=de&url=<?php echo urlencode($this->Environment->base . $this->Environment->request); ?>" rel="nofollow" title="Auf Google+ teilen" target="blank" onclick="window.open(this.href, '', 'width=800,height=600,modal=yes,left=100,top=50,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no'); return false;"><img src="system/modules/news4ward/html/social/google.png" alt="Google+" width="30" height="30"/></a>
+	</span>
+	<?php endif; ?>
+	<?php if(in_array('email',$this->socialButtons)): ?>
+	<span class="email">
+		<a href="mailto:hier-empfänger@einsetzen.de?subject=Empfehlung:%20<?php echo rawurlencode($this->title); ?>&body=Dieser%20Artikel%20könnte%20Sie%20interessieren:%0A<?php echo urlencode($this->Environment->base . $this->Environment->request); ?>%0A%0A<?php echo rawurlencode($this->teaser);?>"><img src="system/modules/news4ward/html/social/mail.png" alt="Per E-Mail empfehlen" width="30" height="30"/></a>
+	</span>
+	<?php endif; ?>
+</div>
+<?php endif; ?>
+
 </div>

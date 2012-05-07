@@ -200,7 +200,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['social'],
 			'inputType'               => 'checkbox',
 			'exclude'                 => true,
-			'options'                 => array('facebook', 'twitter'),
+			'default'				  => serialize(array('facebook', 'twitter','google','email')),
+			'options'                 => array('facebook', 'twitter','google','email'),
 			'eval'                    => array('multiple'=>true,'tl_class'=>''),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_news4ward_article']
 		),
