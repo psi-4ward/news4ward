@@ -37,4 +37,12 @@
 </div>
 <?php endif; ?>
 
+<?php if($this->prevArticle): ?>
+<span class="prevArticle"><a href="<?php echo $this->prevArticle['href']; ?>">&laquo; <?php echo $this->prevArticle['title']; ?></a></span>
+<?php endif; ?>
+<?php if($this->nextArticle): ?>
+<span class="nextArticle"><a href="<?php echo $this->nextArticle['href']; ?>"><?php echo $this->nextArticle['title']; ?> &raquo;</a></span>
+<?php endif; ?>
+
+
 </div>

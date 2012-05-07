@@ -69,6 +69,8 @@ class ModuleNews4wardReader extends News4ward
 	 */
 	protected function compile()
     {
+		$this->import('News4wardHelper');
+
 		// Set the item from the auto_item parameter
 		if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
@@ -136,6 +138,51 @@ class ModuleNews4wardReader extends News4ward
 			$GLOBALS['TL_HEAD'][] = '<meta property="og:url" content="'.$this->Environment->base.$this->Environment->request.'"'.$strTagEnding;
 			$GLOBALS['TL_HEAD'][] = '<meta property="og:description" content="'.str_replace('"','\'',(($objArticle->description) ? $objArticle->description : strip_tags($objArticle->teaser))).'"'.$strTagEnding;
 		}
+
+		// find NEXT  article
+		$strWhere = '';
+		if(!BE_USER_LOGGED_IN)
+		{
+			$strWhere = "AND (a.start='' OR a.start<".$time.") AND (a.stop='' OR a.stop>".$time.") AND a.status='published'";
+		}
+
+		$objNextArticle = $this->Database->prepare("
+			SELECT a.id, a.alias, a.title, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
+			FROM tl_news4ward_article AS a
+			WHERE a.pid = ? AND a.start > ?".$strWhere.' ORDER BY start ASC')->limit(1)->execute($objArticle->pid, $objArticle->start);
+
+		if($objNextArticle->numRows)
+		{
+			$this->Template->nextArticle = array
+			(
+				'title' => $objNextArticle->title,
+				'href'	=> $this->News4wardHelper->generateUrl($objNextArticle)
+			);
+		}
+		else
+		{
+			$this->Template->nextArticle = false;
+		}
+
+		// find PREVIOUS article
+		$objPrevArticle = $this->Database->prepare("
+			SELECT a.id, a.alias, a.title, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
+			FROM tl_news4ward_article AS a
+			WHERE a.pid = ? AND a.start < ?".$strWhere.' ORDER BY start DESC')->limit(1)->execute($objArticle->pid, $objArticle->start);
+
+		if($objPrevArticle->numRows)
+		{
+			$this->Template->prevArticle = array
+			(
+				'title' => $objPrevArticle->title,
+				'href'	=> $this->News4wardHelper->generateUrl($objPrevArticle)
+			);
+		}
+		else
+		{
+			$this->Template->prevArticle = false;
+		}
+
 
 		// HOOK: add content like comments or related articles
 		// todo: who needs this hook? theres also News4wardParseArticles HOOK
