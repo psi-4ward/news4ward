@@ -48,6 +48,8 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['print']          = 'Seite drucken';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['pdf']            = 'Beitrag als PDF';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['facebook']       = 'Auf Facebook teilen';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['twitter']        = 'Auf Twitter teilen';
+$GLOBALS['TL_LANG']['tl_news4ward_article']['google']         = 'Auf Google+ teilen';
+$GLOBALS['TL_LANG']['tl_news4ward_article']['email']          = 'Per E-Mail verschicken';
 
 
 

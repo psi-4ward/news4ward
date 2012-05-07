@@ -75,7 +75,6 @@ class ModuleNews4wardReader extends News4ward
 			$this->Input->setGet('items', $this->Input->get('auto_item'));
 		}
 
-
 		/* build where */
 		$where = array();
 		$time = time();
@@ -107,12 +106,15 @@ class ModuleNews4wardReader extends News4ward
 
 		$this->parseArticles($objArticle,$this->Template);
 
+		// Add social Buttons
+		$this->Template->socialButtons = deserialize($objArticle->social,true);
+
 		// Add keywords and description
-		if ($this->keywords != '')
+		if ($objArticle->keywords != '')
 		{
 			$GLOBALS['TL_KEYWORDS'] .= (strlen($GLOBALS['TL_KEYWORDS']) ? ', ' : '') . $objArticle->keywords;
 		}
-		if ($this->description != '')
+		if ($objArticle->description != '')
 		{
 			$GLOBALS['objPage']->description .= (!empty($GLOBALS['objPage']->description) ? ' ': '') . $objArticle->description;
 		}
@@ -120,10 +122,19 @@ class ModuleNews4wardReader extends News4ward
 		// Add Page Title
 		$GLOBALS['objPage']->title = $objArticle->title;
 
-		// Add facebook meta for the teaserimage
-		if($this->news4ward_useTeaserImageForFacebook && $objArticle->teaserImage &&  is_file(TL_ROOT.'/'.$objArticle->teaserImage))
+		// Add facebook meta data
+		// debug with https://developers.facebook.com/tools/debug
+		if($this->news4ward_facebookMeta)
 		{
-			$GLOBALS['TL_HEAD'][] = '<link rel="image_src" href="'.$this->getImage($objArticle->teaserImage,50,50,'proportional').'" />';
+			$strTagEnding = ($GLOBALS['objPage']->outputFormat == 'xhtml') ? ' />' : '>';
+
+			if($objArticle->teaserImage &&  is_file(TL_ROOT.'/'.$objArticle->teaserImage))
+			{
+				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objArticle->teaserImage.'"'.$strTagEnding;
+			}
+			$GLOBALS['TL_HEAD'][] = '<meta property="og:title" content="'.$objArticle->title.'"'.$strTagEnding;
+			$GLOBALS['TL_HEAD'][] = '<meta property="og:url" content="'.$this->Environment->base.$this->Environment->request.'"'.$strTagEnding;
+			$GLOBALS['TL_HEAD'][] = '<meta property="og:description" content="'.str_replace('"','\'',(($objArticle->description) ? $objArticle->description : strip_tags($objArticle->teaser))).'"'.$strTagEnding;
 		}
 
 		// HOOK: add content like comments or related articles

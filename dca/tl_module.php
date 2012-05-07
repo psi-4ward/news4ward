@@ -16,7 +16,7 @@
  * Add palettes to tl_module
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,perPage,skipFirst,news4ward_order;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_useTeaserImageForFacebook;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_facebookMeta;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 
 /**
@@ -107,9 +107,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_startDay'] = array
 	'eval'                    => array('tl_class'=>'w50')
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_useTeaserImageForFacebook'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_facebookMeta'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_useTeaserImageForFacebook'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_facebookMeta'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'					  => array('tl_class'=>'w50')
