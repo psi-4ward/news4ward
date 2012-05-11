@@ -18,6 +18,36 @@ class News4wardHelper extends Frontend
 
 
 	/**
+	 * Replace news4ward insert tags
+	 * @param $strTag
+	 * @return bool|string
+	 */
+	public function inserttagReplacer($strTag)
+	{
+		if (substr($strTag,0,9) == 'news4ward')
+		{
+			list($strTag,$strValue) = explode('::',$strTag);
+			switch($strValue)
+			{
+				case 'filter_hint':
+					if(!isset($GLOBALS['news4ward_filter_hint'])) return '';
+
+					$tpl = new FrontendTemplate('news4ward_filter_hint');
+					$tpl->items = $GLOBALS['news4ward_filter_hint'];
+					return $tpl->parse();
+				break;
+
+				default:
+					return false;
+				break;
+			}
+		}
+
+		return false;
+	}
+
+
+	/**
 	 * Add items to the indexer
 	 * @param array
 	 * @param integer

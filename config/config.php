@@ -38,3 +38,5 @@ $GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('News4wardHelper', 'getSear
 // Cronjob for feed generation
 $GLOBALS['TL_CRON']['daily'][] = array('News4wardHelper', 'generateFeeds');
 
+// hook for custom inserttags
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('News4wardHelper', 'inserttagReplacer');

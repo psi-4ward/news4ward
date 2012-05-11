@@ -1,0 +1,7 @@
+<?php if(isset($this->items) && !empty($this->items)): ?>
+<div class="news4wrad_filter_hint">
+	<?php foreach($this->items as $filter => $data): ?>
+		<div class="item <?php echo $filter; ?>"><span class="filter"><?php echo $data['hint'];?></span> <span class="value"><?php echo $data['value']; ?></span> </div>
+	<?php endforeach; ?>
+</div>
+<?php endif; ?>

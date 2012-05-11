@@ -132,7 +132,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_showQuantity'] = array
 	'exclude'                 => true,
 	'inputType'               => 'checkbox'
 );
-
+$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_filterHint'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_filterHint'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('mandatory'=>false, 'maxlength'=>'128', 'tl_class'=>'w50')
+);
 
 /**
  * Class tl_module_news4ward

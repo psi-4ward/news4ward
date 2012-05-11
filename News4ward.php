@@ -82,7 +82,10 @@ abstract class News4ward extends Module
 			$objTemplate->setData($objArticles->row());
 
 			$objTemplate->count = ++$count;
-			$objTemplate->class = (strlen($objArticles->cssClass) ? ' ' . $objArticles->cssClass : '') . (($count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even');
+			$objTemplate->class = (strlen($objArticles->cssClass) ? ' ' . $objArticles->cssClass : '')
+									. (($count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '')
+									. ((($count % 2) == 0) ? ' odd' : ' even')
+									. ($objArticles->highlight ? ' highlight' : '');
 			$objTemplate->link = $this->News4wardHelper->generateUrl($objArticles);
 			$objTemplate->archive = $objArticles->archive;
 
