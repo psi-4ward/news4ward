@@ -4,6 +4,9 @@
 <p class="info"><?php echo $this->date; ?> <?php echo $this->author; ?></p>
 <?php endif; ?>
 <h2><a href="<?php echo $this->link; ?>"><?php echo $this->title; ?></a></h2>
+<?php if(!empty($this->subheadline)): ?>
+<h3><?php echo $this->subheadline; ?></h3>
+<?php endif;?>
 <div class="teaser">
 	<?php if(!empty($this->teaserImage)): ?>
 		<div class="image_container">

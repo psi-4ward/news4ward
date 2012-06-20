@@ -10,6 +10,10 @@
 
 <h1><?php echo $this->title;?></h1>
 
+<?php if(!empty($this->subheadline)): ?>
+<h2><?php echo $this->subheadline; ?></h2>
+<?php endif;?>
+
 <?php echo $this->content; ?>
 
 <?php if(!empty($this->socialButtons)): ?>

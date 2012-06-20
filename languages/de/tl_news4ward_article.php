@@ -17,6 +17,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_news4ward_article']['title']       = array('Titel', 'Bitte geben Sie den Beitrag-Titel ein.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['subheadline'] = array('Unterüberschrift', 'Hier kann eine Unterüberschrift angegeben werden.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['alias']       = array('Beitragalias', 'Der Beitragalias ist eine eindeutige Referenz, die anstelle der numerischen Beitrag-ID aufgerufen werden kann.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['author']      = array('Autor', 'Hier können Sie den Autor des Beitrags ändern.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['keywords']    = array('Suchbegriffe', 'Hier können Sie eine Liste kommagetrennter Suchbegriffe eingeben, die von Suchmaschinen wie Google oder Yahoo ausgewertet werden. Suchmaschinen indizieren normalerweise bis zu 800 Zeichen.');

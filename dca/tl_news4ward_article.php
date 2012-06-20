@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},teaserCssID,teaser,teaserImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
+		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},subheadline,teaserCssID,teaser,teaserImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
 	),
 
 	// Fields
@@ -173,6 +173,14 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'eval'                    => array('tl_class'=>'w50')
 		),
 
+		'subheadline' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['subheadline'],
+			'inputType'               => 'text',
+			'exclude'                 => true,
+			'search'                  => true,
+			'eval'                    => array('maxlength'=>255, 'tl_class'=>'long')
+		),
 		'teaserCssID' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['teaserCssID'],
