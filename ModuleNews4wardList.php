@@ -115,7 +115,7 @@ class ModuleNews4wardList extends News4ward
 		$total = $objTotal->total - $skipFirst;
 
 		// Split the results
-		if ($this->perPage > 0 && (!isset($limit) || $this->news_numberOfItems > $this->perPage))
+		if ($this->perPage > 0 && (!isset($limit) || $this->news4ward_numberOfItems > $this->perPage))
 		{
 			// Adjust the overall limit
 			if (isset($limit))
