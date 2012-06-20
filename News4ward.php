@@ -144,6 +144,7 @@ abstract class News4ward extends Module
 			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
 			{
 				$imgSize = deserialize($this->imgSize,true);
+				$objTemplate->arrSize = $imgSize;
 				if(count($imgSize)>1)
 				{
 					$objTemplate->teaserImage = $this->getImage($objArticles->teaserImage,$imgSize[0],$imgSize[1],$imgSize[2]);

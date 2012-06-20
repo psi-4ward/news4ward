@@ -11,6 +11,9 @@
 	<?php if(!empty($this->teaserImage)): ?>
 		<div class="image_container">
 			<img src="<?php echo $this->teaserImage; ?>" alt="<?php echo $this->title; ?>"/>
+			<?php if ($this->teaserImageCaption): ?>
+				<div class="caption" style="width:<?php echo $this->arrSize[0]; ?>px"><?php echo $this->teaserImageCaption; ?></div>
+			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 	<?php echo $this->teaser; ?>

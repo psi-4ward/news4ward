@@ -50,6 +50,7 @@ CREATE TABLE `tl_news4ward_article` (
   `teaserCssID` varchar(255) NOT NULL default '',
   `teaser` text NULL,
   `teaserImage` varchar(255) NOT NULL default '',
+  `teaserImageCaption` varchar(255) NOT NULL default '',
   `social` varchar(255) NOT NULL default '',
   `cssID` varchar(255) NOT NULL default '',
   `published` char(1) NOT NULL default '',
