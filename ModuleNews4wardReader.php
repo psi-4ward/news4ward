@@ -183,18 +183,6 @@ class ModuleNews4wardReader extends News4ward
 			$this->Template->prevArticle = false;
 		}
 
-
-		// HOOK: add content like comments or related articles
-		// todo: who needs this hook? theres also News4wardParseArticles HOOK
-		if(isset($GLOBALS['TL_HOOKS']['News4wardReader']) && is_array($GLOBALS['TL_HOOKS']['News4wardReader']))
-		{
-			foreach ($GLOBALS['TL_HOOKS']['News4wardReader'] as $callback)
-			{
-				$this->import($callback[0]);
-				$this->$callback[0]->$callback[1]($objArticle,$this);
-			}
-		}
-
     }
 
 
