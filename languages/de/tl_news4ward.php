@@ -53,11 +53,11 @@ $GLOBALS['TL_LANG']['tl_news4ward']['source_text']   = 'Komplette Beiträge';
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_news4ward']['new']        = array('Neues Archiv', 'Ein neues Archiv erstellen');
-$GLOBALS['TL_LANG']['tl_news4ward']['show']       = array('Archivdetails', 'Die Details des Archivs ID %s anzeigen');
+$GLOBALS['TL_LANG']['tl_news4ward']['new']        = array('Neues Beitragsarchiv', 'Ein neues Beitragsarchiv erstellen');
+$GLOBALS['TL_LANG']['tl_news4ward']['show']       = array('Beitragsarchivdetails', 'Die Details des Beitragsarchiv ID %s anzeigen');
 $GLOBALS['TL_LANG']['tl_news4ward']['edit']       = array('Beiträge bearbeiten', 'Beiträge des Archivs ID %s bearbeiten');
-$GLOBALS['TL_LANG']['tl_news4ward']['editheader'] = array('Archiv-Einstellungen bearbeiten', 'Einstellungen des Archivs ID %s bearbeiten');
-$GLOBALS['TL_LANG']['tl_news4ward']['copy']       = array('Archiv duplizieren', 'Archiv ID %s duplizieren');
-$GLOBALS['TL_LANG']['tl_news4ward']['delete']     = array('Archiv löschen', 'Archiv ID %s löschen');
+$GLOBALS['TL_LANG']['tl_news4ward']['editheader'] = array('Beitragsarchiv-Einstellungen bearbeiten', 'Einstellungen des Beitragsarchiv ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_news4ward']['copy']       = array('Beitragsarchiv duplizieren', 'Beitragsarchiv ID %s duplizieren');
+$GLOBALS['TL_LANG']['tl_news4ward']['delete']     = array('Beitragsarchiv löschen', 'Beitragsarchiv ID %s löschen');
 
 ?>
