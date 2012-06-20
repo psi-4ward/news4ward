@@ -16,7 +16,7 @@
  * Add palettes to tl_module
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,perPage,skipFirst,news4ward_order;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_facebookMeta,news4ward_metaFields;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_facebookMeta;{template_legend:hide},news4ward_metaFields,news4ward_readerTemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 
 /**
@@ -80,8 +80,18 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_template'] = array
 	'options_callback'        => array('tl_module_news4ward', 'getNewsTemplates'),
 	'eval'                    => array('tl_class'=>'w50')
 );
+$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_readerTemplate'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_readerTemplate'],
+	'default'                 => 'mod_news4ward_reader',
+	'exclude'                 => true,
+	'inputType'               => 'select',
+	'options_callback'        => array('tl_module_news4ward', 'getNewsReaderTemplates'),
+	'eval'                    => array('tl_class'=>'w50')
+);
 
 // do we need this for an archive-module?
+// FIXME
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_format'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_format'],
@@ -226,6 +236,24 @@ class tl_module_news4ward extends Backend
 		}
 
 		return $this->getTemplateGroup('news4ward_', $intPid);
+	}
+
+
+	/**
+	 * Return all news templates as array
+	 * @param DataContainer $dc
+	 * @return array
+	 */
+	public function getNewsReaderTemplates(DataContainer $dc)
+	{
+		$intPid = $dc->activeRecord->pid;
+
+		if ($this->Input->get('act') == 'overrideAll')
+		{
+			$intPid = $this->Input->get('id');
+		}
+
+		return $this->getTemplateGroup('mod_news4ward_reader', $intPid);
 	}
 }
 

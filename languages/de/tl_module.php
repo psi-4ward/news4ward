@@ -21,6 +21,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_numberOfItems'] = array('Gesamtzahl 
 $GLOBALS['TL_LANG']['tl_module']['news4ward_jumpToCurrent'] = array('Kein Zeitraum ausgewählt', 'Hier legen Sie fest, was angezeigt wird, wenn kein Zeitraum ausgewählt ist.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_metaFields']    = array('Meta-Felder', 'Hier können Sie die Meta-Felder auswählen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_template']      = array('Beitragtemplate', 'Hier können Sie das Beitragtemplate auswählen.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_readerTemplate'] = array('Leser-Template', 'Hier können Sie das Leser-Template auswählen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_format']        = array('Archivformat', 'Hier können Sie das Archivformat auswählen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_startDay']      = array('Erster Wochentag', 'Hier können Sie den ersten Tag der Woche festlegen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_order']         = array('Sortierreihenfolge', 'Hier können Sie die Sortierreihenfolge festlegen.');

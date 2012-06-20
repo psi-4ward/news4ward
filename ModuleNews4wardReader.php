@@ -60,6 +60,13 @@ class ModuleNews4wardReader extends News4ward
 
 		$this->alias = $erg[1];
 
+
+		// set the template
+		if(strlen($this->news4ward_readerTemplate))
+		{
+			$this->strTemplate = $this->news4ward_readerTemplate;
+		}
+
 		return parent::generate();
 	}
 
