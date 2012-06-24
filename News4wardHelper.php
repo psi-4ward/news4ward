@@ -24,26 +24,62 @@ class News4wardHelper extends Frontend
 	 */
 	public function inserttagReplacer($strTag)
 	{
-		if (substr($strTag,0,9) == 'news4ward')
+		list($strTag,$strValue) = explode('::',$strTag);
+		switch($strTag)
 		{
-			list($strTag,$strValue) = explode('::',$strTag);
-			switch($strValue)
-			{
-				case 'filter_hint':
-					if(!isset($GLOBALS['news4ward_filter_hint'])) return '';
+			case 'news4ward':
+				switch($strValue)
+				{
+					case 'filter_hint':
+						if(!isset($GLOBALS['news4ward_filter_hint'])) return '';
 
-					$tpl = new FrontendTemplate('news4ward_filter_hint');
-					$tpl->items = $GLOBALS['news4ward_filter_hint'];
-					return $tpl->parse();
-				break;
+						$tpl = new FrontendTemplate('news4ward_filter_hint');
+						$tpl->items = $GLOBALS['news4ward_filter_hint'];
+						return $tpl->parse();
+					break;
 
-				default:
-					return false;
-				break;
-			}
+					default: return false; break;
+				}
+
+			break;
+
+			case 'news4ward_link':
+			case 'news4ward_open':
+			case 'news4ward_url':
+			case 'news4ward_title':
+				$objArticle = $this->Database->prepare('
+						SELECT a.id, a.alias, a.title, p.jumpTo as parentJumpTo
+						FROM tl_news4ward_article AS a
+						LEFT JOIN tl_news4ward AS p ON (a.pid = p.id)
+						WHERE (a.id=? OR a.alias=?)'
+					. (!BE_USER_LOGGED_IN ? "AND (a.start='' OR a.start<?) AND (a.stop='' OR a.stop>?) AND a.status='published'" : ""))
+					->execute($strValue, $strValue, time(), time());
+
+				if(!$objArticle->numRows) return '';
+
+				if($strTag == 'news4ward_link')
+				{
+					return sprintf('<a href="%s" title="%s">%s</a>',$this->generateUrl($objArticle),$objArticle->title,$objArticle->title);
+				}
+				else if($strTag == 'news4ward_open')
+				{
+					return sprintf('<a href="%s" title="%s">',$this->generateUrl($objArticle),$objArticle->title);
+				}
+				else if($strTag == 'news4ward_url')
+				{
+					return $this->generateUrl($objArticle);
+				}
+				else if($strTag == 'news4ward_title')
+				{
+					return $objArticle->title;
+				}
+
+			break;
+
+
+			default: return false; break;
 		}
 
-		return false;
 	}
 
 
