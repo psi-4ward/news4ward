@@ -74,7 +74,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_metaFields'] = array
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_template'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_template'],
-	'default'                 => 'news4ward_latest',
+	'default'                 => 'news4ward_list_item',
 	'exclude'                 => true,
 	'inputType'               => 'select',
 	'options_callback'        => array('tl_module_news4ward', 'getNewsTemplates'),
