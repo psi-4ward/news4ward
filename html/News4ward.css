@@ -1,0 +1,24 @@
+.news4wardStatusToggler
+{
+	border: 1px solid #bbbbbb;
+	padding:10px;
+	position: absolute;
+	background: #fff;
+	display: none;
+	z-index: 1000;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow:  2px 2px 5px 1px #999;
+	box-shadow:  2px 2px 5px 1px #999;
+}
+
+.news4wardStatusToggler a
+{
+	display: block;
+	line-height: 23px;
+}
+
+.mask {
+	position: absolute;
+	z-index: 999;
+}

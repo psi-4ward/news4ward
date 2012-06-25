@@ -14,7 +14,9 @@
 // BE-Module
 $GLOBALS['BE_MOD']['content']['news4ward'] = array(
 	'tables'  => array('tl_news4ward','tl_news4ward_article','tl_content'),
-	'icon'    => 'system/modules/news4ward/html/icon.png'
+	'icon'    => 'system/modules/news4ward/html/icon.png',
+	'javascript' => 'system/modules/news4ward/html/News4ward.js',
+	'stylesheet' => 'system/modules/news4ward/html/News4ward.css',
 );
 
 // FE-Modules
@@ -40,3 +42,9 @@ $GLOBALS['TL_CRON']['daily'][] = array('News4wardHelper', 'generateFeeds');
 
 // hook for custom inserttags
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('News4wardHelper', 'inserttagReplacer');
+
+if (TL_MODE == 'BE')
+{
+	// hook for ajax requests
+	$GLOBALS['TL_HOOKS']['executePreActions'][] = array('News4wardHelper', 'ajaxHandler');
+}

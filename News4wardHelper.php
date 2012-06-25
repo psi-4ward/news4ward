@@ -18,6 +18,48 @@ class News4wardHelper extends Frontend
 
 
 	/**
+	 * Execute some ajax actions
+	 * * toggle news4ward_article.status
+	 *
+	 * @param $strAction
+	 * @return void
+	 */
+	public function ajaxHandler($strAction)
+	{
+		switch($strAction)
+		{
+			case 'news4wardArticleStatusToggle':
+				$this->loadDataContainer('tl_news4ward_article');
+				$this->import('BackendUser','User');
+				$tl_news4ward_article = new tl_news4ward_article();
+				$this->Input->setGet('id',$this->Input->post('id'));
+
+				// validation
+				if(		TL_MODE != 'BE'
+					|| 	!preg_match("~^\d+$~",$this->Input->post('id'))
+					|| 	!in_array($this->Input->post('status'),$GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'])
+					|| 	!$this->User->hasAccess('tl_news4ward_article::status','alexf')
+					||  $tl_news4ward_article->checkPermission()
+					)
+				{
+					header('HTTP/1.0 400 Bad Request',true,400);
+					exit;
+				}
+
+				$this->import('Database');
+				$this->Database->prepare('UPDATE tl_news4ward_article SET status=? WHERE id=? LIMIT 1')
+							   ->executeUncached($this->Input->post('status'),$this->Input->post('id'));
+
+			break;
+
+			default: return;
+		}
+
+		exit;
+	}
+	
+	
+	/**
 	 * Replace news4ward insert tags
 	 * @param $strTag
 	 * @return bool|string
