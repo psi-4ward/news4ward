@@ -21,9 +21,7 @@ contao deletes all your contentelements!
 ### Required extenion
 First install these extensions via repository
 * GlobalContentelements
-* multicolumnwizard
-* autocompleterPlugin
-* autocompleterTextfield
+* [tagsWidget](https://github.com/psi-4ward/tagsWidget)
 
 ### news4ward
 * Download or clone the news4ward to `system/modules`
