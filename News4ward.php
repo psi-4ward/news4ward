@@ -129,7 +129,7 @@ abstract class News4ward extends Module
 				$strContent = $this->String->encodeEmail($strContent);
 			}
 
-			$this->Template->content = $strContent;
+			$objTemplate->content = $strContent;
 
 
 			// Add meta information
