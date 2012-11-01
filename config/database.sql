@@ -8,7 +8,7 @@
 -- ********************************************************
 
 --
--- Table `tl_news4ward_article`
+-- Table `tl_news4ward`
 --
 
 CREATE TABLE `tl_news4ward` (
@@ -51,6 +51,8 @@ CREATE TABLE `tl_news4ward_article` (
   `teaser` text NULL,
   `teaserImage` varchar(255) NOT NULL default '',
   `teaserImageCaption` varchar(255) NOT NULL default '',
+  `useFacebookImage` char(1) NOT NULL default '',
+  `facebookImage` varchar(255) NOT NULL default '',
   `social` varchar(255) NOT NULL default '',
   `cssID` varchar(255) NOT NULL default '',
   `published` char(1) NOT NULL default '',

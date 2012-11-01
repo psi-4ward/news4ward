@@ -108,7 +108,13 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},subheadline,teaserCssID,teaser,teaserImage,teaserImageCaption;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
+		'__selector__'				  => array('useFacebookImage'),
+		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},subheadline,teaserCssID,teaser,teaserImage,teaserImageCaption;{facebook_legend},useFacebookImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
+	),
+
+	'subpalettes' => array
+	(
+		'useFacebookImage'			  => 'facebookImage'
 	),
 
 	// Fields
@@ -259,7 +265,21 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'inputType'               => 'checkbox',
 			'exclude'                 => true,
 			'eval'                    => array('tl_class'=>'w50')
-		)
+		),
+		'useFacebookImage' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['useFacebookImage'],
+			'inputType'               => 'checkbox',
+			'exclude'                 => true,
+			'eval'                    => array('submitOnChange'=>'true')
+		),
+		'facebookImage' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['facebookImage'],
+			'inputType'               => 'fileTree',
+			'exclude'                 => true,
+			'eval'                    => array('fieldType'=>'radio', 'files'=>'true', 'filesOnly'=>true, 'extensions'=>'jpg,gif,png')
+		),
 	)
 );
 

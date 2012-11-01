@@ -137,7 +137,11 @@ class ModuleNews4wardReader extends News4ward
 		{
 			$strTagEnding = ($GLOBALS['objPage']->outputFormat == 'xhtml') ? ' />' : '>';
 
-			if($objArticle->teaserImage &&  is_file(TL_ROOT.'/'.$objArticle->teaserImage))
+			if($objArticle->useFacebookImage && $objArticle->facebookImage && is_file(TL_ROOT.'/'.$objArticle->facebookImage))
+			{
+				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objArticle->facebookImage.'"'.$strTagEnding;
+			}
+			else if($objArticle->teaserImage &&  is_file(TL_ROOT.'/'.$objArticle->teaserImage))
 			{
 				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objArticle->teaserImage.'"'.$strTagEnding;
 			}

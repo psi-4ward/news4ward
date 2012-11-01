@@ -35,6 +35,8 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['stop']        = array('Anzeigen bis
 $GLOBALS['TL_LANG']['tl_news4ward_article']['tstamp']      = array('Änderungsdatum', 'Datum und Uhrzeit der letzten Änderung');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['highlight']   = array('Beitrag hervorheben','Dieser Beitrag wird hervorgehoben.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['sticky']      = array('Beitrag obenhalten','Dieser Beitrag wird bei der Sortierung nach oben gestellt.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['useFacebookImage']= array('Abweichendes Facebook-Bild verwenden', 'Hier können Sie ein Bild angeben, welches anstelle des Teaser-Bildes bei Facebook verlinkungen verwendet wird.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['facebookImage']   = array('Facebook-Bild', 'Wählen Sie hier das Bild für die Facebook-Verlinkungen.');
 
 $GLOBALS['TL_LANG']['tl_news4ward_article']['stati'] = array('published'=>'veröffentlicht','review'=>'Review ausstehend','draft'=>'Entwurf');
 
@@ -46,6 +48,7 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['layout_legend']  = 'Suchbegriffe';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['teaser_legend']  = 'Teasertext';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['expert_legend']  = 'Experten-Einstellungen';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['publish_legend'] = 'Veröffentlichung';
+$GLOBALS['TL_LANG']['tl_news4ward_article']['facebook_legend'] = 'Facebook Einstellungen';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['print']          = 'Seite drucken';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['pdf']            = 'Beitrag als PDF';
 $GLOBALS['TL_LANG']['tl_news4ward_article']['facebook']       = 'Auf Facebook teilen';
