@@ -100,14 +100,15 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('allowComments', 'protected', 'makeFeed'),
-		'default'                     => '{title_legend},title,jumpTo,jumpToList;{protected_legend:hide},protected;{feed_legend:hide},makeFeed'
+		'__selector__'                => array('allowComments', 'protected', 'makeFeed','useFilePath'),
+		'default'                     => '{title_legend},title,jumpTo,jumpToList;{filePath_legend},useFilePath;{protected_legend:hide},protected;{feed_legend:hide},makeFeed'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
 		'protected'                   => 'groups',
+		'useFilePath'                 => 'filePath',
 		'makeFeed'                    => 'format,language,source,maxItems,feedBase,alias,description'
 	),
 
@@ -225,7 +226,22 @@ $GLOBALS['TL_DCA']['tl_news4ward'] = array
 			'search'                  => true,
 			'inputType'               => 'textarea',
 			'eval'                    => array('style'=>'height:60px;', 'tl_class'=>'clr')
-		)
+		),
+		'useFilePath' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['useFilePath'],
+			'exclude'                 => true,
+			'filter'                  => true,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('submitOnChange'=>true)
+		),
+		'filePath' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward']['filePath'],
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array('fieldType'=>'radio', 'files'=>false)
+		),
 	)
 );
 

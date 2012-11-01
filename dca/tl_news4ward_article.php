@@ -27,7 +27,8 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		'onload_callback' => array
 		(
 			array('tl_news4ward_article', 'checkPermission'),
-			array('tl_news4ward_article', 'generateFeed')
+			array('tl_news4ward_article', 'generateFeed'),
+			array('News4wardHelper', 'setFiletreePath'),
 		),
 		'onsubmit_callback' 		  => array(array('tl_news4ward_article', 'scheduleUpdate')),
 		'ondelete_callback'			  => array(array('GlobalContentelements', 'deleteChildRecords'))

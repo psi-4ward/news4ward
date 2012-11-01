@@ -395,4 +395,34 @@ class News4wardHelper extends Frontend
 	}
 
 
+	/**
+	 * Restrict the path for all fileTree fields when the archive has a filePath restriction
+	 * this method gets call through DC-onload_callback
+	 *
+	 * @param DataContainer $dc
+	 */
+	public function setFiletreePath($dc)
+	{
+		$objNews4ward = null;
+		switch($dc->table)
+		{
+			case 'tl_news4ward_article':
+				$objNews4ward = $this->Database->prepare('SELECT useFilePath, filePath FROM tl_news4ward WHERE id=?')->execute($dc->pid);
+			break;
+
+			case 'tl_content':
+				$objNews4wardArticle = $this->Database->prepare('SELECT a.pid FROM tl_content AS c LEFT JOIN tl_news4ward_article AS a ON (c.pid=a.id) WHERE c.id=?')->execute($dc->id);
+				$objNews4ward = $this->Database->prepare('SELECT useFilePath, filePath FROM tl_news4ward WHERE id=?')->execute($objNews4wardArticle->pid);
+			break;
+		}
+
+		if(!$objNews4ward || $objNews4ward->numRows <= 0 || $objNews4ward->useFilePath != '1') return;
+
+		foreach($GLOBALS['TL_DCA'][$dc->table]['fields'] as $fld => $data)
+		{
+			if($data['inputType']!='fileTree') continue;
+			$GLOBALS['TL_DCA'][$dc->table]['fields'][$fld]['eval']['path'] = $objNews4ward->filePath;
+		}
+	}
+
 }

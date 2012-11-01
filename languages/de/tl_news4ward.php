@@ -30,6 +30,8 @@ $GLOBALS['TL_LANG']['tl_news4ward']['feedBase']       = array('Basis-URL', 'Bitt
 $GLOBALS['TL_LANG']['tl_news4ward']['alias']          = array('Feed-Alias', 'Hier können Sie einen eindeutigen Dateinamen (ohne Endung) eingeben. Die XML-Datei wird automatisch im Wurzelverzeichnis Ihrer Contao-Installation erstellt, z.B. als <em>name.xml</em>.');
 $GLOBALS['TL_LANG']['tl_news4ward']['description']    = array('Feed-Beschreibung', 'Bitte geben Sie eine kurze Beschreibung des Nachrichten-Feeds ein.');
 $GLOBALS['TL_LANG']['tl_news4ward']['tstamp']         = array('Änderungsdatum', 'Datum und Uhrzeit der letzten Änderung');
+$GLOBALS['TL_LANG']['tl_news4ward']['useFilePath']    = array('Dateipfad einschränken', 'Hier können Sie den Pfad der Dateibäume für Artikel dieses Archivs beschränken.');
+$GLOBALS['TL_LANG']['tl_news4ward']['filePath']       = array('Dateipfadeinschränkung', 'Wählen Sie hier das neue Wurzelverzeichnis aus.');
 
 
 /**
@@ -38,6 +40,7 @@ $GLOBALS['TL_LANG']['tl_news4ward']['tstamp']         = array('Änderungsdatum',
 $GLOBALS['TL_LANG']['tl_news4ward']['title_legend']     = 'Titel und Weiterleitung';
 $GLOBALS['TL_LANG']['tl_news4ward']['protected_legend'] = 'Zugriffsschutz';
 $GLOBALS['TL_LANG']['tl_news4ward']['feed_legend']      = 'RSS/Atom-Feed';
+$GLOBALS['TL_LANG']['tl_news4ward']['filePath_legend']  = 'Dateipfad einschränken';
 
 
 /**
