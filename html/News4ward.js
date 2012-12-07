@@ -13,8 +13,9 @@ var News4ward = {
 
 	setStatus: function(el,id,status)
 	{
+		var togglerIcon = el.getParent('.news4wardStatusToggler').retrieve('togglerIcon');
 		var img = el.getElement('img');
-		el.getParent().getPrevious('a img').set('src',img.get('src')).set('title',img.get('title'));
+		togglerIcon.getElement('img').set('src',img.get('src')).set('title',img.get('title'));
 
 		new Request.Contao({
 			onRequest: AjaxRequest.displayBox('…'),
@@ -31,7 +32,9 @@ var News4ward = {
 	{
 		News4ward.mask.show();
 
-		var togglerContainer = el.getNext('.news4wardStatusToggler');
+		var togglerContainer = el.getNext('.news4wardStatusToggler').clone();
+		togglerContainer.store('togglerIcon',el);
+		togglerContainer.inject(document.body,'bottom');
 		togglerContainer.setPosition({x: window.event.x + 10, y: window.event.y - togglerContainer.getDimensions().y/2});
 		togglerContainer.setStyle('display','block').set('tween',{'duration':300}).fade('hide').fade('in');
 	},
@@ -39,7 +42,7 @@ var News4ward = {
 	hideTogglers: function()
 	{
 		News4ward.mask.hide();
-		document.getElements('.news4wardStatusToggler').fade('out');
+		document.getElement('body > .news4wardStatusToggler').fade('out').get('tween').chain(function(){this.element.destroy();});
 	}
 };
 
