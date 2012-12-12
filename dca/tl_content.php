@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -20,7 +20,7 @@ if($this->Input->get('do') == 'news4ward')
 	
 	// set news4wards checkPermissions function
 	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_news4ward', 'checkPermission');
-	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('News4wardHelper', 'setFiletreePath');
+	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('\News4ward\Helper', 'setFiletreePath');
 	$GLOBALS['TL_DCA']['tl_content']['list']['operations']['toggle']['button_callback'] = array('tl_content_news4ward', 'toggleIcon');
 }
 

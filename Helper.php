@@ -1,4 +1,4 @@
-<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -11,8 +11,9 @@
  * @licence LGPL
  */
 
+namespace Psi\News4ward;
 
-class News4wardHelper extends Frontend
+class Helper extends \Frontend
 {
 	protected static $objPageCache = array();
 
@@ -32,12 +33,12 @@ class News4wardHelper extends Frontend
 				$this->loadDataContainer('tl_news4ward_article');
 				$this->import('BackendUser','User');
 				$tl_news4ward_article = new tl_news4ward_article();
-				$this->Input->setGet('id',$this->Input->post('id'));
+				Input::setGet('id', Input::post('id'));
 
 				// validation
 				if(		TL_MODE != 'BE'
-					|| 	!preg_match("~^\d+$~",$this->Input->post('id'))
-					|| 	!in_array($this->Input->post('status'),$GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'])
+					|| 	!preg_match("~^\d+$~", Input::post('id'))
+					|| 	!in_array(Input::post('status'), $GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'])
 					|| 	!$this->User->hasAccess('tl_news4ward_article::status','alexf')
 					||  $tl_news4ward_article->checkPermission()
 					)
@@ -48,7 +49,7 @@ class News4wardHelper extends Frontend
 
 				$this->import('Database');
 				$this->Database->prepare('UPDATE tl_news4ward_article SET status=? WHERE id=? LIMIT 1')
-							   ->executeUncached($this->Input->post('status'),$this->Input->post('id'));
+							   ->executeUncached(Input::post('status'),Input::post('id'));
 
 			break;
 
@@ -138,7 +139,7 @@ class News4wardHelper extends Frontend
 
 		if ($intRoot > 0)
 		{
-			$arrRoot = $this->getChildRecords($intRoot, 'tl_page');
+			$arrRoot = $this->Database->getChildRecords($intRoot, 'tl_page');
 		}
 
 		$time = time();
@@ -169,7 +170,7 @@ class News4wardHelper extends Frontend
 				if ($objParent->numRows)
 				{
 					$domain = $this->Environment->base;
-					$objParent = $this->getPageDetails($objParent->id);
+					$objParent = PageModel::findWithDetails($objParent->id);
 
 					if ($objParent->domain != '')
 					{
@@ -210,11 +211,11 @@ class News4wardHelper extends Frontend
 	/**
 	 * Return the link of a news article
 	 *
-	 * @param Database_Result $objArticle
+	 * @param \Database_Result $objArticle
 	 * @param bool|string $strUrl an optional predefined url
 	 * @return string
 	 */
-	public function generateUrl(Database_Result $objArticle, $strUrl=false)
+	public function generateUrl(\Database_Result $objArticle, $strUrl=false)
 	{
 		if($strUrl)
 		{
@@ -233,6 +234,7 @@ class News4wardHelper extends Frontend
 			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($objArticle->alias)) ? $objArticle->alias : $objArticle->id));
 		}
 
+		return '';
 	}
 
 
@@ -255,7 +257,7 @@ class News4wardHelper extends Frontend
 		$objArchive->feedName = ($objArchive->alias != '') ? $objArchive->alias : 'news4ward' . $objArchive->id;
 
 		// Delete XML file
-		if ($this->Input->get('act') == 'delete' || $objArchive->protected)
+		if (Input::get('act') == 'delete' || $objArchive->protected)
 		{
 			$this->import('Files');
 			$this->Files->delete($objArchive->feedName . '.xml');
@@ -265,7 +267,7 @@ class News4wardHelper extends Frontend
 		else
 		{
 			$this->generateFiles($objArchive->row());
-			$this->log('Generated news4ward feed "' . $objArchive->feedName . '.xml"', 'News4wardHelper generateFeed()', TL_CRON);
+			$this->log('Generated news4ward feed "' . $objArchive->feedName . '.xml"', 'Helper generateFeed()', TL_CRON);
 		}
 	}
 
@@ -275,7 +277,8 @@ class News4wardHelper extends Frontend
 	 */
 	public function generateFeeds()
 	{
-		$this->removeOldFeeds();
+		$this->import('Automator');
+		$this->Automator->purgeXmlFiles();
 		$objArchive = $this->Database->execute("SELECT * FROM tl_news4ward WHERE makeFeed=1 AND protected!=1");
 
 		while ($objArchive->next())
@@ -283,7 +286,7 @@ class News4wardHelper extends Frontend
 			$objArchive->feedName = ($objArchive->alias != '') ? $objArchive->alias : 'news4ward' . $objArchive->id;
 
 			$this->generateFiles($objArchive->row());
-			$this->log('Generated news4ward feed "' . $objArchive->feedName . '.xml"', 'News4wardHelper generateFeeds()', TL_CRON);
+			$this->log('Generated news4ward feed "' . $objArchive->feedName . '.xml"', 'Helper generateFeeds()', TL_CRON);
 		}
 	}
 
@@ -330,7 +333,7 @@ class News4wardHelper extends Frontend
 			return;
 		}
 
-		$objParent = $this->getPageDetails($objParent->id);
+		$objParent = PageModel::findWithDetails($objParent->id);
 		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
 
 		// Parse items
@@ -407,7 +410,8 @@ class News4wardHelper extends Frontend
 		switch($dc->table)
 		{
 			case 'tl_news4ward_article':
-				$objNews4ward = $this->Database->prepare('SELECT useFilePath, filePath FROM tl_news4ward WHERE id=?')->execute($dc->pid);
+				$objNews4wardArticle = $this->Database->prepare('SELECT pid FROM tl_news4ward_article WHERE id=?')->execute($dc->id);
+				$objNews4ward = $this->Database->prepare('SELECT useFilePath, filePath FROM tl_news4ward WHERE id=?')->execute($objNews4wardArticle->pid);
 			break;
 
 			case 'tl_content':
@@ -418,10 +422,13 @@ class News4wardHelper extends Frontend
 
 		if(!$objNews4ward || $objNews4ward->numRows <= 0 || $objNews4ward->useFilePath != '1') return;
 
+		$objFile = \FilesModel::findByPk($objNews4ward->filePath);
+		if(!$objFile) return;
+
 		foreach($GLOBALS['TL_DCA'][$dc->table]['fields'] as $fld => $data)
 		{
 			if($data['inputType']!='fileTree') continue;
-			$GLOBALS['TL_DCA'][$dc->table]['fields'][$fld]['eval']['path'] = $objNews4ward->filePath;
+			$GLOBALS['TL_DCA'][$dc->table]['fields'][$fld]['eval']['path'] = $objFile->path;
 		}
 	}
 

@@ -1,4 +1,4 @@
-<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -10,8 +10,10 @@
  * @filesource
  * @licence LGPL
  */
+
+namespace Psi\News4ward\Module;
  
-class ModuleNews4wardList extends News4ward
+class Listing extends Module
 {
     /**
    	 * Template
@@ -28,7 +30,7 @@ class ModuleNews4wardList extends News4ward
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new BackendTemplate('be_wildcard');
+			$objTemplate = new \BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### News4ward LIST ###';
 			$objTemplate->title = $this->headline;

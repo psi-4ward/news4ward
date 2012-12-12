@@ -1,4 +1,4 @@
-<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -10,8 +10,10 @@
  * @filesource
  * @licence LGPL
  */
- 
-class ModuleNews4wardReader extends News4ward
+
+namespace Psi\News4ward\Module;
+
+class Reader extends Module
 {
     /**
    	 * Template
@@ -28,7 +30,7 @@ class ModuleNews4wardReader extends News4ward
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new BackendTemplate('be_wildcard');
+			$objTemplate = new \BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### News4ward READER ###';
 			$objTemplate->title = $this->headline;
@@ -76,7 +78,7 @@ class ModuleNews4wardReader extends News4ward
 	 */
 	protected function compile()
     {
-		$this->import('News4wardHelper');
+		$this->import('\News4ward\Helper','Helper');
 
 		// Set the item from the auto_item parameter
 		if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
@@ -167,7 +169,7 @@ class ModuleNews4wardReader extends News4ward
 			$this->Template->nextArticle = array
 			(
 				'title' => $objNextArticle->title,
-				'href'	=> $this->News4wardHelper->generateUrl($objNextArticle)
+				'href'	=> $this->Helper->generateUrl($objNextArticle)
 			);
 		}
 		else
@@ -186,7 +188,7 @@ class ModuleNews4wardReader extends News4ward
 			$this->Template->prevArticle = array
 			(
 				'title' => $objPrevArticle->title,
-				'href'	=> $this->News4wardHelper->generateUrl($objPrevArticle)
+				'href'	=> $this->Helper->generateUrl($objPrevArticle)
 			);
 		}
 		else
@@ -198,5 +200,3 @@ class ModuleNews4wardReader extends News4ward
 
 
 }
-
-?>

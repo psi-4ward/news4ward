@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -230,9 +230,9 @@ class tl_module_news4ward extends Backend
 	{
 		$intPid = $dc->activeRecord->pid;
 
-		if ($this->Input->get('act') == 'overrideAll')
+		if (Input::get('act') == 'overrideAll')
 		{
-			$intPid = $this->Input->get('id');
+			$intPid = Input::get('id');
 		}
 
 		return $this->getTemplateGroup('news4ward_', $intPid);
@@ -248,9 +248,9 @@ class tl_module_news4ward extends Backend
 	{
 		$intPid = $dc->activeRecord->pid;
 
-		if ($this->Input->get('act') == 'overrideAll')
+		if (Input::get('act') == 'overrideAll')
 		{
-			$intPid = $this->Input->get('id');
+			$intPid = Input::get('id');
 		}
 
 		return $this->getTemplateGroup('mod_news4ward_reader', $intPid);

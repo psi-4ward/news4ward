@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -28,10 +28,9 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		(
 			array('tl_news4ward_article', 'checkPermission'),
 			array('tl_news4ward_article', 'generateFeed'),
-			array('News4wardHelper', 'setFiletreePath'),
+			array('\News4ward\Helper', 'setFiletreePath'),
 		),
 		'onsubmit_callback' 		  => array(array('tl_news4ward_article', 'scheduleUpdate')),
-		'ondelete_callback'			  => array(array('GlobalContentelements', 'deleteChildRecords'))
 	),
 
 	// List
@@ -309,7 +308,7 @@ class tl_news4ward_article extends Backend
 	public function listItem($arrRow)
 	{
 		// the title
-		$strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">'.$this->generateImage('articles.gif','','style="vertical-align:bottom;"').' '.$arrRow['title'].'</div>';
+		$strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">'.Image::getHtml('articles.gif','','style="vertical-align:bottom;"').' '.$arrRow['title'].'</div>';
 
 		// show the autor
 		if(!empty($arrRow['author']))
@@ -337,20 +336,20 @@ class tl_news4ward_article extends Backend
 		$strReturn .= '<a href="#" onclick="javascript:News4ward.showStatusToggler(this,\''.$arrRow['id'].'\'); return false;">';
 		if($arrRow['status'] == 'draft')
 		{
-			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/draft.png',
+			$strReturn .= Image::getHtml(	'system/modules/news4ward/html/draft.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']].'"');
 		}
 		else if($arrRow['status'] == 'review')
 		{
-			$strReturn .= $this->generateImage('system/modules/news4ward/html/review.png',
+			$strReturn .= Image::getHtml('system/modules/news4ward/html/review.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']].'"');
 		}
 		else
 		{
 			$published = ($arrRow['status'] == 'published' && ($arrRow['start'] == '' || $arrRow['start'] < time()) && ($arrRow['stop'] == '' || $arrRow['stop'] > time()));
-			$strReturn .= $this->generateImage('system/modules/news4ward/html/'.($published ? '' : 'not').'published.png','','');
+			$strReturn .= Image::getHtml('system/modules/news4ward/html/'.($published ? '' : 'not').'published.png','','');
 		}
 		$strReturn .= '</a>';
 
@@ -359,7 +358,7 @@ class tl_news4ward_article extends Backend
 		foreach($GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'] as $status)
 		{
 			$strReturn .= '<a href="#" onclick="News4ward.setStatus(this,\''.$arrRow['id'].'\',\''.$status.'\'); return false;">';
-			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/'.$status.'.png',
+			$strReturn .= Image::getHtml(	'system/modules/news4ward/html/'.$status.'.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status].'"');
 			$strReturn .= ' '.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status];
@@ -370,11 +369,11 @@ class tl_news4ward_article extends Backend
 
 		if($arrRow['highlight'])
 		{
-			$strReturn .= ' '.$this->generateImage('system/modules/news4ward/html/highlight.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0].'"');
+			$strReturn .= ' '.Image::getHtml('system/modules/news4ward/html/highlight.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0].'"');
 		}
 		if($arrRow['sticky'])
 		{
-			$strReturn .= ' '.$this->generateImage('system/modules/news4ward/html/sticky.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0].'"');
+			$strReturn .= ' '.Image::getHtml('system/modules/news4ward/html/sticky.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0].'"');
 		}
 		$strReturn .= '</div>';
 
@@ -398,11 +397,12 @@ class tl_news4ward_article extends Backend
 	}
 
 
-
 	/**
 	 * Auto-generate an article alias if it has not been set yet
-	 * @param mixed
-	 * @param object
+	 *
+	 * @param $varValue
+	 * @param DataContainer $dc
+	 * @throws Exception
 	 * @return string
 	 */
 	public function generateAlias($varValue, DataContainer $dc)
@@ -454,7 +454,7 @@ class tl_news4ward_article extends Backend
 			return '';
 		}
 
-		return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+		return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
 	}
 
 
@@ -500,11 +500,11 @@ class tl_news4ward_article extends Backend
 			return;
 		}
 
-		$this->import('News4wardHelper');
+		$this->import('\News4ward\Helper','Helper');
 
 		foreach ($session as $id)
 		{
-			$this->News4wardHelper->generateFeed($id);
+			$this->Helper->generateFeed($id);
 		}
 
 		$this->Session->set('news4ward_feed_updater', NULL);
