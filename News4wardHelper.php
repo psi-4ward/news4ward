@@ -333,6 +333,12 @@ class News4wardHelper extends Frontend
 		$objParent = $this->getPageDetails($objParent->id);
 		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
 
+		// be sure to be absolute
+		if(substr($strUrl,0,4) != 'http')
+		{
+			$strUrl = $strLink.$strUrl;
+		}
+
 		// Parse items
 		while ($objArticle->next())
 		{
