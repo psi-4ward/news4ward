@@ -33,12 +33,12 @@ class Helper extends \Frontend
 				$this->loadDataContainer('tl_news4ward_article');
 				$this->import('BackendUser','User');
 				$tl_news4ward_article = new tl_news4ward_article();
-				Input::setGet('id', Input::post('id'));
+				\Input::setGet('id', \Input::post('id'));
 
 				// validation
 				if(		TL_MODE != 'BE'
-					|| 	!preg_match("~^\d+$~", Input::post('id'))
-					|| 	!in_array(Input::post('status'), $GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'])
+					|| 	!preg_match("~^\d+$~", \Input::post('id'))
+					|| 	!in_array(\Input::post('status'), $GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'])
 					|| 	!$this->User->hasAccess('tl_news4ward_article::status','alexf')
 					||  $tl_news4ward_article->checkPermission()
 					)
@@ -49,7 +49,7 @@ class Helper extends \Frontend
 
 				$this->import('Database');
 				$this->Database->prepare('UPDATE tl_news4ward_article SET status=? WHERE id=? LIMIT 1')
-							   ->executeUncached(Input::post('status'),Input::post('id'));
+							   ->executeUncached(\Input::post('status'),\Input::post('id'));
 
 			break;
 
@@ -76,7 +76,7 @@ class Helper extends \Frontend
 					case 'filter_hint':
 						if(!isset($GLOBALS['news4ward_filter_hint'])) return '';
 
-						$tpl = new FrontendTemplate('news4ward_filter_hint');
+						$tpl = new \FrontendTemplate('news4ward_filter_hint');
 						$tpl->items = $GLOBALS['news4ward_filter_hint'];
 						return $tpl->parse();
 					break;
@@ -170,7 +170,7 @@ class Helper extends \Frontend
 				if ($objParent->numRows)
 				{
 					$domain = $this->Environment->base;
-					$objParent = PageModel::findWithDetails($objParent->id);
+					$objParent = \PageModel::findWithDetails($objParent->id);
 
 					if ($objParent->domain != '')
 					{
@@ -257,7 +257,7 @@ class Helper extends \Frontend
 		$objArchive->feedName = ($objArchive->alias != '') ? $objArchive->alias : 'news4ward' . $objArchive->id;
 
 		// Delete XML file
-		if (Input::get('act') == 'delete' || $objArchive->protected)
+		if (\Input::get('act') == 'delete' || $objArchive->protected)
 		{
 			$this->import('Files');
 			$this->Files->delete($objArchive->feedName . '.xml');
@@ -302,7 +302,7 @@ class Helper extends \Frontend
 		$strLink = ($arrArchive['feedBase'] != '') ? $arrArchive['feedBase'] : $this->Environment->base;
 		$strFile = $arrArchive['feedName'];
 
-		$objFeed = new Feed($strFile);
+		$objFeed = new \Feed($strFile);
 
 		$objFeed->link = $strLink;
 		$objFeed->title = $arrArchive['title'];
@@ -333,13 +333,13 @@ class Helper extends \Frontend
 			return;
 		}
 
-		$objParent = PageModel::findWithDetails($objParent->id);
+		$objParent = \PageModel::findWithDetails($objParent->id);
 		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
 
 		// Parse items
 		while ($objArticle->next())
 		{
-			$objItem = new FeedItem();
+			$objItem = new \FeedItem();
 
 			$objItem->title = $objArticle->title;
 			$objItem->link = $this->generateUrl($objArticle, $strUrl);
@@ -392,7 +392,7 @@ class Helper extends \Frontend
 		}
 
 		// Create file
-		$objRss = new File($strFile . '.xml');
+		$objRss = new \File($strFile . '.xml');
 		$objRss->write($this->replaceInsertTags($objFeed->$strType()));
 		$objRss->close();
 	}
