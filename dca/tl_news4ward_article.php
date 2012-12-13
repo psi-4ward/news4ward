@@ -470,6 +470,36 @@ class tl_news4ward_article extends Backend
 			return;
 		}
 
+		// set rootIDs if the user is only allowed to edit his own articles
+		if(is_array($this->User->news4ward_itemRights) && in_array('onlyOwn',$this->User->news4ward_itemRights))
+		{
+			$objArticles = $this->Database->prepare('SELECT id FROM tl_news4ward_article WHERE author=?')->execute($this->User->id);
+			$GLOBALS['TL_DCA']['tl_news4ward_article']['list']['sorting']['root'] = $objArticles->numRows ? $objArticles->fetchEach('id') : array(0);
+
+			// check single-edit
+			if($this->Input->get('act')
+				&& !in_array($this->Input->get('act'),array('create','select','editAll','overrideAll'))
+				&& !in_array($this->Input->get('id'),$GLOBALS['TL_DCA']['tl_news4ward_article']['list']['sorting']['root'])
+			)
+			{
+				$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward article ID "'.$this->Input->get('id').'"', 'tl_news4ward_article checkPermission', TL_ERROR);
+				$this->redirect('contao/main.php?act=error');
+			}
+
+			// check multiple-edit
+			if($this->Input->get('act') && in_array($this->Input->get('act'),array('create','select','editAll','overrideAll'))
+			)
+			{
+				$IDS = $this->Session->get('CURRENT');
+				$IDS = $IDS['IDS'];
+				if(count(array_diff($IDS,$GLOBALS['TL_DCA']['tl_news4ward_article']['list']['sorting']['root'])))
+				{
+					$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward article IDs "'.implode(',',array_diff($IDS,$GLOBALS['TL_DCA']['tl_news4ward_article']['list']['sorting']['root'])).'"', 'tl_news4ward_article checkPermission', TL_ERROR);
+					$this->redirect('contao/main.php?act=error');
+				}
+			}
+		}
+
 		// find tl_news4archiv.id
 		if(!$this->Input->get('act') || in_array($this->Input->get('act'),array('create','select','editAll','overrideAll')))
 		{
@@ -481,9 +511,10 @@ class tl_news4ward_article extends Backend
 			$news4wardID = $objArticle->pid;
 		}
 
+		// check archive rights
 		if(is_array($this->User->news4ward) && count($this->User->news4ward) > 0 && in_array($news4wardID,$this->User->news4ward)) return;
 
-		$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$news4wardID.'"', 'tl_news4ward checkPermission', TL_ERROR);
+		$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$news4wardID.'"', 'tl_news4ward_article checkPermission', TL_ERROR);
 		$this->redirect('contao/main.php?act=error');
 	}
 
@@ -535,4 +566,3 @@ class tl_news4ward_article extends Backend
 	}
 }
 
-?>

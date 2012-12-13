@@ -33,6 +33,7 @@ array_insert($GLOBALS['FE_MOD'], 2, array
 // add news archive permissions
 $GLOBALS['TL_PERMISSIONS'][] = 'news4ward';
 $GLOBALS['TL_PERMISSIONS'][] = 'news4ward_newp';
+$GLOBALS['TL_PERMISSIONS'][] = 'news4ward_itemRights';
 
 // Register hook to add items to the indexer
 $GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('\News4ward\Helper', 'getSearchablePages');

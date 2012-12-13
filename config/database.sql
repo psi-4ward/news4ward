@@ -106,6 +106,7 @@ CREATE TABLE `tl_module` (
 CREATE TABLE `tl_user` (
   `news4ward` blob NULL,
   `news4ward_newp` blob NULL
+  `news4ward_itemRights` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -115,6 +116,7 @@ CREATE TABLE `tl_user` (
 CREATE TABLE `tl_user_group` (
   `news4ward` blob NULL,
   `news4ward_newp` blob NULL
+  `news4ward_itemRights` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
