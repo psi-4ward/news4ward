@@ -144,18 +144,18 @@ class Listing extends Module
 			}
 
 			// Add the pagination menu
-			$objPagination = new Pagination($total, $this->perPage);
+			$objPagination = new \Pagination($total, $this->perPage);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 
 
 		/* get the items */
 		$objArticlesStmt = $this->Database->prepare("
-			SELECT *, author AS authorId,
+			SELECT tl_news4ward_article.*, author AS authorId, user.name as author, user.email as authorEmail,
 				(SELECT title FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS archive,
-				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo,
-				(SELECT name FROM tl_user WHERE id=author) AS author
+				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo
 			FROM tl_news4ward_article
+			LEFT JOIN tl_user AS user ON (tl_news4ward_article.author=user.id)
 			WHERE ".implode(' AND ',$where)
 			.((count($ordering)) ? ' ORDER BY '.implode(',',$ordering) : ''));
 
