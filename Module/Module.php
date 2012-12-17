@@ -38,7 +38,7 @@ abstract class Module extends \Module
 			switch ($field)
 			{
 				case 'date':
-					$return['date'] = $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $objArticle->start);
+					$return['date'] = $this->parseDate($GLOBALS['objPage']->datimFormat, $objArticle->date);
 					break;
 
 				case 'author':
