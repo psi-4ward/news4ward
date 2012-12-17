@@ -308,7 +308,7 @@ class tl_news4ward_article extends Backend
 	public function listItem($arrRow)
 	{
 		// the title
-		$strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">'.Image::getHtml('articles.gif','','style="vertical-align:bottom;"').' '.$arrRow['title'].'</div>';
+		$strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">'.$this->generateImage('articles.gif','','style="vertical-align:bottom;"').' '.$arrRow['title'].'</div>';
 
 		// show the autor
 		if(!empty($arrRow['author']))
@@ -336,20 +336,20 @@ class tl_news4ward_article extends Backend
 		$strReturn .= '<a href="#" onclick="javascript:News4ward.showStatusToggler(this,\''.$arrRow['id'].'\'); return false;">';
 		if($arrRow['status'] == 'draft')
 		{
-			$strReturn .= Image::getHtml(	'system/modules/news4ward/html/draft.png',
+			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/draft.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']].'"');
 		}
 		else if($arrRow['status'] == 'review')
 		{
-			$strReturn .= Image::getHtml('system/modules/news4ward/html/review.png',
+			$strReturn .= $this->generateImage('system/modules/news4ward/html/review.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$arrRow['status']].'"');
 		}
 		else
 		{
 			$published = ($arrRow['status'] == 'published' && ($arrRow['start'] == '' || $arrRow['start'] < time()) && ($arrRow['stop'] == '' || $arrRow['stop'] > time()));
-			$strReturn .= Image::getHtml('system/modules/news4ward/html/'.($published ? '' : 'not').'published.png','','');
+			$strReturn .= $this->generateImage('system/modules/news4ward/html/'.($published ? '' : 'not').'published.png','','');
 		}
 		$strReturn .= '</a>';
 
@@ -358,7 +358,7 @@ class tl_news4ward_article extends Backend
 		foreach($GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'] as $status)
 		{
 			$strReturn .= '<a href="#" onclick="News4ward.setStatus(this,\''.$arrRow['id'].'\',\''.$status.'\'); return false;">';
-			$strReturn .= Image::getHtml(	'system/modules/news4ward/html/'.$status.'.png',
+			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/'.$status.'.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status].'"');
 			$strReturn .= ' '.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status];
@@ -369,11 +369,11 @@ class tl_news4ward_article extends Backend
 
 		if($arrRow['highlight'])
 		{
-			$strReturn .= ' '.Image::getHtml('system/modules/news4ward/html/highlight.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0].'"');
+			$strReturn .= ' '.$this->generateImage('system/modules/news4ward/html/highlight.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['highlight'][0].'"');
 		}
 		if($arrRow['sticky'])
 		{
-			$strReturn .= ' '.Image::getHtml('system/modules/news4ward/html/sticky.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0].'"');
+			$strReturn .= ' '.$this->generateImage('system/modules/news4ward/html/sticky.png',$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0],'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['sticky'][0].'"');
 		}
 		$strReturn .= '</div>';
 
@@ -454,7 +454,7 @@ class tl_news4ward_article extends Backend
 			return '';
 		}
 
-		return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+		return '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
 	}
 
 
