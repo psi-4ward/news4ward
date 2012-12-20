@@ -170,7 +170,7 @@ class Helper extends \Frontend
 				if ($objParent->numRows)
 				{
 					$domain = $this->Environment->base;
-					$objParent = \PageModel::findWithDetails($objParent->id);
+					$objParent = $this->getPageDetails($objParent->id);
 
 					if ($objParent->domain != '')
 					{
@@ -333,7 +333,7 @@ class Helper extends \Frontend
 			return;
 		}
 
-		$objParent = \PageModel::findWithDetails($objParent->id);
+		$objParent = $this->getPageDetails($objParent->id);
 		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
 
 		// be sure to be absolute
