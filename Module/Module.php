@@ -144,6 +144,11 @@ abstract class Module extends \Module
 			$objTemplate->author = $arrMeta['author'];
 			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->start);
 
+			// Resolve ID from database driven filesystem
+			if($objArticles->teaserImage && is_numeric($objArticles->teaserImage) && ($objImage = \FilesModel::findByPk($objArticles->teaserImage)) !== null)
+			{
+				$objArticles->teaserImage = $objImage->path;
+			}
 			// Add teaser image
 			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
 			{
