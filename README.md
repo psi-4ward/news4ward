@@ -28,3 +28,10 @@ First install these extensions via repository
 * and optionally news4ward_tags, news4ward_comments and news4ward_categories if you like
 * update the database
 * create modules, news4ward-archives and so on ... :)
+
+
+### Copyright
+License: http://www.gnu.org/licenses/lgpl-3.0.html LGPL <br>
+Author: [4ward.media](http://www.4wardmedia.de)
+
+Much thanks to to Jozef Dvorsky for providing the english translation!
