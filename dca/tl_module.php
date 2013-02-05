@@ -15,7 +15,7 @@
 /**
  * Add palettes to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,perPage,skipFirst,news4ward_order;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,news4ward_perPage,news4ward_skipFirst,news4ward_order;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_facebookMeta;{template_legend:hide},news4ward_metaFields,news4ward_readerTemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 
@@ -49,6 +49,22 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_featured'] = array
 	'options'                 => array('all_items', 'featured', 'unfeatured'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 	'eval'                    => array('tl_class'=>'w50')
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_perPage'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_perPage'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
+);
+		
+$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_skipFirst'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_skipFirst'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_jumpToCurrent'] = array

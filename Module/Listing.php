@@ -105,7 +105,7 @@ class Listing extends Module
 		}
 
 		/* Pagination */
-		$skipFirst = intval($this->skipFirst);
+		$skipFirst = intval($this->news4ward_skipFirst);
 		$offset = 0;
 		$limit = null;
 
@@ -117,7 +117,7 @@ class Listing extends Module
 		$total = $objTotal->total - $skipFirst;
 
 		// Split the results
-		if ($this->perPage > 0 && (!isset($limit) || $this->news4ward_numberOfItems > $this->perPage))
+		if ($this->news4ward_perPage > 0 && (!isset($limit) || $this->news4ward_numberOfItems > $this->news4ward_perPage))
 		{
 			// Adjust the overall limit
 			if (isset($limit))
@@ -128,14 +128,14 @@ class Listing extends Module
 			$page = $this->Input->get('page') ? $this->Input->get('page') : 1;
 
 			// Check the maximum page number
-			if ($page > ($total/$this->perPage))
+			if ($page > ($total/$this->news4ward_perPage))
 			{
-				$page = ceil($total/$this->perPage);
+				$page = ceil($total/$this->news4ward_perPage);
 			}
 
 			// Limit and offset
-			$limit = $this->perPage;
-			$offset = (max($page, 1) - 1) * $this->perPage;
+			$limit = $this->news4ward_perPage;
+			$offset = (max($page, 1) - 1) * $this->news4ward_perPage;
 
 			// Overall limit
 			if ($offset + $limit > $total)
@@ -144,7 +144,7 @@ class Listing extends Module
 			}
 
 			// Add the pagination menu
-			$objPagination = new \Pagination($total, $this->perPage);
+			$objPagination = new \Pagination($total, $this->news4ward_perPage);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 

@@ -87,6 +87,8 @@ CREATE TABLE `tl_module` (
   `news4ward_archives` blob NULL,
   `news4ward_featured` varchar(16) NOT NULL default '',
   `news4ward_numberOfItems` smallint(5) unsigned NOT NULL default '0',
+  `news4ward_perPage` smallint(5) unsigned NOT NULL default '0',
+  `news4ward_skipFirst` smallint(5) unsigned NOT NULL default '0',
   `news4ward_jumpToCurrent` varchar(16) NOT NULL default '',
   `news4ward_metaFields` varchar(255) NOT NULL default '',
   `news4ward_template` varchar(32) NOT NULL default '',
