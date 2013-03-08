@@ -99,6 +99,7 @@ CREATE TABLE `tl_module` (
   `news4ward_showQuantity` char(1) NOT NULL default '',
   `news4ward_facebookMeta` char(1) NOT NULL default '',
   `news4ward_filterHint` varchar(128) NOT NULL default '',
+  `news4ward_timeConstraint` varchar(128) NOT NULL default 'all',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

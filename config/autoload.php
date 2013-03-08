@@ -22,4 +22,5 @@ TemplateLoader::addFiles(array
 	'mod_news4ward_reader'  => 'system/modules/news4ward/templates',
 	'news4ward_filter_hint' => 'system/modules/news4ward/templates',
 	'news4ward_list_item'   => 'system/modules/news4ward/templates',
+	'news4ward_list_headline'   => 'system/modules/news4ward/templates',
 ));
