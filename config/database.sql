@@ -87,6 +87,8 @@ CREATE TABLE `tl_module` (
   `news4ward_archives` blob NULL,
   `news4ward_featured` varchar(16) NOT NULL default '',
   `news4ward_numberOfItems` smallint(5) unsigned NOT NULL default '0',
+  `news4ward_perPage` smallint(5) unsigned NOT NULL default '0',
+  `news4ward_skipFirst` smallint(5) unsigned NOT NULL default '0',
   `news4ward_jumpToCurrent` varchar(16) NOT NULL default '',
   `news4ward_metaFields` varchar(255) NOT NULL default '',
   `news4ward_template` varchar(32) NOT NULL default '',
@@ -97,6 +99,7 @@ CREATE TABLE `tl_module` (
   `news4ward_showQuantity` char(1) NOT NULL default '',
   `news4ward_facebookMeta` char(1) NOT NULL default '',
   `news4ward_filterHint` varchar(128) NOT NULL default '',
+  `news4ward_timeConstraint` varchar(128) NOT NULL default 'all',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -106,6 +109,7 @@ CREATE TABLE `tl_module` (
 CREATE TABLE `tl_user` (
   `news4ward` blob NULL,
   `news4ward_newp` blob NULL
+  `news4ward_itemRights` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -115,6 +119,7 @@ CREATE TABLE `tl_user` (
 CREATE TABLE `tl_user_group` (
   `news4ward` blob NULL,
   `news4ward_newp` blob NULL
+  `news4ward_itemRights` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

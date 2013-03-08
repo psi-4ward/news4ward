@@ -1,4 +1,4 @@
-<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -10,8 +10,10 @@
  * @filesource
  * @licence LGPL
  */
- 
-class ModuleNews4wardReader extends News4ward
+
+namespace Psi\News4ward\Module;
+
+class Reader extends Module
 {
     /**
    	 * Template
@@ -28,7 +30,7 @@ class ModuleNews4wardReader extends News4ward
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new BackendTemplate('be_wildcard');
+			$objTemplate = new \BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### News4ward READER ###';
 			$objTemplate->title = $this->headline;
@@ -76,7 +78,7 @@ class ModuleNews4wardReader extends News4ward
 	 */
 	protected function compile()
     {
-		$this->import('News4wardHelper');
+		$this->import('\News4ward\Helper','Helper');
 
 		// Set the item from the auto_item parameter
 		if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
@@ -103,11 +105,11 @@ class ModuleNews4wardReader extends News4ward
 
 		/* get the item */
 		$objArticle = $this->Database->prepare("
-			SELECT *, author AS authorId,
+			SELECT tl_news4ward_article.*, author AS authorId, user.name as author, user.email as authorEmail,
 				(SELECT title FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS archive,
-				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo,
-				(SELECT name FROM tl_user WHERE id=author) AS author
+				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo
 			FROM tl_news4ward_article
+			LEFT JOIN tl_user AS user ON (tl_news4ward_article.author=user.id)
 			WHERE ".implode(' AND ',$where))->execute();
 
 
@@ -167,7 +169,7 @@ class ModuleNews4wardReader extends News4ward
 			$this->Template->nextArticle = array
 			(
 				'title' => $objNextArticle->title,
-				'href'	=> $this->News4wardHelper->generateUrl($objNextArticle)
+				'href'	=> $this->Helper->generateUrl($objNextArticle)
 			);
 		}
 		else
@@ -186,7 +188,7 @@ class ModuleNews4wardReader extends News4ward
 			$this->Template->prevArticle = array
 			(
 				'title' => $objPrevArticle->title,
-				'href'	=> $this->News4wardHelper->generateUrl($objPrevArticle)
+				'href'	=> $this->Helper->generateUrl($objPrevArticle)
 			);
 		}
 		else
@@ -198,5 +200,3 @@ class ModuleNews4wardReader extends News4ward
 
 
 }
-
-?>

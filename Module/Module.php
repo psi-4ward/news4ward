@@ -1,4 +1,4 @@
-<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -10,15 +10,19 @@
  * @filesource
  * @licence LGPL
  */
-abstract class News4ward extends Module
+
+
+namespace Psi\News4ward\Module;
+
+abstract class Module extends \Module
 {
 
 	/**
 	 * Return the meta fields of a news article as array
-	 * @param Database_Result $objArticle
+	 * @param \Database_Result $objArticle
 	 * @return array
 	 */
-	protected function getMetaFields(Database_Result $objArticle)
+	protected function getMetaFields(\Database_Result $objArticle)
 	{
 		$meta = deserialize($this->news4ward_metaFields);
 
@@ -34,7 +38,7 @@ abstract class News4ward extends Module
 			switch ($field)
 			{
 				case 'date':
-					$return['date'] = $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $objArticle->start);
+					$return['date'] = $this->parseDate($GLOBALS['objPage']->datimFormat, $objArticle->date);
 					break;
 
 				case 'author':
@@ -53,11 +57,11 @@ abstract class News4ward extends Module
 	/**
 	 * Parse one or more items and return them as array
 	 *
-	 * @param Database_Result $objArticles
+	 * @param \Database_Result $objArticles
 	 * @param bool|Template $objTemplate
 	 * @return array
 	 */
-	protected function parseArticles(Database_Result $objArticles, $objTemplate=false)
+	protected function parseArticles(\Database_Result $objArticles, $objTemplate=false)
 	{
 		if ($objArticles->numRows < 1)
 		{
@@ -65,8 +69,8 @@ abstract class News4ward extends Module
 		}
 
 		global $objPage;
-		$this->import('String');
-		$this->import('News4wardHelper');
+		$this->import('\String');
+		$this->import('\News4ward\Helper','Helper');
 
 		$arrArticles = array();
 		$limit = $objArticles->numRows;
@@ -77,7 +81,7 @@ abstract class News4ward extends Module
 			// init FrontendTemplate if theres no object given
 			if(!$objTemplate)
 			{
-				$objTemplate = new FrontendTemplate($this->news4ward_template);
+				$objTemplate = new \FrontendTemplate($this->news4ward_template);
 			}
 			$objTemplate->setData($objArticles->row());
 
@@ -86,7 +90,7 @@ abstract class News4ward extends Module
 									. (($count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '')
 									. ((($count % 2) == 0) ? ' odd' : ' even')
 									. ($objArticles->highlight ? ' highlight' : '');
-			$objTemplate->link = $this->News4wardHelper->generateUrl($objArticles);
+			$objTemplate->link = $this->Helper->generateUrl($objArticles);
 			$objTemplate->archive = $objArticles->archive;
 
 			// Clean the RTE output for the TEASER
@@ -94,19 +98,19 @@ abstract class News4ward extends Module
 			{
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$objArticles->teaser = $this->String->toXhtml($objArticles->teaser);
+					$objArticles->teaser = \String::toXhtml($objArticles->teaser);
 				}
 				else
 				{
-					$objArticles->teaser = $this->String->toHtml5($objArticles->teaser);
+					$objArticles->teaser = \String::toHtml5($objArticles->teaser);
 				}
 
-				$objTemplate->teaser = $this->String->encodeEmail($objArticles->teaser);
+				$objTemplate->teaser = \String::encodeEmail($objArticles->teaser);
 			}
 
 
 			// Generate ContentElements
-			$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticles->id);
+			$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="tl_news4ward_article" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticles->id);
 			$strContent = '';
 			while($objContentelements->next())
 			{
@@ -119,14 +123,14 @@ abstract class News4ward extends Module
 				// Clean the RTE output
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$strContent = $this->String->toXhtml($strContent);
+					$strContent = \String::toXhtml($strContent);
 				}
 				else
 				{
-					$strContent = $this->String->toHtml5($strContent);
+					$strContent = \String::toHtml5($strContent);
 				}
 
-				$strContent = $this->String->encodeEmail($strContent);
+				$strContent = \String::encodeEmail($strContent);
 			}
 
 			$objTemplate->content = $strContent;
@@ -140,6 +144,11 @@ abstract class News4ward extends Module
 			$objTemplate->author = $arrMeta['author'];
 			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->start);
 
+			// Resolve ID from database driven filesystem
+			if($objArticles->teaserImage && is_numeric($objArticles->teaserImage) && ($objImage = \FilesModel::findByPk($objArticles->teaserImage)) !== null)
+			{
+				$objArticles->teaserImage = $objImage->path;
+			}
 			// Add teaser image
 			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
 			{
@@ -187,7 +196,7 @@ abstract class News4ward extends Module
 			return $arrArchives;
 		}
 
-		$this->import('FrontendUser', 'User');
+		$this->import('\FrontendUser', 'User');
 		$objArchive = $this->Database->execute("SELECT id, protected, groups FROM tl_news4ward WHERE id IN(" . implode(',', array_map('intval', $arrArchives)) . ")");
 		$arrArchives = array();
 

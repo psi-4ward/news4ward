@@ -28,6 +28,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_order']         = array('Sortierreih
 $GLOBALS['TL_LANG']['tl_module']['news4ward_showQuantity']  = array('Anzahl der Beiträge', 'Die Anzahl der Beiträge pro Seite.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_facebookMeta']  = array('Facebook Metadaten erzeugen', 'Die Facebook Metadaten sind Attribute, die beim Sharen oder Teilen verwendet werden. Unter anderem wird das Teaserbild für Facebook verwendet.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_filterHint']  	= array('Filter Hinweis', 'Ist der Filter dieses Modul gesetzt kann dieser über den Insert-Tag {{news4ward::filter_hint}} nochmals ausgegeben werden. Der Wert dieses Feldes beschreibt die Filtereigenschaft.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint']  	= array('Zeitbeschränkung', 'Hier können Sie die anzuzeigenden Beiträge auf ein Zeitintervall beschränken.');
 
 
 /**
@@ -42,7 +43,7 @@ $GLOBALS['TL_LANG']['tl_module']['all_items']    = 'Alle Beiträge anzeigen';
 $GLOBALS['TL_LANG']['tl_module']['featured']     = 'Nur hervorgehobene Beiträge anzeigen';
 $GLOBALS['TL_LANG']['tl_module']['unfeatured']   = 'Hervorgehobene Beiträge überspringen';
 
-$GLOBALS['tl_module']['news4ward_order_ref']	= array
+$GLOBALS['TL_LANG']['tl_module']['news4ward_order_ref']	= array
 (
 	'start ASC'		=> 'Anzeigedatum aufsteigend',
 	'start DESC'	=> 'Anzeigedatum absteigend',
@@ -50,4 +51,13 @@ $GLOBALS['tl_module']['news4ward_order_ref']	= array
 	'title DESC'	=> 'Beitragstitel absteigend'
 );
 
-?>
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['all'] = 'Alle Beiträge';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['cur_month'] = 'des laufenden Monats';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['cur_year'] = 'des laufenden Jahres';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_7'] = '- 1 Woche';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_14'] = '- 2 Wochen';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_30'] = '- 1 Monat';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_90'] = '- 3 Monate';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_180'] = '- 6 Monate';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_365'] = '- 1 Jahr';
+$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['past_two'] = '- 2 Jahre';

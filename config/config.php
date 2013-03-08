@@ -24,8 +24,8 @@ array_insert($GLOBALS['FE_MOD'], 2, array
 (
 	'news4ward' => array
 	(
-		'news4wardList'    => 'ModuleNews4wardList',
-		'news4wardReader'  => 'ModuleNews4wardReader',
+		'news4wardList'    => '\News4ward\Module\Listing',
+		'news4wardReader'  => '\News4ward\Module\Reader',
 	)
 ));
 
@@ -33,18 +33,19 @@ array_insert($GLOBALS['FE_MOD'], 2, array
 // add news archive permissions
 $GLOBALS['TL_PERMISSIONS'][] = 'news4ward';
 $GLOBALS['TL_PERMISSIONS'][] = 'news4ward_newp';
+$GLOBALS['TL_PERMISSIONS'][] = 'news4ward_itemRights';
 
 // Register hook to add items to the indexer
-$GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('News4wardHelper', 'getSearchablePages');
+$GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('\News4ward\Helper', 'getSearchablePages');
 
 // Cronjob for feed generation
-$GLOBALS['TL_CRON']['daily'][] = array('News4wardHelper', 'generateFeeds');
+$GLOBALS['TL_CRON']['daily'][] = array('Helper', 'generateFeeds');
 
 // hook for custom inserttags
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('News4wardHelper', 'inserttagReplacer');
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('\News4ward\Helper', 'inserttagReplacer');
 
 if (TL_MODE == 'BE')
 {
 	// hook for ajax requests
-	$GLOBALS['TL_HOOKS']['executePreActions'][] = array('News4wardHelper', 'ajaxHandler');
+	$GLOBALS['TL_HOOKS']['executePreActions'][] = array('\News4ward\Helper', 'ajaxHandler');
 }

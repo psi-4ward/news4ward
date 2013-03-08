@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -298,7 +298,7 @@ class tl_news4ward extends Backend
 		}
 
 		// Check current action
-		switch ($this->Input->get('act'))
+		switch (Input::get('act'))
 		{
 			case 'create':
 			case 'select':
@@ -307,11 +307,11 @@ class tl_news4ward extends Backend
 
 			case 'edit':
 				// Dynamically add the record to the user profile
-				if (!in_array($this->Input->get('id'), $root))
+				if (!in_array(Input::get('id'), $root))
 				{
 					$arrNew = $this->Session->get('new_records');
 
-					if (is_array($arrNew['tl_news4ward']) && in_array($this->Input->get('id'), $arrNew['tl_news4ward']))
+					if (is_array($arrNew['tl_news4ward']) && in_array(Input::get('id'), $arrNew['tl_news4ward']))
 					{
 						// Add permissions on user level
 						// @todo if rights are extended, add to group instead!
@@ -327,7 +327,7 @@ class tl_news4ward extends Backend
 							if (is_array($arrNewp) && in_array('create', $arrNewp))
 							{
 								$arrNews = deserialize($objUser->news4ward);
-								$arrNews[] = $this->Input->get('id');
+								$arrNews[] = Input::get('id');
 
 								$this->Database->prepare("UPDATE tl_user SET news4ward=? WHERE id=?")
 											   ->execute(serialize($arrNews), $this->User->id);
@@ -346,7 +346,7 @@ class tl_news4ward extends Backend
 							if (is_array($arrNewp) && in_array('create', $arrNewp))
 							{
 								$arrNews = deserialize($objGroup->news4ward);
-								$arrNews[] = $this->Input->get('id');
+								$arrNews[] = Input::get('id');
 
 								$this->Database->prepare("UPDATE tl_user_group SET news4ward=? WHERE id=?")
 											   ->execute(serialize($arrNews), $this->User->groups[0]);
@@ -354,7 +354,7 @@ class tl_news4ward extends Backend
 						}
 
 						// Add new element to the user object
-						$root[] = $this->Input->get('id');
+						$root[] = Input::get('id');
 						$this->User->news4ward = $root;
 					}
 				}
@@ -363,9 +363,9 @@ class tl_news4ward extends Backend
 			case 'copy':
 			case 'delete':
 			case 'show':
-				if (!in_array($this->Input->get('id'), $root) || ($this->Input->get('act') == 'delete' && !$this->User->hasAccess('delete', 'news4ward_newp')))
+				if (!in_array(Input::get('id'), $root) || (Input::get('act') == 'delete' && !$this->User->hasAccess('delete', 'news4ward_newp')))
 				{
-					$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archive ID "'.$this->Input->get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
+					$this->log('Not enough permissions to '.Input::get('act').' news4ward archive ID "'.Input::get('id').'"', 'tl_news4ward checkPermission', TL_ERROR);
 					$this->redirect('contao/main.php?act=error');
 				}
 				break;
@@ -386,7 +386,7 @@ class tl_news4ward extends Backend
 
 			case 'deleteAll':
 				$session = $this->Session->getData();
-				if ($this->Input->get('act') == 'deleteAll' && !$this->User->hasAccess('delete', 'news4ward_newp'))
+				if (Input::get('act') == 'deleteAll' && !$this->User->hasAccess('delete', 'news4ward_newp'))
 				{
 					$session['CURRENT']['IDS'] = array();
 				}
@@ -398,9 +398,9 @@ class tl_news4ward extends Backend
 				break;
 
 			default:
-				if (strlen($this->Input->get('act')))
+				if (strlen(Input::get('act')))
 				{
-					$this->log('Not enough permissions to '.$this->Input->get('act').' news4ward archives', 'tl_news4ward checkPermission', TL_ERROR);
+					$this->log('Not enough permissions to '.Input::get('act').' news4ward archives', 'tl_news4ward checkPermission', TL_ERROR);
 					$this->redirect('contao/main.php?act=error');
 				}
 				break;
@@ -420,11 +420,11 @@ class tl_news4ward extends Backend
 			return;
 		}
 
-		$this->import('News4wardHelper');
+		$this->import('\News4ward\Helper','Helper');
 
 		foreach ($session as $id)
 		{
-			$this->News4wardHelper->generateFeed($id);
+			$this->Helper->generateFeed($id);
 		}
 
 		$this->Session->set('news4ward_feed_updater', NULL);
@@ -471,7 +471,8 @@ class tl_news4ward extends Backend
 			return $varValue;
 		}
 
-		$arrFeeds = $this->removeOldFeeds(true);
+		$this->import('Automator');
+		$arrFeeds = $this->Automator->purgeXmlFiles(true);
 
 		// Alias exists
 		if (array_search($varValue, $arrFeeds) !== false)

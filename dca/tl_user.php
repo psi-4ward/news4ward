@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -16,12 +16,12 @@
 /**
  * Extend default palette
  */
-$GLOBALS['TL_DCA']['tl_user']['palettes']['extend'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward,news4ward_newp;', $GLOBALS['TL_DCA']['tl_user']['palettes']['extend']);
-$GLOBALS['TL_DCA']['tl_user']['palettes']['custom'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward,news4ward_newp;', $GLOBALS['TL_DCA']['tl_user']['palettes']['custom']);
+$GLOBALS['TL_DCA']['tl_user']['palettes']['extend'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward,news4ward_newp,news4ward_itemRights;', $GLOBALS['TL_DCA']['tl_user']['palettes']['extend']);
+$GLOBALS['TL_DCA']['tl_user']['palettes']['custom'] = str_replace('fop;', 'fop;{news4ward_legend},news4ward,news4ward_newp,news4ward_itemRights;', $GLOBALS['TL_DCA']['tl_user']['palettes']['custom']);
 
 
 /**
- * Add fields to tl_user_group
+ * Add fields to tl_user
  */
 $GLOBALS['TL_DCA']['tl_user']['fields']['news4ward'] = array
 (
@@ -42,4 +42,13 @@ $GLOBALS['TL_DCA']['tl_user']['fields']['news4ward_newp'] = array
 	'eval'                    => array('multiple'=>true)
 );
 
-?>
+$GLOBALS['TL_DCA']['tl_user']['fields']['news4ward_itemRights'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_user']['news4ward_itemRights'],
+	'exclude'                 => true,
+	'inputType'               => 'checkbox',
+	'options'                 => array('onlyOwn'),
+	'reference'               => &$GLOBALS['TL_LANG']['tl_user']['news4ward_itemRights_reference'],
+	'eval'                    => array('multiple'=>true)
+);
+

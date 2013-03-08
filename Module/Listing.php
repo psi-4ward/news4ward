@@ -1,4 +1,4 @@
-<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -10,8 +10,10 @@
  * @filesource
  * @licence LGPL
  */
+
+namespace Psi\News4ward\Module;
  
-class ModuleNews4wardList extends News4ward
+class Listing extends Module
 {
     /**
    	 * Template
@@ -28,7 +30,7 @@ class ModuleNews4wardList extends News4ward
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new BackendTemplate('be_wildcard');
+			$objTemplate = new \BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### News4ward LIST ###';
 			$objTemplate->title = $this->headline;
@@ -76,6 +78,12 @@ class ModuleNews4wardList extends News4ward
 		elseif($this->news4ward_featured == 'unfeatured')
 			$where[] = 'tl_news4ward_article.highlight<>"1"';
 
+		// limit the time period
+		if($this->news4ward_timeConstraint != 'all' && $this->news4ward_timeConstraint != '')
+		{
+			list($strBegin, $strEnd) = $this->getDatesFromFormat(new \Date(), $this->news4ward_timeConstraint);
+			$where[] = "tl_news4ward_article.start >= $strBegin AND tl_news4ward_article.start <= $strEnd";
+		}
 
 		// HOOK: add filter logic from other modules like tags
 		if(isset($GLOBALS['TL_HOOKS']['News4wardListFilter']) && is_array($GLOBALS['TL_HOOKS']['News4wardListFilter']))
@@ -103,7 +111,7 @@ class ModuleNews4wardList extends News4ward
 		}
 
 		/* Pagination */
-		$skipFirst = intval($this->skipFirst);
+		$skipFirst = intval($this->news4ward_skipFirst);
 		$offset = 0;
 		$limit = null;
 
@@ -115,7 +123,7 @@ class ModuleNews4wardList extends News4ward
 		$total = $objTotal->total - $skipFirst;
 
 		// Split the results
-		if ($this->perPage > 0 && (!isset($limit) || $this->news4ward_numberOfItems > $this->perPage))
+		if ($this->news4ward_perPage > 0 && (!isset($limit) || $this->news4ward_numberOfItems > $this->news4ward_perPage))
 		{
 			// Adjust the overall limit
 			if (isset($limit))
@@ -126,14 +134,14 @@ class ModuleNews4wardList extends News4ward
 			$page = $this->Input->get('page') ? $this->Input->get('page') : 1;
 
 			// Check the maximum page number
-			if ($page > ($total/$this->perPage))
+			if ($page > ($total/$this->news4ward_perPage))
 			{
-				$page = ceil($total/$this->perPage);
+				$page = ceil($total/$this->news4ward_perPage);
 			}
 
 			// Limit and offset
-			$limit = $this->perPage;
-			$offset = (max($page, 1) - 1) * $this->perPage;
+			$limit = $this->news4ward_perPage;
+			$offset = (max($page, 1) - 1) * $this->news4ward_perPage;
 
 			// Overall limit
 			if ($offset + $limit > $total)
@@ -142,18 +150,18 @@ class ModuleNews4wardList extends News4ward
 			}
 
 			// Add the pagination menu
-			$objPagination = new Pagination($total, $this->perPage);
+			$objPagination = new \Pagination($total, $this->news4ward_perPage);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 
 
 		/* get the items */
 		$objArticlesStmt = $this->Database->prepare("
-			SELECT *, author AS authorId,
+			SELECT tl_news4ward_article.*, author AS authorId, user.name as author, user.email as authorEmail,
 				(SELECT title FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS archive,
-				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo,
-				(SELECT name FROM tl_user WHERE id=author) AS author
+				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo
 			FROM tl_news4ward_article
+			LEFT JOIN tl_user AS user ON (tl_news4ward_article.author=user.id)
 			WHERE ".implode(' AND ',$where)
 			.((count($ordering)) ? ' ORDER BY '.implode(',',$ordering) : ''));
 
@@ -210,5 +218,65 @@ class ModuleNews4wardList extends News4ward
 			$GLOBALS['TL_HEAD'][] = '<link rel="alternate" href="' . $base . $objNews4ward->alias . '.xml" type="application/' . $objNews4ward->format . '+xml" title="' . $objNews4ward->title . '"' . $strTagEnding . "\n";
 		}
 
+	}
+
+
+	/**
+	 * Return the begin and end timestamp
+	 * @param \Date
+	 * @param string
+	 * @return array
+	 */
+	protected function getDatesFromFormat(\Date $objDate, $strFormat)
+	{
+		switch ($strFormat)
+		{
+			case 'cur_month':
+				return array($objDate->monthBegin, $objDate->monthEnd, $GLOBALS['TL_LANG']['MSC']['cal_emptyMonth']);
+				break;
+
+			case 'cur_year':
+				return array($objDate->yearBegin, $objDate->yearEnd, $GLOBALS['TL_LANG']['MSC']['cal_emptyYear']);
+				break;
+
+			case 'all': // 1970-01-01 00:00:00 - 2038-01-01 00:00:00
+				return array(0, 2145913200, $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_7':
+				$objToday = new \Date();
+				return array((strtotime('-7 days', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_14':
+				$objToday = new \Date();
+				return array((strtotime('-14 days', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_30':
+				$objToday = new \Date();
+				return array((strtotime('-1 month', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_90':
+				$objToday = new \Date();
+				return array((strtotime('-3 months', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_180':
+				$objToday = new \Date();
+				return array((strtotime('-6 months', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_365':
+				$objToday = new \Date();
+				return array((strtotime('-1 year', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+
+			case 'past_two':
+				$objToday = new \Date();
+				return array((strtotime('-2 years', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
+				break;
+		}
 	}
 }

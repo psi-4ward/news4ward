@@ -24,7 +24,7 @@ var News4ward = {
 				AjaxRequest.hideBox();
 				News4ward.hideTogglers();
    			}
-		}).post({'action':'news4wardArticleStatusToggle', 'id':id, 'status':status, 'REQUEST_TOKEN':REQUEST_TOKEN});
+		}).post({'action':'news4wardArticleStatusToggle', 'id':id, 'status':status, 'REQUEST_TOKEN':Contao.request_token});
 
  	},
 
