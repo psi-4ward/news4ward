@@ -1,0 +1,4 @@
+
+<div class="layout_short news4ward_list block<?php echo $this->class; ?>">
+<h2><a href="<?php echo $this->link; ?>"><?php echo $this->title; ?></a></h2>
+</div>
