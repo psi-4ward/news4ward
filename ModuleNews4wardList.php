@@ -79,7 +79,7 @@ class ModuleNews4wardList extends News4ward
 		// limit the time period
 		if($this->news4ward_timeConstraint != 'all' && $this->news4ward_timeConstraint != '')
 		{
-			list($strBegin, $strEnd) = $this->getDatesFromFormat(new \Date(), $this->news4ward_timeConstraint);
+			list($strBegin, $strEnd) = $this->getDatesFromFormat(new Date(), $this->news4ward_timeConstraint);
 			$where[] = "tl_news4ward_article.start >= $strBegin AND tl_news4ward_article.start <= $strEnd";
 		}
 
@@ -242,37 +242,37 @@ class ModuleNews4wardList extends News4ward
 				break;
 
 			case 'past_7':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-7 days', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 
 			case 'past_14':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-14 days', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 
 			case 'past_30':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-1 month', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 
 			case 'past_90':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-3 months', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 
 			case 'past_180':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-6 months', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 
 			case 'past_365':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-1 year', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 
 			case 'past_two':
-				$objToday = new \Date();
+				$objToday = new Date();
 				return array((strtotime('-2 years', $objToday->dayBegin) - 1), ($objToday->dayBegin - 1), $GLOBALS['TL_LANG']['MSC']['cal_empty']);
 				break;
 		}
