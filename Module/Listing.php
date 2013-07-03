@@ -177,6 +177,16 @@ class Listing extends Module
 
 		$objArticles = $objArticlesStmt->execute();
 
+		// overwrite parentJumpTo
+		if($this->news4ward_overwriteArchiveJumpTo)
+		{
+			while($objArticles->next())
+			{
+				$objArticles->parentJumpTo = $this->jumpTo;
+			}
+			$objArticles->reset();
+		}
+
 		$this->Template->articles = $this->parseArticles($objArticles);
 		$this->Template->archives = $this->news_archives;
 		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];

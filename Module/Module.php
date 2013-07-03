@@ -76,6 +76,7 @@ abstract class Module extends \Module
 		$limit = $objArticles->numRows;
 		$count = 0;
 
+
 		while ($objArticles->next())
 		{
 			// init FrontendTemplate if theres no object given
