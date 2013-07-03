@@ -100,6 +100,7 @@ CREATE TABLE `tl_module` (
   `news4ward_facebookMeta` char(1) NOT NULL default '',
   `news4ward_filterHint` varchar(128) NOT NULL default '',
   `news4ward_timeConstraint` varchar(128) NOT NULL default 'all',
+  `news4ward_overwriteArchiveJumpTo` char(1) NOT NULL default '',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

@@ -29,6 +29,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_showQuantity']  = array('Anzahl der 
 $GLOBALS['TL_LANG']['tl_module']['news4ward_facebookMeta']  = array('Facebook Metadaten erzeugen', 'Die Facebook Metadaten sind Attribute, die beim Sharen oder Teilen verwendet werden. Unter anderem wird das Teaserbild für Facebook verwendet.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_filterHint']  	= array('Filter Hinweis', 'Ist der Filter dieses Modul gesetzt kann dieser über den Insert-Tag {{news4ward::filter_hint}} nochmals ausgegeben werden. Der Wert dieses Feldes beschreibt die Filtereigenschaft.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint']  	= array('Zeitbeschränkung', 'Hier können Sie die anzuzeigenden Beiträge auf ein Zeitintervall beschränken.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_overwriteArchiveJumpTo']  	= array('Weiterleitungsseite des Archivs überschreiben', 'Wählen Sie eine individuelle Leser-Seite für diese Liste.');
 
 
 /**

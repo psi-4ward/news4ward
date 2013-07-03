@@ -15,9 +15,11 @@
 /**
  * Add palettes to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,news4ward_perPage,news4ward_skipFirst,news4ward_order,news4ward_timeConstraint;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardList']    = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_numberOfItems,news4ward_featured,news4ward_perPage,news4ward_skipFirst,news4ward_order,news4ward_timeConstraint;{template_legend:hide},news4ward_metaFields,news4ward_template,imgSize;{redirect_legend},news4ward_overwriteArchiveJumpTo;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['news4wardReader']  = '{title_legend},name,headline,type;{config_legend},news4ward_archives,news4ward_facebookMeta;{template_legend:hide},news4ward_metaFields,news4ward_readerTemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'news4ward_overwriteArchiveJumpTo';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['news4ward_overwriteArchiveJumpTo'] = 'jumpTo';
 
 /**
  * Add fields to tl_module
@@ -175,6 +177,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_timeConstraint'] = array
 	'options'                 => array('all', 'cur_month', 'cur_year', 'past_7', 'past_14', 'past_30', 'past_90', 'past_180', 'past_365', 'past_two'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref'],
 	'eval'                    => array('tl_class'=>'w50')
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_overwriteArchiveJumpTo'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['news4ward_overwriteArchiveJumpTo'],
+	'exclude'                 => true,
+	'inputType'               => 'checkbox',
+	'eval'					  => array('submitOnChange'=>true)
 );
 
 

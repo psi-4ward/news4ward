@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_order']         = array('Sort order'
 $GLOBALS['TL_LANG']['tl_module']['news4ward_showQuantity']  = array('Entries per page', 'The number of entries per page. Set to 0 to disable pagination.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_facebookMeta']  = array('Create meta-data for Facebook', 'Facebook meta-data are atributes, which are used/shared on Facebook. What more Teaser image will be used for Facebook.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_filterHint']  	= array('Current filter indicator', 'The indicator and currently used/selected filter is shown on page by Insert-Tag {{news4ward::filter_hint}}. The value of this field (e.g. <em>Category:</em>) describes the actual filter (e.g. <em>Sport</em>). On the page will be visible <em>Category: Sport</em>.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_overwriteArchiveJumpTo']  	= array('Overwrite the archive jumpto page', 'Choose a separate reader page.');
 
 
 /**
@@ -51,5 +52,3 @@ $GLOBALS['tl_module']['news4ward_order_ref']	= array
 	'title ASC'		=> 'title ASC',
 	'title DESC'	=> 'title DESC'
 );
-
-?>
