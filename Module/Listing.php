@@ -86,7 +86,7 @@ class Listing extends Module
 		}
 
 		// HOOK: add filter logic from other modules like tags
-		if(isset($GLOBALS['TL_HOOKS']['News4wardListFilter']) && is_array($GLOBALS['TL_HOOKS']['News4wardListFilter']))
+		if($this->news4ward_ignoreFilters != '1' && isset($GLOBALS['TL_HOOKS']['News4wardListFilter']) && is_array($GLOBALS['TL_HOOKS']['News4wardListFilter']))
 		{
 			foreach ($GLOBALS['TL_HOOKS']['News4wardListFilter'] as $callback)
 			{

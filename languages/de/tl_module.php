@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['tl_module']['news4ward_facebookMeta']  = array('Facebook Me
 $GLOBALS['TL_LANG']['tl_module']['news4ward_filterHint']  	= array('Filter Hinweis', 'Ist der Filter dieses Modul gesetzt kann dieser über den Insert-Tag {{news4ward::filter_hint}} nochmals ausgegeben werden. Der Wert dieses Feldes beschreibt die Filtereigenschaft.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint']  	= array('Zeitbeschränkung', 'Hier können Sie die anzuzeigenden Beiträge auf ein Zeitintervall beschränken.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_overwriteArchiveJumpTo']  	= array('Weiterleitungsseite des Archivs überschreiben', 'Wählen Sie eine individuelle Leser-Seite für diese Liste.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_ignoreFilters']  	= array('Filter ignorieren', 'Gesetzte Filter werden von dieser Beitragsliste nicht beachtet.');
 
 
 /**
