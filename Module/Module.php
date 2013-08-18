@@ -38,7 +38,11 @@ abstract class Module extends \Module
 			switch ($field)
 			{
 				case 'date':
-					$return['date'] = $this->parseDate($GLOBALS['objPage']->datimFormat, $objArticle->date);
+					$return['date'] = \Date::parse($GLOBALS['objPage']->dateFormat, $objArticle->start);
+					break;
+
+				case 'datetime':
+					$return['datetime'] = \Date::parse($GLOBALS['objPage']->datimFormat, $objArticle->start);
 					break;
 
 				case 'author':
@@ -143,7 +147,7 @@ abstract class Module extends \Module
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
 			$objTemplate->timestamp = $objArticles->start;
 			$objTemplate->author = $arrMeta['author'];
-			$objTemplate->datetime = date('Y-m-d\TH:i:sP', $objArticles->start);
+			$objTemplate->datetime = $arrMeta['datetime'];
 
 			// Resolve ID from database driven filesystem
 			if($objArticles->teaserImage && is_numeric($objArticles->teaserImage) && ($objImage = \FilesModel::findByPk($objArticles->teaserImage)) !== null)
