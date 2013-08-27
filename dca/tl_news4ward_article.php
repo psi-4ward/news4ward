@@ -333,7 +333,7 @@ class tl_news4ward_article extends Backend
 
 		// generate the status icons
 		$strReturn .= '<div style="margin-bottom:5px;">'.$GLOBALS['TL_LANG']['tl_news4ward_article']['status'][0].': ';
-		$strReturn .= '<a href="#" onclick="javascript:News4ward.showStatusToggler(this,\''.$arrRow['id'].'\'); return false;">';
+		$strReturn .= '<a href="#" onclick="News4ward.showStatusToggler(this,\''.$arrRow['id'].'\', event || window.event); return false;">';
 		if($arrRow['status'] == 'draft')
 		{
 			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/draft.png',
@@ -357,7 +357,7 @@ class tl_news4ward_article extends Backend
 		$strReturn .= '<div class="news4wardStatusToggler">';
 		foreach($GLOBALS['TL_DCA']['tl_news4ward_article']['fields']['status']['options'] as $status)
 		{
-			$strReturn .= '<a href="#" onclick="News4ward.setStatus(this,\''.$arrRow['id'].'\',\''.$status.'\'); return false;">';
+			$strReturn .= '<a href="#" onclick="News4ward.setStatus(this,\''.$arrRow['id'].'\',\''.$status.'\', event || window.event); return false;">';
 			$strReturn .= $this->generateImage(	'system/modules/news4ward/html/'.$status.'.png',
 												$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status],
 												'title="'.$GLOBALS['TL_LANG']['tl_news4ward_article']['stati'][$status].'"');

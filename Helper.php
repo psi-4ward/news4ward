@@ -32,7 +32,7 @@ class Helper extends \Frontend
 			case 'news4wardArticleStatusToggle':
 				$this->loadDataContainer('tl_news4ward_article');
 				$this->import('BackendUser','User');
-				$tl_news4ward_article = new tl_news4ward_article();
+				$tl_news4ward_article = new \tl_news4ward_article();
 				\Input::setGet('id', \Input::post('id'));
 
 				// validation

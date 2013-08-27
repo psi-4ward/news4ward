@@ -28,14 +28,16 @@ var News4ward = {
 
  	},
 
-	showStatusToggler: function(el,id)
+	showStatusToggler: function(el, id, ev)
 	{
+		ev.x = ev.x || ev.clientX;
+		ev.y = ev.y || ev.clientY;
 		News4ward.mask.show();
 
 		var togglerContainer = el.getNext('.news4wardStatusToggler').clone();
 		togglerContainer.store('togglerIcon',el);
 		togglerContainer.inject(document.body,'bottom');
-		togglerContainer.setPosition({x: window.event.x + 10, y: window.event.y - togglerContainer.getDimensions().y/2});
+		togglerContainer.setPosition({x: ev.x + 10, y: ev.y - togglerContainer.getDimensions().y/2});
 		togglerContainer.setStyle('display','block').set('tween',{'duration':300}).fade('hide').fade('in');
 	},
 
