@@ -49,9 +49,9 @@ $GLOBALS['TL_LANG']['tl_module']['unfeatured']   = 'Skip featured blog entries';
 
 $GLOBALS['tl_module']['news4ward_order_ref']	= array
 (
-	'start ASC'		=> 'start ASC',
+	'start ASC'	=> 'start ASC',
 	'start DESC'	=> 'start DESC',
-	'title ASC'		=> 'title ASC',
+	'title ASC'	=> 'title ASC',
 	'title DESC'	=> 'title DESC'
 );
 
