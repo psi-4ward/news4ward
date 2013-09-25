@@ -17,6 +17,8 @@
  */
 $GLOBALS['TL_LANG']['tl_module']['news4ward_archives']      = array('Beitragsarchive', 'Bitte wählen Sie ein oder mehrere Beitragsarchive.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_featured']      = array('Hervorgehobene Beiträge', 'Hier legen Sie fest, wie hervorgehobene Beiträge gehandhabt werden.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_perPage']       = array('Beiträge pro Seite', 'Die Anzahl der Beiträge pro Seite. 0 bedeutet keine Seitenaufteilung.');
+$GLOBALS['TL_LANG']['tl_module']['news4ward_skipFirst']     = array('Beiträge auslassen', 'Hier kann die Anzahl der auszulassenden Beiträge festgelegt werden.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_numberOfItems'] = array('Gesamtzahl der Beiträge', 'Hier können Sie die Gesamtzahl der Beiträge festlegen. Geben Sie 0 ein, um alle anzuzeigen.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_jumpToCurrent'] = array('Kein Zeitraum ausgewählt', 'Hier legen Sie fest, was angezeigt wird, wenn kein Zeitraum ausgewählt ist.');
 $GLOBALS['TL_LANG']['tl_module']['news4ward_metaFields']    = array('Meta-Felder', 'Hier können Sie die Meta-Felder auswählen.');
