@@ -5,6 +5,9 @@
  * @author Christoph Wiechert <wio@psitrax.de>
  */
 
+if(!in_array('_stylepicker4ward', \ModuleLoader::getActive())) return;
+
+ 
 // News4ward Articles
 $GLOBALS['TL_DCA']['tl_stylepicker4ward']['fields']['_news4ward_Article'] = array
 (
