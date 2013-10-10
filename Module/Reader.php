@@ -113,7 +113,12 @@ class Reader extends Module
 			WHERE ".implode(' AND ',$where))->execute();
 
 
-		if(!$objArticle->numRows) return;
+		if(!$objArticle->numRows) {
+			header('HTTP/1.1 404 Not Found');
+			$objHandler = new $GLOBALS['TL_PTY']['error_404']();
+			$objHandler->generate(false);
+			exit;
+		};
 
 		$this->parseArticles($objArticle,$this->Template);
 
