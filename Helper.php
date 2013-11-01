@@ -368,6 +368,7 @@ class Helper extends \Frontend
 				$strDescription = $objArticle->teaser;
 			}
 			$strDescription = $this->replaceInsertTags($strDescription);
+			$strDescription = str_replace(array('<br>', '[-]', '&shy;', '[nbsp]', '&nbsp;'), array('<br/>', '', '', ' ', ' '), $strDescription);
 			$objItem->description = $this->convertRelativeUrls($strDescription, $strLink);
 
 
