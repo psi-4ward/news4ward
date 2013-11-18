@@ -35,7 +35,7 @@
 	<?php endif; ?>
 	<?php if(in_array('email',$this->socialButtons)): ?>
 	<span class="email">
-		<a href="mailto:hier-empfänger@einsetzen.de?subject=Empfehlung:%20<?php echo rawurlencode($this->title); ?>&body=Dieser%20Artikel%20könnte%20Sie%20interessieren:%0A<?php echo urlencode($this->Environment->base . $this->Environment->request); ?>%0A%0A<?php echo rawurlencode($this->teaser);?>"><img src="system/modules/news4ward/html/social/mail.png" alt="Per E-Mail empfehlen" width="30" height="30"></a>
+		<a href="mailto:hier-empfänger@einsetzen.de?subject=Empfehlung:%20<?php echo rawurlencode($this->title); ?>&body=Dieser%20Artikel%20könnte%20Sie%20interessieren:%0A<?php echo urlencode($this->Environment->base . $this->Environment->request); ?>%0A%0A<?php echo rawurlencode(preg_replace("/<[^>]+>/", "", $this->teaser));?>"><img src="system/modules/news4ward/html/social/mail.png" alt="Per E-Mail empfehlen" width="30" height="30"></a>
 	</span>
 	<?php endif; ?>
 </div>
