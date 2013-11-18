@@ -88,19 +88,24 @@ class Reader extends Module
 
 		/* build where */
 		$where = array();
+		$whereVals = array();
 		$time = time();
 
 		// news archives
-		$where[] = 'tl_news4ward_article.pid IN('. implode(',', array_map('intval', $this->news_archives)) . ')';
+		$where[] = 'tl_news4ward_article.pid IN(?)';
+		$whereVals[] = implode(',', array_map('intval', $this->news_archives));
 
 		// published
 		if(!BE_USER_LOGGED_IN)
 		{
-			$where[] = "(tl_news4ward_article.start='' OR tl_news4ward_article.start<".$time.") AND (tl_news4ward_article.stop='' OR tl_news4ward_article.stop>".$time.") AND tl_news4ward_article.status='published'";
+			$where[] = "(tl_news4ward_article.start='' OR tl_news4ward_article.start<?) AND (tl_news4ward_article.stop='' OR tl_news4ward_article.stop>?) AND tl_news4ward_article.status='published'";
+			$whereVals[] = $time;
+			$whereVals[] = $time;
 		}
 
 		// alias
-		$where[] = 'tl_news4ward_article.alias = "'.mysql_real_escape_string($this->alias).'"';
+		$where[] = 'tl_news4ward_article.alias = ?';
+		$whereVals[] = $this->alias;
 
 
 		/* get the item */
@@ -110,7 +115,7 @@ class Reader extends Module
 				(SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=tl_news4ward_article.pid) AS parentJumpTo
 			FROM tl_news4ward_article
 			LEFT JOIN tl_user AS user ON (tl_news4ward_article.author=user.id)
-			WHERE ".implode(' AND ',$where))->execute();
+			WHERE ".implode(' AND ',$where))->execute($whereVals);
 
 
 		if(!$objArticle->numRows) {
@@ -201,7 +206,7 @@ class Reader extends Module
 			$this->Template->prevArticle = false;
 		}
 
-    }
+	}
 
 
 }
