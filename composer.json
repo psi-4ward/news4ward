@@ -30,6 +30,6 @@
                         "symlinks": {
                                 "contao": "system/modules/news4ward"
                         }
-                },
+                }
         }
 } 
