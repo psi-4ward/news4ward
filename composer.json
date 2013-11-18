@@ -38,7 +38,7 @@
         "extra": {
                 "contao": {
                         "symlinks": {
-                                "contao": "system/modules/news4ward"
+                                ".": "system/modules/news4ward"
                         }
                 }
         }
