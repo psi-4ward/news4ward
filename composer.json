@@ -1,44 +1,51 @@
 {
-        "name":"psi/news4ward",
-        "description":"A blogging / news system for Contao",
-        "keywords":["news", "blog"],
-        "type":"contao-module",
-        "license":"LGPL-3.0+",
-        "authors":[
-                {
-                        "name":"Christoph Wiechert",
-                        "email":"wio@psitrax.de.de",
-                        "homepage":"http://4wardmedia.de",
-                        "role":"Developer"
-                }
-        ],
-        "support":{
-                "email":"wio@psitrax.de.de",
-                "issues":"https://github.com/psi-4ward/news4ward/issues?direction=desc&sort=created&state=open",
-                "forum":"https://community.contao.org/de/forumdisplay.php?110-4ward",
-                "irc":"irc://irc.freenode.org/contao.de",
-                "source":"https://github.com/psi-4ward/news4ward"
-        },
-        "require":{
-                "php":">=5.3",
-                "contao/core": ">=3.1,<3.3",
-                "menatwork/contao-multicolumnwizard": "~3"
-        },
-        "suggest":{
-                 "psi/news4ward_tags": "Provides article tagging and a tagcloud frontend module.",
-                 "psi/news4ward_comments": "Let visitors comment articles",
-                 "psi/news4ward_categories": "Organize articles in categories and provide a frontend filter module.",
-                 "psi/news4ward_archive-menu": "Timebased frontend filter module.",
-                 "psi/news4ward_author-menu": "Frontend filter module for authors.",
-                 "psi/news4ward_related": "Find similar articles to the displayed one.",
-                 "psi/news4ward_tags": "Provides article tagging and a tagcloud frontend module."       
-                 
-                 },
-        "extra": {
-                "contao": {
-                        "symlinks": {
-                                ".": "system/modules/news4ward"
-                        }
-                }
-        }
+  "name": "psi/news4ward",
+  "description": "A blogging / news system for Contao",
+  "keywords": ["news", "blog"],
+  "type": "contao-module",
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "Christoph Wiechert",
+      "email": "wio@psitrax.de.de",
+      "homepage": "http://4wardmedia.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "wio@psitrax.de.de",
+    "issues": "https://github.com/psi-4ward/news4ward/issues?direction=desc&sort=created&state=open",
+    "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
+    "irc": "irc://irc.freenode.org/contao.de",
+    "source": "https://github.com/psi-4ward/news4ward"
+  },
+  "require": {
+    "php": ">=5.3",
+    "contao/core": ">=3.2.1,<3.3",
+    "menatwork/contao-multicolumnwizard": "~3"
+  },
+  "suggest": {
+    "psi/news4ward_tags": "Provides article tagging and a tagcloud frontend module.",
+    "psi/news4ward_comments": "Let visitors comment articles",
+    "psi/news4ward_categories": "Organize articles in categories and provide a frontend filter module.",
+    "psi/news4ward_archive-menu": "Timebased frontend filter module.",
+    "psi/news4ward_author-menu": "Frontend filter module for authors.",
+    "psi/news4ward_related": "Find similar articles to the displayed one."
+  },
+  "replace": {
+    "contao-legacy/news4ward": "self.version"
+  },
+  "conflict": {
+    "contao/core": "3.0.*"
+  },
+  "extra": {
+    "contao": {
+      "source": {
+        "": "system/modules/news4ward"
+      },
+      "runonce": [
+        "runonce/32update.php"
+      ]
+    }
+  }
 } 
