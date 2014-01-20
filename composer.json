@@ -7,13 +7,13 @@
   "authors": [
     {
       "name": "Christoph Wiechert",
-      "email": "wio@psitrax.de.de",
+      "email": "wio@psitrax.de",
       "homepage": "http://4wardmedia.de",
       "role": "Developer"
     }
   ],
   "support": {
-    "email": "wio@psitrax.de.de",
+    "email": "wio@psitrax.de",
     "issues": "https://github.com/psi-4ward/news4ward/issues?direction=desc&sort=created&state=open",
     "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
     "irc": "irc://irc.freenode.org/contao.de",
@@ -40,7 +40,7 @@
   },
   "extra": {
     "contao": {
-      "source": {
+      "sources": {
         "": "system/modules/news4ward"
       },
       "runonce": [
