@@ -27,7 +27,7 @@ CREATE TABLE `tl_news4ward` (
   `feedBase` varchar(255) NOT NULL default '',
   `alias` varbinary(128) NOT NULL default '',
   `description` text NULL,
-  `filePath` varchar(255) NOT NULL default '',
+  `filePath` binary(16) NULL,
   `useFilePath` char(1) NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
