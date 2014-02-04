@@ -368,7 +368,9 @@ class Helper extends \Frontend
 				$strDescription = $objArticle->teaser;
 			}
 			$strDescription = $this->replaceInsertTags($strDescription);
-			$strDescription = str_replace(array('<br>', '[-]', '&shy;', '[nbsp]', '&nbsp;'), array('<br/>', '', '', ' ', ' '), $strDescription);
+//			$strDescription = str_replace(array('<br>', '[-]', '&shy;', '[nbsp]', '&nbsp;'), array('<br/>', '', '', ' ', ' '), $strDescription);
+//			$strDescription = preg_replace('~/<img([^>]+)>/g~', '<img$i />', $strDescription);
+			$strDescription = \String::toXhtml($strDescription);
 			$objItem->description = $this->convertRelativeUrls($strDescription, $strLink);
 
 
