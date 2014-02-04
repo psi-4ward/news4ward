@@ -62,6 +62,7 @@ class Listing extends Module
 
 		/* build where */
 		$where = array();
+	    $whereValues = array();
 
 		// news archives
 		$where[] = 'tl_news4ward_article.pid IN('. implode(',', array_map('intval', $this->news_archives)) . ')';
@@ -95,6 +96,12 @@ class Listing extends Module
 
 				if (is_string($tmp) && !empty($tmp))
 					$where[] = $tmp;
+				if(is_array($tmp))
+				{
+					$where[] = $tmp['where'];
+					if(is_string($tmp['values'])) $whereValues[] = $tmp['values'];
+					if(is_array($tmp['values'])) $whereValues = array_merge($whereValues, $tmp['values']);
+				}
 			}
 		}
 
@@ -119,7 +126,7 @@ class Listing extends Module
 		if ($this->news4ward_numberOfItems > 0)	$limit = $this->news4ward_numberOfItems;
 
 		// Get the total number of items
-		$objTotal = $this->Database->execute("SELECT COUNT(*) AS total FROM tl_news4ward_article WHERE ".implode(' AND ',$where));
+		$objTotal = $this->Database->prepare("SELECT COUNT(*) AS total FROM tl_news4ward_article WHERE ".implode(' AND ',$where), $whereValues);
 		$total = $objTotal->total - $skipFirst;
 
 		// Split the results
@@ -175,7 +182,7 @@ class Listing extends Module
 			$objArticlesStmt->limit(max($total, 1), $skipFirst);
 		}
 
-		$objArticles = $objArticlesStmt->execute();
+		$objArticles = $objArticlesStmt->execute($whereValues);
 
 		// overwrite parentJumpTo
 		if($this->news4ward_overwriteArchiveJumpTo)
