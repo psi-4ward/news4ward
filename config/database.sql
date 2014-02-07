@@ -51,7 +51,7 @@ CREATE TABLE `tl_news4ward_article` (
   `highlight` char(1) NOT NULL default '',
   `teaserCssID` varchar(255) NOT NULL default '',
   `teaser` text NULL,
-  `teaserImage` varchar(255) NOT NULL default '',
+  `teaserImage` binary(16) NULL,
   `teaserImageCaption` varchar(255) NOT NULL default '',
   `useFacebookImage` char(1) NOT NULL default '',
   `facebookImage` varchar(255) NOT NULL default '',
