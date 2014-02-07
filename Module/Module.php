@@ -150,10 +150,15 @@ abstract class Module extends \Module
 			$objTemplate->datetime = $arrMeta['datetime'];
 
 			// Resolve ID from database driven filesystem
-			if($objArticles->teaserImage && is_numeric($objArticles->teaserImage) && ($objImage = \FilesModel::findByPk($objArticles->teaserImage)) !== null)
+			if($objArticles->teaserImage && ($objImage = \FilesModel::findByPk($objArticles->teaserImage)) !== null)
 			{
 				$objArticles->teaserImage = $objImage->path;
 			}
+			else
+			{
+				$objArticles->teaserImage = '';
+			}
+
 			// Add teaser image
 			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
 			{
