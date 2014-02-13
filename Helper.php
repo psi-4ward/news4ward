@@ -211,27 +211,27 @@ class Helper extends \Frontend
 	/**
 	 * Return the link of a news article
 	 *
-	 * @param \Database_Result $objArticle
+	 * @param array $arrArticle
 	 * @param bool|string $strUrl an optional predefined url
 	 * @return string
 	 */
-	public function generateUrl(\Database_Result $objArticle, $strUrl=false)
+	public function generateUrl($arrArticle, $strUrl=false)
 	{
 		if($strUrl)
 		{
-			return sprintf($strUrl, (($objArticle->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $objArticle->alias : $objArticle->id));
+			return sprintf($strUrl, (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']));
 		}
-		elseif($objArticle->parentJumpTo)
+		elseif($arrArticle['parentJumpTo'])
 		{
-			if(!isset(self::$objPageCache[$objArticle->parentJumpTo]))
+			if(!isset(self::$objPageCache[$arrArticle['parentJumpTo']]))
 			{
-				self::$objPageCache[$objArticle->parentJumpTo] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($objArticle->parentJumpTo);
+				self::$objPageCache[$arrArticle['parentJumpTo']] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($arrArticle['parentJumpTo']);
 			}
-			return $this->generateFrontendUrl(self::$objPageCache[$objArticle->parentJumpTo]->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($objArticle->alias)) ? $objArticle->alias : $objArticle->id));
+			return $this->generateFrontendUrl(self::$objPageCache[$arrArticle['parentJumpTo']]->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
 		}
 		elseif(TL_MODE == 'FE')
 		{
-			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($objArticle->alias)) ? $objArticle->alias : $objArticle->id));
+			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
 		}
 
 		return '';

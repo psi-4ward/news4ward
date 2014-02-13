@@ -19,10 +19,10 @@ abstract class Module extends \Module
 
 	/**
 	 * Return the meta fields of a news article as array
-	 * @param \Database_Result $objArticle
+	 * @param array $arrArticle
 	 * @return array
 	 */
-	protected function getMetaFields(\Database_Result $objArticle)
+	protected function getMetaFields($arrArticle)
 	{
 		$meta = deserialize($this->news4ward_metaFields);
 
@@ -38,17 +38,17 @@ abstract class Module extends \Module
 			switch ($field)
 			{
 				case 'date':
-					$return['date'] = \Date::parse($GLOBALS['objPage']->dateFormat, $objArticle->start);
+					$return['date'] = \Date::parse($GLOBALS['objPage']->dateFormat, $arrArticle['start']);
 					break;
 
 				case 'datetime':
-					$return['datetime'] = \Date::parse($GLOBALS['objPage']->datimFormat, $objArticle->start);
+					$return['datetime'] = \Date::parse($GLOBALS['objPage']->datimFormat, $arrArticle['start']);
 					break;
 
 				case 'author':
-					if (strlen($objArticle->author))
+					if (strlen($arrArticle['author']))
 					{
-						$return['author'] = $GLOBALS['TL_LANG']['MSC']['by'] . ' ' . $objArticle->author;
+						$return['author'] = $GLOBALS['TL_LANG']['MSC']['by'] . ' ' . $arrArticle['author'];
 					}
 					break;
 			}
@@ -61,13 +61,13 @@ abstract class Module extends \Module
 	/**
 	 * Parse one or more items and return them as array
 	 *
-	 * @param \Database_Result $objArticles
+	 * @param array $arrArticles
 	 * @param bool|Template $objTemplate
 	 * @return array
 	 */
-	protected function parseArticles(\Database_Result $objArticles, $objTemplate=false)
+	protected function parseArticles($arrArticles, $objTemplate=false)
 	{
-		if ($objArticles->numRows < 1)
+		if (!$arrArticles)
 		{
 			return array();
 		}
@@ -76,46 +76,45 @@ abstract class Module extends \Module
 		$this->import('\String');
 		$this->import('\News4ward\Helper','Helper');
 
-		$arrArticles = array();
-		$limit = $objArticles->numRows;
+		$limit = count($arrArticles);
 		$count = 0;
+		$arrReturn = array();
 
-
-		while ($objArticles->next())
+		foreach($arrArticles as $article)
 		{
 			// init FrontendTemplate if theres no object given
 			if(!$objTemplate)
 			{
 				$objTemplate = new \FrontendTemplate($this->news4ward_template);
 			}
-			$objTemplate->setData($objArticles->row());
+			$objTemplate->setData($article);
 
 			$objTemplate->count = ++$count;
-			$objTemplate->class = (strlen($objArticles->cssClass) ? ' ' . $objArticles->cssClass : '')
+			$objTemplate->class = (strlen($article['cssClass']) ? ' ' . $article['cssClass'] : '')
 									. (($count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '')
 									. ((($count % 2) == 0) ? ' odd' : ' even')
-									. ($objArticles->highlight ? ' highlight' : '');
-			$objTemplate->link = $this->Helper->generateUrl($objArticles);
-			$objTemplate->archive = $objArticles->archive;
+									. ($article['highlight'] ? ' highlight' : '');
+			$objTemplate->link = $this->Helper->generateUrl($article);
+			$objTemplate->archive = $article['archive'];
 
 			// Clean the RTE output for the TEASER
-			if ($objArticles->teaser != '')
+			if ($article['teaser'] != '')
 			{
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$objArticles->teaser = \String::toXhtml($objArticles->teaser);
+					$article['teaser'] = \String::toXhtml($article['teaser']);
 				}
 				else
 				{
-					$objArticles->teaser = \String::toHtml5($objArticles->teaser);
+					$article['teaser'] = \String::toHtml5($article['teaser']);
 				}
 
-				$objTemplate->teaser = \String::encodeEmail($objArticles->teaser);
+				$objTemplate->teaser = \String::encodeEmail($article['teaser']);
 			}
 
 
 			// Generate ContentElements
-			$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="tl_news4ward_article" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($objArticles->id);
+			$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="tl_news4ward_article" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($article['id']);
 			$strContent = '';
 			while($objContentelements->next())
 			{
@@ -145,32 +144,32 @@ abstract class Module extends \Module
 			$arrMeta = $this->getMetaFields($objArticles);
 			$objTemplate->date = $arrMeta['date'];
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
-			$objTemplate->timestamp = $objArticles->start;
+			$objTemplate->timestamp = $article['start'];
 			$objTemplate->author = $arrMeta['author'];
 			$objTemplate->datetime = $arrMeta['datetime'];
 
 			// Resolve ID from database driven filesystem
-			if($objArticles->teaserImage && ($objImage = \FilesModel::findByPk($objArticles->teaserImage)) !== null)
+			if($article['teaserImage'] && ($objImage = \FilesModel::findByPk($article['teaserImage'])) !== null)
 			{
-				$objArticles->teaserImage = $objImage->path;
+				$article['teaserImage'] = $objImage->path;
 			}
 			else
 			{
-				$objArticles->teaserImage = '';
+				$article['teaserImage'] = '';
 			}
 
 			// Add teaser image
-			if($objArticles->teaserImage && is_file(TL_ROOT.'/'.$objArticles->teaserImage))
+			if($article['teaserImage'] && is_file(TL_ROOT.'/'.$article['teaserImage']))
 			{
-				$imgSize = deserialize($this->imgSize,true);
+				$imgSize = deserialize($this->imgSize, true);
 				$objTemplate->arrSize = $imgSize;
 				if(count($imgSize)>1)
 				{
-					$objTemplate->teaserImage = $this->getImage($objArticles->teaserImage,$imgSize[0],$imgSize[1],$imgSize[2]);
+					$objTemplate->teaserImage = \Image::get($article['teaserImage'], $imgSize[0], $imgSize[1], $imgSize[2]);
 				}
 				else
 				{
-					$objTemplate->teaserImage = $objArticles->teaserImage;
+					$objTemplate->teaserImage = $article['teaserImage'];
 				}
 				$objTemplate->teaserImageRaw = $objTemplate->teaserImag;
 			}
@@ -182,14 +181,14 @@ abstract class Module extends \Module
 				foreach ($GLOBALS['TL_HOOKS']['News4wardParseArticle'] as $callback)
 				{
 					$this->import($callback[0]);
-					$this->$callback[0]->$callback[1]($this,$objArticles,$objTemplate);
+					$this->$callback[0]->$callback[1]($this, $arrArticles, $objTemplate);
 				}
 			}
 
-			$arrArticles[] = $objTemplate->parse();
+			$arrReturn[] = $objTemplate->parse();
 		}
 
-		return $arrArticles;
+		return $arrReturn;
 	}
 
 

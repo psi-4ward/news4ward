@@ -179,7 +179,7 @@ class Reader extends Module
 			$this->Template->nextArticle = array
 			(
 				'title' => $objNextArticle->title,
-				'href'	=> $this->Helper->generateUrl($objNextArticle)
+				'href'	=> $this->Helper->generateUrl($objNextArticle->row())
 			);
 		}
 		else
@@ -198,7 +198,7 @@ class Reader extends Module
 			$this->Template->prevArticle = array
 			(
 				'title' => $objPrevArticle->title,
-				'href'	=> $this->Helper->generateUrl($objPrevArticle)
+				'href'	=> $this->Helper->generateUrl($objPrevArticle->row())
 			);
 		}
 		else

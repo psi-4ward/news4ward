@@ -184,17 +184,18 @@ class Listing extends Module
 
 		$objArticles = $objArticlesStmt->execute($whereValues);
 
+	    $arrArticles = $objArticles->fetchAllAssoc();
+
 		// overwrite parentJumpTo
 		if($this->news4ward_overwriteArchiveJumpTo)
 		{
-			while($objArticles->next())
+			foreach($arrArticles as $article)
 			{
-				$objArticles->parentJumpTo = $this->jumpTo;
+				$article['parentJumpTo'] = $this->jumpTo;
 			}
-			$objArticles->reset();
 		}
 
-		$this->Template->articles = $this->parseArticles($objArticles);
+	    $this->Template->articles = $this->parseArticles($arrArticles);
 		$this->Template->archives = $this->news_archives;
 		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
 
