@@ -126,7 +126,7 @@ class Listing extends Module
 		if ($this->news4ward_numberOfItems > 0)	$limit = $this->news4ward_numberOfItems;
 
 		// Get the total number of items
-		$objTotal = $this->Database->prepare("SELECT COUNT(*) AS total FROM tl_news4ward_article WHERE ".implode(' AND ',$where), $whereValues);
+		$objTotal = $this->Database->prepare("SELECT COUNT(*) AS total FROM tl_news4ward_article WHERE ".implode(' AND ',$where))->execute($whereValues);
 		$total = $objTotal->total - $skipFirst;
 
 		// Split the results
