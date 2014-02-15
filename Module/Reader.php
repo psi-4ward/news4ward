@@ -125,7 +125,7 @@ class Reader extends Module
 			exit;
 		};
 
-		$this->parseArticles($objArticle,$this->Template);
+		$this->parseArticles($objArticle->fetchAllAssoc(), $this->Template);
 
 		// Add social Buttons
 		$this->Template->socialButtons = deserialize($objArticle->social,true);
