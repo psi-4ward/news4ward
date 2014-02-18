@@ -189,9 +189,9 @@ class Listing extends Module
 		// overwrite parentJumpTo
 		if($this->news4ward_overwriteArchiveJumpTo)
 		{
-			foreach($arrArticles as $article)
+			foreach($arrArticles as $k => $article)
 			{
-				$article['parentJumpTo'] = $this->jumpTo;
+				$arrArticles[$k]['parentJumpTo'] = $this->jumpTo;
 			}
 		}
 
