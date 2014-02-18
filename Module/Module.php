@@ -141,7 +141,7 @@ abstract class Module extends \Module
 
 
 			// Add meta information
-			$arrMeta = $this->getMetaFields($objArticles);
+			$arrMeta = $this->getMetaFields($article);
 			$objTemplate->date = $arrMeta['date'];
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
 			$objTemplate->timestamp = $article['start'];
