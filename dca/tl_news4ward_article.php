@@ -146,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['author'],
 			'inputType'               => 'select',
-			'default'                 => $this->User->id,
+			'default'                 => \BackendUser::getInstance()->id,
 			'exclude'                 => true,
 			'foreignKey'              => 'tl_user.name',
 			'filter'                  => 'true',
