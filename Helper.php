@@ -67,7 +67,7 @@ class Helper extends \Frontend
 	 */
 	public function inserttagReplacer($strTag)
 	{
-		list($strTag,$strValue) = explode('::',$strTag);
+		list($strTag, $strValue) = explode('::',$strTag);
 		switch($strTag)
 		{
 			case 'news4ward':
@@ -102,15 +102,15 @@ class Helper extends \Frontend
 
 				if($strTag == 'news4ward_link')
 				{
-					return sprintf('<a href="%s" title="%s">%s</a>',$this->generateUrl($objArticle),$objArticle->title,$objArticle->title);
+					return sprintf('<a href="%s" title="%s">%s</a>',$this->generateUrl($objArticle->row()), $objArticle->title, $objArticle->title);
 				}
 				else if($strTag == 'news4ward_open')
 				{
-					return sprintf('<a href="%s" title="%s">',$this->generateUrl($objArticle),$objArticle->title);
+					return sprintf('<a href="%s" title="%s">',$this->generateUrl($objArticle->row()), $objArticle->title);
 				}
 				else if($strTag == 'news4ward_url')
 				{
-					return $this->generateUrl($objArticle);
+					return $this->generateUrl($objArticle->row());
 				}
 				else if($strTag == 'news4ward_title')
 				{
@@ -200,7 +200,7 @@ class Helper extends \Frontend
 			// Add items to the indexer
 			while ($objArticle->next())
 			{
-				$arrPages[] = $this->generateUrl($objArticle, $strUrl);
+				$arrPages[] = $this->generateUrl($objArticle->row(), $strUrl);
 			}
 		}
 
@@ -348,7 +348,7 @@ class Helper extends \Frontend
 			$objItem = new \FeedItem();
 
 			$objItem->title = $objArticle->title;
-			$objItem->link = $this->generateUrl($objArticle, $strUrl);
+			$objItem->link = $this->generateUrl($objArticle->row(), $strUrl);
 			$objItem->published = $objArticle->start;
 			$objItem->author = $objArticle->authorName;
 

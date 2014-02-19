@@ -389,7 +389,7 @@ class tl_news4ward_article extends Backend
 			foreach ($GLOBALS['TL_HOOKS']['news4ward_article_generateListItem'] as $callback)
 			{
 				$this->import($callback[0]);
-				$strReturn = $this->$callback[0]->$callback[1]($strReturn,$arrRow);
+				$strReturn = $this->$callback[0]->$callback[1]($strReturn, $arrRow);
 			}
 		}
 

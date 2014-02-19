@@ -531,5 +531,3 @@ class tl_news4ward extends Backend
 		return ($this->User->isAdmin || $this->User->hasAccess('delete', 'news4ward_newp')) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ' : ' ';
 	}
 }
-
-?>
