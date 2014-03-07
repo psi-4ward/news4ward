@@ -205,7 +205,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['teaserImage'],
 			'inputType'               => 'fileTree',
 			'exclude'                 => true,
-			'eval'                    => array('fieldType'=>'radio', 'files'=>'true', 'filesOnly'=>true, 'extensions'=>'jpg,gif,png')
+			'eval'                    => array('fieldType'=>'radio', 'files'=>'true', 'filesOnly'=>true, 'extensions'=>'jpg,gif,png,jpeg')
 		),
 		'teaserImageCaption' => array
 		(
