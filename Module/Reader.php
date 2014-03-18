@@ -149,13 +149,13 @@ class Reader extends Module
 		{
 			$strTagEnding = ($GLOBALS['objPage']->outputFormat == 'xhtml') ? ' />' : '>';
 
-			if($objArticle->useFacebookImage && $objArticle->facebookImage && is_file(TL_ROOT.'/'.$objArticle->facebookImage))
+			if($objArticle->useFacebookImage && ($objImage = \FilesModel::findByPk($objArticle->facebookImage)) && is_file(TL_ROOT.'/'.$objImage->path))
 			{
-				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objArticle->facebookImage.'"'.$strTagEnding;
+				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objImage->path.'"'.$strTagEnding;
 			}
-			else if($objArticle->teaserImage &&  is_file(TL_ROOT.'/'.$objArticle->teaserImage))
+			else if($objArticle->teaserImage && ($objImage = \FilesModel::findByPk($objArticle->teaserImage)) && is_file(TL_ROOT.'/'.$objImage->path))
 			{
-				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objArticle->teaserImage.'"'.$strTagEnding;
+				$GLOBALS['TL_HEAD'][] = '<meta property="og:image" content="'.$this->Environment->base.$objImage->path.'"'.$strTagEnding;
 			}
 			$GLOBALS['TL_HEAD'][] = '<meta property="og:title" content="'.$objArticle->title.'"'.$strTagEnding;
 			$GLOBALS['TL_HEAD'][] = '<meta property="og:url" content="'.$this->Environment->base.$this->Environment->request.'"'.$strTagEnding;
