@@ -155,7 +155,7 @@ abstract class Module extends \Module
 			}
 			else
 			{
-				$article['teaserImage'] = '';
+                $article['teaserImage'] = '';
 			}
 
 			// Add teaser image
@@ -172,7 +172,9 @@ abstract class Module extends \Module
 					$objTemplate->teaserImage = $article['teaserImage'];
 				}
 				$objTemplate->teaserImageRaw = $objTemplate->teaserImag;
-			}
+			} else {
+                $objTemplate->teaserImage = '';
+            }
 
 
 			// HOOK: add custom logic
