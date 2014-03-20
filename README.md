@@ -18,11 +18,14 @@ Installation
 ------------
 
 ### Attention
+**DO NOT** use the Contao Repository, it holds very old versions of news4ward and its componentes!
+Use the [Contao Compoers](https://contao.org/de/extension-list/view/composer.html) to install news4ward with all dependencies.
+
 Make a Backup of your Installation! If you use news4ward without GlobalContentelements
 contao deletes all your contentelements!
 
 ### Required extenion
-First install these extensions via repository
+First install these extensions:
 * [tagsWidget](https://github.com/psi-4ward/tagsWidget)
 * [MultiColumnWizard](https://contao.org/de/extension-list/view/MultiColumnWizard.de.html)
 
