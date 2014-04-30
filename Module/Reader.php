@@ -43,6 +43,7 @@ class Reader extends Module
 
 		$this->news_archives = $this->sortOutProtected(deserialize($this->news4ward_archives));
 
+
 		// Return if there are no archives
 		if (!is_array($this->news_archives) || count($this->news_archives) < 1)
 		{
@@ -69,7 +70,10 @@ class Reader extends Module
 			$this->strTemplate = $this->news4ward_readerTemplate;
 		}
 
-		return parent::generate();
+        // support disalbed auto-item parameter
+        \Input::get($this->alias);
+
+        return parent::generate();
 	}
 
 
@@ -79,12 +83,6 @@ class Reader extends Module
 	protected function compile()
     {
 		$this->import('\News4ward\Helper','Helper');
-
-		// Set the item from the auto_item parameter
-		if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
-		{
-			$this->Input->setGet('items', $this->Input->get('auto_item'));
-		}
 
 		/* build where */
 		$where = array();
@@ -212,7 +210,7 @@ class Reader extends Module
 			$this->Template->prevArticle = false;
 		}
 
-	}
+    }
 
 
 }
