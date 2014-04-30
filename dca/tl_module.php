@@ -86,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_metaFields'] = array
 	'inputType'               => 'checkbox',
 	'options'                 => array('date', 'author'),
 	'reference'               => &$GLOBALS['TL_LANG']['MSC'],
-	'eval'                    => array('multiple'=>true, 'tl_class'=>'w50')
+	'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_template'] = array
