@@ -183,7 +183,7 @@ abstract class Module extends \Module
 				foreach ($GLOBALS['TL_HOOKS']['News4wardParseArticle'] as $callback)
 				{
 					$this->import($callback[0]);
-					$this->$callback[0]->$callback[1]($this, $arrArticles, $objTemplate);
+					$this->$callback[0]->$callback[1]($this, $article, $objTemplate, $arrArticles);
 				}
 			}
 
