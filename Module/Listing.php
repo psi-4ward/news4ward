@@ -108,14 +108,7 @@ class Listing extends Module
 
 		/* Ordering */
 		$ordering = array('tl_news4ward_article.sticky DESC');
-
-		switch($this->news4ward_order)
-		{
-			case 'title ASC':	$ordering[] = 'tl_news4ward_article.title'; 			break;
-			case 'title DESC':	$ordering[] = 'tl_news4ward_article.title DESC'; 		break;
-			case 'start ASC':	$ordering[] = 'tl_news4ward_article.start'; 			break;
-			case 'start DESC':	$ordering[] = 'tl_news4ward_article.start DESC'; 		break;
-		}
+        $ordering[] = 'tl_news4ward_article.'.$this->news4ward_order;
 
 		/* Pagination */
 		$skipFirst = intval($this->news4ward_skipFirst);
