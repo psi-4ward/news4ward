@@ -46,12 +46,6 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 		),
 		'global_operations' => array
 		(
-			'toggleNodes' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['toggleNodes'],
-				'href'                => '&amp;ptg=all',
-				'class'               => 'header_toggle'
-			),
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
