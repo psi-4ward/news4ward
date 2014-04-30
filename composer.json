@@ -30,7 +30,11 @@
     "psi/news4ward_categories": "Organize articles in categories and provide a frontend filter module.",
     "psi/news4ward_archive-menu": "Timebased frontend filter module.",
     "psi/news4ward_author-menu": "Frontend filter module for authors.",
-    "psi/news4ward_related": "Find similar articles to the displayed one."
+    "psi/news4ward_related": "Find similar articles to the displayed one.",
+    "psi/news4ward_mostread": "Count article read hits and display most visited articles.",
+    "psi/news4ward_newsletter": "Prepare newsltters from articles",
+    "psi/news4ward_titleSearch": "Filter listing within title searchbox",
+    "psi/news4ward_metaTitle": "Extra field for page title"
   },
   "replace": {
     "contao-legacy/news4ward": "self.version"

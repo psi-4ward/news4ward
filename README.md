@@ -11,7 +11,9 @@ Features
 * [Categories] (https://github.com/psi-4ward/news4ward_categories)
 * [Related-Articles] (https://github.com/psi-4ward/news4ward_related)
 * [Archive-Menu] (https://github.com/psi-4ward/news4ward_archiveMenu)
-* [Author-Menu] (https://github.com/psi-4ward/news4ward_authorMenu)
+* [Newsletter] (https://github.com/psi-4ward/news4ward_newsletter)
+* [Mostread] (https://github.com/psi-4ward/news4ward_mostread)
+* [TitleSearch] (https://github.com/psi-4ward/news4ward_titleSearch)
 * and of course some more improvements compared to core-news module
 
 Installation
