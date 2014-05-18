@@ -356,7 +356,7 @@ class Helper extends \Frontend
 			if($arrArchive['source'] == 'source_text')
 			{
 				/* generate the content-elements */
-				$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do="news4ward" AND invisible="" ORDER BY sorting')->execute($objArticle->id);
+				$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="news4ward" AND invisible="" ORDER BY sorting')->execute($objArticle->id);
 				$strDescription = '';
 				while($objContentelements->next())
 				{
