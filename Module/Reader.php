@@ -50,28 +50,11 @@ class Reader extends Module
 			return '';
 		}
 
-		// Read the alias from the url
-		if (!preg_match("~.*".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9\._-]+).*~i", $this->Environment->request, $erg))
-		{
-			return '';
-		}
-		// strip suffix
-		if (substr($erg[1], -strlen($GLOBALS['TL_CONFIG']['urlSuffix'])) == $GLOBALS['TL_CONFIG']['urlSuffix'])
-		{
-			$erg[1] = substr($erg[1],0,-strlen($GLOBALS['TL_CONFIG']['urlSuffix']));
-		}
-
-		$this->alias = $erg[1];
-
-
 		// set the template
 		if ($this->news4ward_readerTemplate != '')
 		{
 			$this->strTemplate = $this->news4ward_readerTemplate;
 		}
-
-        // support disabled auto-item parameter
-        \Input::get($this->alias);
 
         return parent::generate();
 	}
@@ -102,8 +85,10 @@ class Reader extends Module
 		}
 
 		// alias
-		$where[] = 'tl_news4ward_article.alias = ?';
-		$whereVals[] = $this->alias;
+		$varAlias = ($GLOBALS['TL_CONFIG']['useAutoItem'] && in_array('items', $GLOBALS['TL_AUTO_ITEM'])) ? \Input::get('auto_item') : \Input::get('items');
+		$where[] = '(tl_news4ward_article.id=? OR tl_news4ward_article.alias=?)';
+		$whereVals[] = is_numeric($varAlias) ? $varAlias : 0;
+		$whereVals[] = $varAlias;
 
 
 		/* get the item */
