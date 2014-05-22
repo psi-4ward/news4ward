@@ -177,7 +177,7 @@ class Helper extends \Frontend
 						$domain = ($this->Environment->ssl ? 'https://' : 'http://') . $objParent->domain . TL_PATH . '/';
 					}
 
-					$arrProcessed[$objArchive->jumpTo] = $domain . $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
+					$arrProcessed[$objArchive->jumpTo] = $domain . $this->generateFrontendUrl($objParent->row(), (($GLOBALS['TL_CONFIG']['useAutoItem'] && in_array('items', $GLOBALS['TL_AUTO_ITEM'])) ?  '/%s' : '/items/%s'), $objParent->language);
 				}
 			}
 
@@ -217,9 +217,16 @@ class Helper extends \Frontend
 	 */
 	public function generateUrl($arrArticle, $strUrl=false)
 	{
+		$strParam = (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']);
+
+		if (!$GLOBALS['TL_CONFIG']['useAutoItem'] || !in_array('items', $GLOBALS['TL_AUTO_ITEM']))
+		{
+			$strParam = 'items/' . $strParam;
+		}
+
 		if ($strUrl)
 		{
-			return sprintf($strUrl, (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']));
+			return sprintf($strUrl, $strParam);
 		}
 		elseif ($arrArticle['parentJumpTo'])
 		{
@@ -228,11 +235,11 @@ class Helper extends \Frontend
 				self::$objPageCache[$arrArticle['parentJumpTo']] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($arrArticle['parentJumpTo']);
 			}
 
-			return $this->generateFrontendUrl(self::$objPageCache[$arrArticle['parentJumpTo']]->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
+			return $this->generateFrontendUrl(self::$objPageCache[$arrArticle['parentJumpTo']]->row(), '/' . $strParam);
 		}
 		elseif (TL_MODE == 'FE')
 		{
-			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
+			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . $strParam);
 		}
 
 		return '';
@@ -335,7 +342,7 @@ class Helper extends \Frontend
 		}
 
 		$objParent = $this->getPageDetails($objParent->id);
-		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
+		$strUrl = $this->generateFrontendUrl($objParent->row(), (($GLOBALS['TL_CONFIG']['useAutoItem'] && in_array('items', $GLOBALS['TL_AUTO_ITEM'])) ?  '/%s' : '/items/%s'), $objParent->language);
 
 		// be sure to be absolute
 		if (substr($strUrl,0,4) != 'http')

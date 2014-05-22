@@ -35,6 +35,9 @@ $GLOBALS['TL_PERMISSIONS'][] = 'news4ward';
 $GLOBALS['TL_PERMISSIONS'][] = 'news4ward_newp';
 $GLOBALS['TL_PERMISSIONS'][] = 'news4ward_itemRights';
 
+// Register auto_item
+$GLOBALS['TL_AUTO_ITEM'][] = 'items';
+
 // Register hook to add items to the indexer
 $GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('\News4ward\Helper', 'getSearchablePages');
 
