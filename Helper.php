@@ -15,8 +15,6 @@ namespace Psi\News4ward;
 
 class Helper extends \Frontend
 {
-	protected static $objPageCache = array();
-
 
 	/**
 	 * Execute some ajax actions
@@ -58,8 +56,8 @@ class Helper extends \Frontend
 
 		exit;
 	}
-	
-	
+
+
 	/**
 	 * Replace news4ward insert tags
 	 * @param $strTag
@@ -177,7 +175,7 @@ class Helper extends \Frontend
 						$domain = ($this->Environment->ssl ? 'https://' : 'http://') . $objParent->domain . TL_PATH . '/';
 					}
 
-					$arrProcessed[$objArchive->jumpTo] = $domain . $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
+					$arrProcessed[$objArchive->jumpTo] = $domain . $this->generateFrontendUrl($objParent->row(), (($GLOBALS['TL_CONFIG']['useAutoItem'] && in_array('items', $GLOBALS['TL_AUTO_ITEM'])) ?  '/%s' : '/items/%s'), $objParent->language);
 				}
 			}
 
@@ -217,21 +215,24 @@ class Helper extends \Frontend
 	 */
 	public function generateUrl($arrArticle, $strUrl=false)
 	{
-		if($strUrl)
+		$strParam = (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']);
+
+		if (!$GLOBALS['TL_CONFIG']['useAutoItem'] || !in_array('items', $GLOBALS['TL_AUTO_ITEM']))
 		{
-			return sprintf($strUrl, (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']));
+			$strParam = 'items/' . $strParam;
 		}
-		elseif($arrArticle['parentJumpTo'])
+
+		if ($strUrl)
 		{
-			if(!isset(self::$objPageCache[$arrArticle['parentJumpTo']]))
-			{
-				self::$objPageCache[$arrArticle['parentJumpTo']] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($arrArticle['parentJumpTo']);
-			}
-			return $this->generateFrontendUrl(self::$objPageCache[$arrArticle['parentJumpTo']]->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
+			return sprintf($strUrl, $strParam);
 		}
-		elseif(TL_MODE == 'FE')
+		elseif ($arrArticle['parentJumpTo'] && ($objJumpTo = \PageModel::findByPk($arrArticle['parentJumpTo'])) !== null)
 		{
-			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
+		    return $objJumpTo->getFrontendUrl('/' . $strParam);
+		}
+		elseif (TL_MODE == 'FE')
+		{
+			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . $strParam);
 		}
 
 		return '';
@@ -334,10 +335,10 @@ class Helper extends \Frontend
 		}
 
 		$objParent = $this->getPageDetails($objParent->id);
-		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
+		$strUrl = $this->generateFrontendUrl($objParent->row(), (($GLOBALS['TL_CONFIG']['useAutoItem'] && in_array('items', $GLOBALS['TL_AUTO_ITEM'])) ?  '/%s' : '/items/%s'), $objParent->language);
 
 		// be sure to be absolute
-		if(substr($strUrl,0,4) != 'http')
+		if (substr($strUrl,0,4) != 'http')
 		{
 			$strUrl = $strLink.$strUrl;
 		}
@@ -353,7 +354,7 @@ class Helper extends \Frontend
 			$objItem->author = $objArticle->authorName;
 
 			// Prepare the description
-			if($arrArchive['source'] == 'source_text')
+			if ($arrArchive['source'] == 'source_text')
 			{
 				/* generate the content-elements */
 				$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="news4ward" AND invisible="" ORDER BY sorting')->execute($objArticle->id);

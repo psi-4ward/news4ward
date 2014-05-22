@@ -12,7 +12,7 @@
  */
 
 namespace Psi\News4ward\Module;
- 
+
 class Listing extends Module
 {
     /**
@@ -68,26 +68,26 @@ class Listing extends Module
 		$where[] = 'tl_news4ward_article.pid IN('. implode(',', array_map('intval', $this->news_archives)) . ')';
 
 		// published
-		if(!BE_USER_LOGGED_IN)
+		if (!BE_USER_LOGGED_IN)
 		{
 			$where[] = "(tl_news4ward_article.start='' OR tl_news4ward_article.start<".$time.") AND (tl_news4ward_article.stop='' OR tl_news4ward_article.stop>".$time.") AND tl_news4ward_article.status='published'";
 		}
 
 		// show only highlighted items?
-		if($this->news4ward_featured == 'featured')
+		if ($this->news4ward_featured == 'featured')
 			$where[] = 'tl_news4ward_article.highlight="1"';
-		elseif($this->news4ward_featured == 'unfeatured')
+		elseif ($this->news4ward_featured == 'unfeatured')
 			$where[] = 'tl_news4ward_article.highlight<>"1"';
 
 		// limit the time period
-		if($this->news4ward_timeConstraint != 'all' && $this->news4ward_timeConstraint != '')
+		if ($this->news4ward_timeConstraint != 'all' && $this->news4ward_timeConstraint != '')
 		{
 			list($strBegin, $strEnd) = $this->getDatesFromFormat(new \Date(), $this->news4ward_timeConstraint);
 			$where[] = "tl_news4ward_article.start >= $strBegin AND tl_news4ward_article.start <= $strEnd";
 		}
 
 		// HOOK: add filter logic from other modules like tags
-		if($this->news4ward_ignoreFilters != '1' && isset($GLOBALS['TL_HOOKS']['News4wardListFilter']) && is_array($GLOBALS['TL_HOOKS']['News4wardListFilter']))
+		if ($this->news4ward_ignoreFilters != '1' && isset($GLOBALS['TL_HOOKS']['News4wardListFilter']) && is_array($GLOBALS['TL_HOOKS']['News4wardListFilter']))
 		{
 			foreach ($GLOBALS['TL_HOOKS']['News4wardListFilter'] as $callback)
 			{
@@ -180,9 +180,9 @@ class Listing extends Module
 	    $arrArticles = $objArticles->fetchAllAssoc();
 
 		// overwrite parentJumpTo
-		if($this->news4ward_overwriteArchiveJumpTo)
+		if ($this->news4ward_overwriteArchiveJumpTo)
 		{
-			foreach($arrArticles as $k => $article)
+			foreach ($arrArticles as $k => $article)
 			{
 				$arrArticles[$k]['parentJumpTo'] = $this->jumpTo;
 			}
@@ -204,7 +204,7 @@ class Listing extends Module
 	 */
 	protected function addNewsfeedsToLayout()
 	{
-		if(!$GLOBALS['objPage']->layout)
+		if (!$GLOBALS['objPage']->layout)
 		{
 			$objLayout = $this->Database->prepare('SELECT news4ward_feeds FROM tl_layout WHERE fallback="1"')->limit(1)->execute();
 		}
@@ -213,17 +213,17 @@ class Listing extends Module
 			$objLayout = $this->Database->prepare('SELECT news4ward_feeds FROM tl_layout WHERE id=?')->limit(1)->execute($GLOBALS['objPage']->layout);
 		}
 
-		if(!$objLayout->numRows) return;
+		if (!$objLayout->numRows) return;
 
 		$arrNews4wardIDs = deserialize($objLayout->news4ward_feeds,true);
 		if(empty($arrNews4wardIDs)) return;
 
 		$objNews4ward = $this->Database->prepare('SELECT feedBase,alias,format,title FROM tl_news4ward WHERE FIND_IN_SET(id,?) AND makeFeed="1"')->execute(implode(',',$arrNews4wardIDs));
-		if(!$objNews4ward->numRows) return;
+		if (!$objNews4ward->numRows) return;
 
 		$strTagEnding = ($GLOBALS['objPage']->outputFormat == 'xhtml') ? ' />' : '>';
 
-		while($objNews4ward->next())
+		while ($objNews4ward->next())
 		{
 			$base = strlen($objNews4ward->feedBase) ? $objNews4ward->feedBase : $this->Environment->base;
 			$GLOBALS['TL_HEAD'][] = '<link rel="alternate" href="' . $base . $objNews4ward->alias . '.xml" type="application/' . $objNews4ward->format . '+xml" title="' . $objNews4ward->title . '"' . $strTagEnding . "\n";
