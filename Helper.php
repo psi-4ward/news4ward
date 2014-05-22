@@ -58,8 +58,8 @@ class Helper extends \Frontend
 
 		exit;
 	}
-	
-	
+
+
 	/**
 	 * Replace news4ward insert tags
 	 * @param $strTag
@@ -217,19 +217,20 @@ class Helper extends \Frontend
 	 */
 	public function generateUrl($arrArticle, $strUrl=false)
 	{
-		if($strUrl)
+		if ($strUrl)
 		{
 			return sprintf($strUrl, (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']));
 		}
-		elseif($arrArticle['parentJumpTo'])
+		elseif ($arrArticle['parentJumpTo'])
 		{
-			if(!isset(self::$objPageCache[$arrArticle['parentJumpTo']]))
+			if (!isset(self::$objPageCache[$arrArticle['parentJumpTo']]))
 			{
 				self::$objPageCache[$arrArticle['parentJumpTo']] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($arrArticle['parentJumpTo']);
 			}
+
 			return $this->generateFrontendUrl(self::$objPageCache[$arrArticle['parentJumpTo']]->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
 		}
-		elseif(TL_MODE == 'FE')
+		elseif (TL_MODE == 'FE')
 		{
 			return $this->generateFrontendUrl($GLOBALS['objPage']->row(), '/' . ((!$GLOBALS['TL_CONFIG']['disableAlias'] && strlen($arrArticle['alias'])) ? $arrArticle['alias'] : $arrArticle['id']));
 		}
@@ -337,7 +338,7 @@ class Helper extends \Frontend
 		$strUrl = $this->generateFrontendUrl($objParent->row(), ($GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/%s' : '/items/%s'), $objParent->language);
 
 		// be sure to be absolute
-		if(substr($strUrl,0,4) != 'http')
+		if (substr($strUrl,0,4) != 'http')
 		{
 			$strUrl = $strLink.$strUrl;
 		}
@@ -353,7 +354,7 @@ class Helper extends \Frontend
 			$objItem->author = $objArticle->authorName;
 
 			// Prepare the description
-			if($arrArchive['source'] == 'source_text')
+			if ($arrArchive['source'] == 'source_text')
 			{
 				/* generate the content-elements */
 				$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="news4ward" AND invisible="" ORDER BY sorting')->execute($objArticle->id);

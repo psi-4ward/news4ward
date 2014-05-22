@@ -51,12 +51,12 @@ class Reader extends Module
 		}
 
 		// Read the alias from the url
-		if(!preg_match("~.*".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9\._-]+).*~i",$this->Environment->request,$erg))
+		if (!preg_match("~.*".preg_quote($GLOBALS['objPage']->alias)."/([a-z0-9\._-]+).*~i", $this->Environment->request, $erg))
 		{
 			return '';
 		}
 		// strip suffix
-		if(substr($erg[1],-strlen($GLOBALS['TL_CONFIG']['urlSuffix'])) == $GLOBALS['TL_CONFIG']['urlSuffix'])
+		if (substr($erg[1], -strlen($GLOBALS['TL_CONFIG']['urlSuffix'])) == $GLOBALS['TL_CONFIG']['urlSuffix'])
 		{
 			$erg[1] = substr($erg[1],0,-strlen($GLOBALS['TL_CONFIG']['urlSuffix']));
 		}
@@ -65,12 +65,12 @@ class Reader extends Module
 
 
 		// set the template
-		if(strlen($this->news4ward_readerTemplate))
+		if ($this->news4ward_readerTemplate != '')
 		{
 			$this->strTemplate = $this->news4ward_readerTemplate;
 		}
 
-        // support disalbed auto-item parameter
+        // support disabled auto-item parameter
         \Input::get($this->alias);
 
         return parent::generate();
@@ -82,7 +82,7 @@ class Reader extends Module
 	 */
 	protected function compile()
     {
-		$this->import('\News4ward\Helper','Helper');
+		$this->import('\News4ward\Helper', 'Helper');
 
 		/* build where */
 		$where = array();
@@ -94,7 +94,7 @@ class Reader extends Module
 		$whereVals[] = implode(',', array_map('intval', $this->news_archives));
 
 		// published
-		if(!BE_USER_LOGGED_IN)
+		if (!BE_USER_LOGGED_IN)
 		{
 			$where[] = "(tl_news4ward_article.start='' OR tl_news4ward_article.start<?) AND (tl_news4ward_article.stop='' OR tl_news4ward_article.stop>?) AND tl_news4ward_article.status='published'";
 			$whereVals[] = $time;
@@ -116,7 +116,7 @@ class Reader extends Module
 			WHERE ".implode(' AND ',$where))->execute($whereVals);
 
 
-		if(!$objArticle->numRows) {
+		if (!$objArticle->numRows) {
 			header('HTTP/1.1 404 Not Found');
 			$objHandler = new $GLOBALS['TL_PTY']['error_404']();
 			$objHandler->generate(false);
@@ -143,7 +143,7 @@ class Reader extends Module
 
 		// Add facebook meta data
 		// debug with https://developers.facebook.com/tools/debug
-		if($this->news4ward_facebookMeta)
+		if ($this->news4ward_facebookMeta)
 		{
 			$strTagEnding = ($GLOBALS['objPage']->outputFormat == 'xhtml') ? ' />' : '>';
 
@@ -162,7 +162,7 @@ class Reader extends Module
 
 		// find NEXT  article
 		$strWhere = '';
-		if(!BE_USER_LOGGED_IN)
+		if (!BE_USER_LOGGED_IN)
 		{
 			$strWhere = "AND (a.start='' OR a.start<".$time.") AND (a.stop='' OR a.stop>".$time.") AND a.status='published'";
 		}
@@ -172,7 +172,7 @@ class Reader extends Module
 			"FROM tl_news4ward_article AS a
 			WHERE a.pid IN (?) AND a.start > ?".$strWhere.' ORDER BY start ASC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
 
-		if($objNextArticle->numRows)
+		if ($objNextArticle->numRows)
 		{
             $arrNext = $objNextArticle->row();
             $arrNext['parentJumpTo'] = $GLOBALS['objPage']->id;
@@ -194,7 +194,7 @@ class Reader extends Module
 			"FROM tl_news4ward_article AS a
 			WHERE a.pid IN (?) AND a.start < ?".$strWhere.' ORDER BY start DESC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
 
-		if($objPrevArticle->numRows)
+		if ($objPrevArticle->numRows)
 		{
             $arrPrev = $objPrevArticle->row();
             $arrPrev['parentJumpTo'] = $GLOBALS['objPage']->id;
@@ -209,8 +209,5 @@ class Reader extends Module
 		{
 			$this->Template->prevArticle = false;
 		}
-
     }
-
-
 }

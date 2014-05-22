@@ -80,10 +80,10 @@ abstract class Module extends \Module
 		$count = 0;
 		$arrReturn = array();
 
-		foreach($arrArticles as $article)
+		foreach ($arrArticles as $article)
 		{
 			// init FrontendTemplate if theres no object given
-			if(!$objTemplate)
+			if (!$objTemplate)
 			{
 				$objTemplate = new \FrontendTemplate($this->news4ward_template);
 			}
@@ -116,7 +116,7 @@ abstract class Module extends \Module
 			// Generate ContentElements
 			$objContentelements = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND ptable="tl_news4ward_article" ' . (!BE_USER_LOGGED_IN ? " AND invisible=''" : "") . ' ORDER BY sorting ')->execute($article['id']);
 			$strContent = '';
-			while($objContentelements->next())
+			while ($objContentelements->next())
 			{
 				$strContent .= $this->getContentElement($objContentelements->id);
 			}
@@ -149,7 +149,7 @@ abstract class Module extends \Module
 			$objTemplate->datetime = $arrMeta['datetime'];
 
 			// Resolve ID from database driven filesystem
-			if($article['teaserImage'] && ($objImage = \FilesModel::findByPk($article['teaserImage'])) !== null)
+			if ($article['teaserImage'] && ($objImage = \FilesModel::findByPk($article['teaserImage'])) !== null)
 			{
 				$article['teaserImage'] = $objImage->path;
 			}
@@ -159,7 +159,7 @@ abstract class Module extends \Module
 			}
 
 			// Add teaser image
-			if($article['teaserImage'] && is_file(TL_ROOT.'/'.$article['teaserImage']))
+			if ($article['teaserImage'] && is_file(TL_ROOT.'/'.$article['teaserImage']))
 			{
 				$imgSize = deserialize($this->imgSize, true);
 				$objTemplate->arrSize = $imgSize;
@@ -178,7 +178,7 @@ abstract class Module extends \Module
 
 
 			// HOOK: add custom logic
-			if(isset($GLOBALS['TL_HOOKS']['News4wardParseArticle']) && is_array($GLOBALS['TL_HOOKS']['News4wardParseArticle']))
+			if (isset($GLOBALS['TL_HOOKS']['News4wardParseArticle']) && is_array($GLOBALS['TL_HOOKS']['News4wardParseArticle']))
 			{
 				foreach ($GLOBALS['TL_HOOKS']['News4wardParseArticle'] as $callback)
 				{
@@ -233,5 +233,4 @@ abstract class Module extends \Module
 
 		return $arrArchives;
 	}
-
 }
