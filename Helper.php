@@ -15,8 +15,6 @@ namespace Psi\News4ward;
 
 class Helper extends \Frontend
 {
-	protected static $objPageCache = array();
-
 
 	/**
 	 * Execute some ajax actions
@@ -228,14 +226,9 @@ class Helper extends \Frontend
 		{
 			return sprintf($strUrl, $strParam);
 		}
-		elseif ($arrArticle['parentJumpTo'])
+		elseif ($arrArticle['parentJumpTo'] && ($objJumpTo = \PageModel::findByPk($arrArticle['parentJumpTo'])) !== null)
 		{
-			if (!isset(self::$objPageCache[$arrArticle['parentJumpTo']]))
-			{
-				self::$objPageCache[$arrArticle['parentJumpTo']] = $this->Database->prepare('SELECT id,alias FROM tl_page WHERE id=?')->execute($arrArticle['parentJumpTo']);
-			}
-
-			return $this->generateFrontendUrl(self::$objPageCache[$arrArticle['parentJumpTo']]->row(), '/' . $strParam);
+		    return $objJumpTo->getFrontendUrl('/' . $strParam);
 		}
 		elseif (TL_MODE == 'FE')
 		{
