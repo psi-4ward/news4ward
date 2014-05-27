@@ -73,7 +73,7 @@ class Reader extends Module
 		$time = time();
 
 		// news archives
-		$where[] = 'tl_news4ward_article.pid IN(?)';
+		$where[] = 'FIND_IN_SET(tl_news4ward_article.pid, ?)';
 		$whereVals[] = implode(',', array_map('intval', $this->news_archives));
 
 		// published
