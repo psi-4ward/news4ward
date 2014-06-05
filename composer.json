@@ -21,7 +21,7 @@
   },
   "require": {
     "php": ">=5.3",
-    "contao/core": ">=3.2.1,<3.3",
+    "contao/core": ">=3.2.1,<4",
     "menatwork/contao-multicolumnwizard": "~3"
   },
   "suggest": {
