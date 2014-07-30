@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	'palettes' => array
 	(
 		'__selector__'				  => array('useFacebookImage'),
-		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},subheadline,teaserCssID,teaser,teaserImage,teaserImageCaption;{facebook_legend},useFacebookImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
+		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},subheadline,teaser,teaserImage,teaserImageCaption,teaserCssID;{facebook_legend},useFacebookImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
 	),
 
 	'subpalettes' => array
