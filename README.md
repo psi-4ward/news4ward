@@ -9,6 +9,7 @@ Features
 * [Tagcloud] (https://github.com/psi-4ward/news4ward_tags)
 * [Comments] (https://github.com/psi-4ward/news4ward_comments)
 * [Categories] (https://github.com/psi-4ward/news4ward_categories)
+* [Multiple-Categories] (https://github.com/psi-4ward/news4ward_multicategories)
 * [Related-Articles] (https://github.com/psi-4ward/news4ward_related)
 * [Archive-Menu] (https://github.com/psi-4ward/news4ward_archiveMenu)
 * [Newsletter] (https://github.com/psi-4ward/news4ward_newsletter)
