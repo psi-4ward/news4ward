@@ -153,20 +153,15 @@ class Reader extends Module
 		}
 
 		$objNextArticle = $this->Database->prepare("
-			SELECT a.id, a.alias, a.title ". //, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
+			SELECT a.id, a.alias, a.title, a.pid ". //, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
 			"FROM tl_news4ward_article AS a
 			WHERE FIND_IN_SET(a.pid, ?) AND a.start > ?".$strWhere.' ORDER BY start ASC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
 
 		if ($objNextArticle->numRows)
 		{
-            $arrNext = $objNextArticle->row();
-            $arrNext['parentJumpTo'] = $GLOBALS['objPage']->id;
-			$this->Template->nextArticle = array
-			(
-				'title' => $objNextArticle->title,
-				'href'	=> $this->Helper->generateUrl($arrNext),
-                'alias' => $objNextArticle->alias
-			);
+			$this->Template->nextArticle			= $objNextArticle->row();
+			$this->Template->nextArticle['parentJumpTo']	= $GLOBALS['objPage']->id;
+			$this->Template->nextArticle['href']		= $this->Helper->generateUrl($this->Template->nextArticle);
 		}
 		else
 		{
@@ -175,20 +170,15 @@ class Reader extends Module
 
 		// find PREVIOUS article
 		$objPrevArticle = $this->Database->prepare("
-			SELECT a.id, a.alias, a.title ". //, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
+			SELECT a.id, a.alias, a.title, a.pid ". //, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
 			"FROM tl_news4ward_article AS a
 			WHERE FIND_IN_SET(a.pid, ?) AND a.start < ?".$strWhere.' ORDER BY start DESC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
 
 		if ($objPrevArticle->numRows)
 		{
-            $arrPrev = $objPrevArticle->row();
-            $arrPrev['parentJumpTo'] = $GLOBALS['objPage']->id;
-            $this->Template->prevArticle = array
-			(
-				'title' => $objPrevArticle->title,
-				'href'	=> $this->Helper->generateUrl($arrPrev),
-                'alias' => $objPrevArticle->alias
-			);
+			$this->Template->prevArticle			= $objPrevArticle->row();
+			$this->Template->prevArticle['parentJumpTo']	= $GLOBALS['objPage']->id;
+			$this->Template->prevArticle['href']		= $this->Helper->generateUrl($this->Template->prevArticle);
 		}
 		else
 		{
