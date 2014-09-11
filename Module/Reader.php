@@ -155,7 +155,7 @@ class Reader extends Module
 		$objNextArticle = $this->Database->prepare("
 			SELECT a.id, a.alias, a.title ". //, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
 			"FROM tl_news4ward_article AS a
-			WHERE a.pid IN (?) AND a.start > ?".$strWhere.' ORDER BY start ASC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
+			WHERE FIND_IN_SET(a.pid, ?) AND a.start > ?".$strWhere.' ORDER BY start ASC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
 
 		if ($objNextArticle->numRows)
 		{
@@ -177,7 +177,7 @@ class Reader extends Module
 		$objPrevArticle = $this->Database->prepare("
 			SELECT a.id, a.alias, a.title ". //, (SELECT jumpTo FROM tl_news4ward WHERE tl_news4ward.id=a.pid) AS parentJumpTo
 			"FROM tl_news4ward_article AS a
-			WHERE a.pid IN (?) AND a.start < ?".$strWhere.' ORDER BY start DESC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
+			WHERE FIND_IN_SET(a.pid, ?) AND a.start < ?".$strWhere.' ORDER BY start DESC')->limit(1)->execute(implode(',', array_map('intval', $this->news_archives)), $objArticle->start);
 
 		if ($objPrevArticle->numRows)
 		{
