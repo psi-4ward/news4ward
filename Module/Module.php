@@ -89,11 +89,13 @@ abstract class Module extends \Module
 			}
 			$objTemplate->setData($article);
 
+			$cssID = deserialize($article['cssID']);
 			$objTemplate->count = ++$count;
-			$objTemplate->class = (strlen($article['cssClass']) ? ' ' . $article['cssClass'] : '')
+			$objTemplate->class = ($cssID && strlen($cssID[1]) ? ' ' .$cssID[1] : '')
 									. (($count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '')
 									. ((($count % 2) == 0) ? ' odd' : ' even')
 									. ($article['highlight'] ? ' highlight' : '');
+			if($cssID && $cssID[0]) $cssID[0] = ' id="'.$cssID[0].'"';
 			$objTemplate->link = $this->Helper->generateUrl($article);
 			$objTemplate->archive = $article['archive'];
 

@@ -110,6 +110,13 @@ class Reader extends Module
 
 		$this->parseArticles($objArticle->fetchAllAssoc(), $this->Template);
 
+		// Respect the article-cssID
+		$cssID = deserialize($this->cssID, true);
+		if($cssID[1]) $cssID[1] .= ' ';
+		$articleCssID = deserialize($this->Template->cssID, true);
+		if($articleCssID[1])	$cssID[1] = $cssID[1].$articleCssID[1];
+		$this->cssID = $cssID;
+
 		// Add social Buttons
 		$this->Template->socialButtons = deserialize($objArticle->social,true);
 
@@ -159,13 +166,13 @@ class Reader extends Module
 
 		if ($objNextArticle->numRows)
 		{
-            $arrNext = $objNextArticle->row();
-            $arrNext['parentJumpTo'] = $GLOBALS['objPage']->id;
+			$arrNext = $objNextArticle->row();
+			$arrNext['parentJumpTo'] = $GLOBALS['objPage']->id;
 			$this->Template->nextArticle = array
 			(
 				'title' => $objNextArticle->title,
 				'href'	=> $this->Helper->generateUrl($arrNext),
-                'alias' => $objNextArticle->alias
+				'alias' => $objNextArticle->alias
 			);
 		}
 		else
@@ -181,18 +188,18 @@ class Reader extends Module
 
 		if ($objPrevArticle->numRows)
 		{
-            $arrPrev = $objPrevArticle->row();
-            $arrPrev['parentJumpTo'] = $GLOBALS['objPage']->id;
-            $this->Template->prevArticle = array
+			$arrPrev = $objPrevArticle->row();
+			$arrPrev['parentJumpTo'] = $GLOBALS['objPage']->id;
+			$this->Template->prevArticle = array
 			(
 				'title' => $objPrevArticle->title,
 				'href'	=> $this->Helper->generateUrl($arrPrev),
-                'alias' => $objPrevArticle->alias
+				'alias' => $objPrevArticle->alias
 			);
 		}
 		else
 		{
 			$this->Template->prevArticle = false;
 		}
-    }
+	}
 }

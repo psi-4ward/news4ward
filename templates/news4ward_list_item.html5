@@ -1,5 +1,5 @@
 
-<div class="layout_short news4ward_list block<?php echo $this->class; ?>">
+<div class="layout_short news4ward_list block<?php echo $this->class; ?>"<?php echo $this->cssID; ?>>
 <?php if ($this->hasMetaFields): ?>
 <p class="info"><?php echo $this->date; ?> <?php echo $this->author; ?></p>
 <?php endif; ?>
