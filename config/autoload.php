@@ -10,7 +10,9 @@ ClassLoader::addClasses(array
 	'Psi\News4ward\Module\Listing'   	=> 'system/modules/news4ward/Module/Listing.php',
 	'Psi\News4ward\Module\Module'		=> 'system/modules/news4ward/Module/Module.php',
 	'Psi\News4ward\Module\Reader' 		=> 'system/modules/news4ward/Module/Reader.php',
-	'Psi\News4ward\Helper'       		=> 'system/modules/news4ward/Helper.php'
+	'Psi\News4ward\Helper'       		=> 'system/modules/news4ward/Helper.php',
+
+	'Psi\News4ward\Model\ArticleModel'       		=> 'system/modules/news4ward/Model/ArticleModel.php'
 ));
 
 /**

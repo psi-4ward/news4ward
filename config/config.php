@@ -52,3 +52,6 @@ if (TL_MODE == 'BE')
 	// hook for ajax requests
 	$GLOBALS['TL_HOOKS']['executePreActions'][] = array('\News4ward\Helper', 'ajaxHandler');
 }
+
+// Models
+$GLOBALS['TL_MODELS']['tl_news4ward_article'] = '\News4ward\Model\ArticleModel';
