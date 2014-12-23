@@ -12,7 +12,8 @@ ClassLoader::addClasses(array
 	'Psi\News4ward\Module\Reader' 		=> 'system/modules/news4ward/Module/Reader.php',
 	'Psi\News4ward\Helper'       		=> 'system/modules/news4ward/Helper.php',
 
-	'Psi\News4ward\Model\ArticleModel'       		=> 'system/modules/news4ward/Model/ArticleModel.php'
+	'Psi\News4ward\Model\ArticleModel'       		=> 'system/modules/news4ward/Model/ArticleModel.php',
+	'Psi\News4ward\Model\ArchiveModel'       		=> 'system/modules/news4ward/Model/ArchiveModel.php',
 ));
 
 /**

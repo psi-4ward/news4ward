@@ -55,3 +55,4 @@ if (TL_MODE == 'BE')
 
 // Models
 $GLOBALS['TL_MODELS']['tl_news4ward_article'] = '\News4ward\Model\ArticleModel';
+$GLOBALS['TL_MODELS']['tl_news4ward'] = '\News4ward\Model\ArchiveModel';
