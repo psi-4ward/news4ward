@@ -110,12 +110,20 @@ class Reader extends Module
 
 		$this->parseArticles($objArticle->fetchAllAssoc(), $this->Template);
 
-		// Respect the article-cssID
-		$cssID = deserialize($this->cssID, true);
-		if($cssID[1]) $cssID[1] .= ' ';
-		$articleCssID = deserialize($this->Template->cssID, true);
-		if($articleCssID[1])	$cssID[1] = $cssID[1].$articleCssID[1];
-		$this->cssID = $cssID;
+    // Respect the article-cssID
+    $moduleCssID = deserialize($this->cssID, true);
+    $articleCssID = deserialize($objArticle->cssID, true);
+    if($articleCssID[0] && !$moduleCssID[0]) {
+	    // take article cssID only if module doesnt have one
+	    $moduleCssID[0] = $articleCssID[0];
+    }
+    if($articleCssID[1]) {
+	    // merge article and module css classes
+	    if($moduleCssID[1]) $moduleCssID[1] .= ' ';
+	    $moduleCssID[1] .= $articleCssID[1];
+    }
+    $this->cssID = $moduleCssID;
+
 
 		// Add social Buttons
 		$this->Template->socialButtons = deserialize($objArticle->social,true);

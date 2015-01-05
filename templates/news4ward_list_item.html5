@@ -7,7 +7,7 @@
 <?php if(!empty($this->subheadline)): ?>
 <h3><?php echo $this->subheadline; ?></h3>
 <?php endif;?>
-<div class="teaser">
+<div class="teaser <?php echo $this->teaserClass; ?>"<?php echo $this->teaserCssID; ?>>
 	<?php if(!empty($this->teaserImage)): ?>
 		<figure class="image_container">
 			<img src="<?php echo $this->teaserImage; ?>" alt="<?php echo $this->title; ?>">
