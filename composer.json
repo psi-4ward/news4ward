@@ -35,7 +35,8 @@
     "psi/news4ward_mostread": "Count article read hits and display most visited articles.",
     "psi/news4ward_newsletter": "Prepare newsltters from articles",
     "psi/news4ward_titleSearch": "Filter listing within title searchbox",
-    "psi/news4ward_metaTitle": "Extra field for page title"
+    "psi/news4ward_metaTitle": "Extra field for page title",
+    "christianbarkowsky/news4ward_robots": "Extra robots-tag field for SEO optimisation"
   },
   "replace": {
     "contao-legacy/news4ward": "self.version"
