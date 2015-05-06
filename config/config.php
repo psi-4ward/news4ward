@@ -42,7 +42,7 @@ $GLOBALS['TL_AUTO_ITEM'][] = 'items';
 $GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('\News4ward\Helper', 'getSearchablePages');
 
 // Cronjob for feed generation
-$GLOBALS['TL_CRON']['daily'][] = array('Helper', 'generateFeeds');
+$GLOBALS['TL_CRON']['daily'][] = array('\News4ward\Helper', 'generateFeeds');
 
 // hook for custom inserttags
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('\News4ward\Helper', 'inserttagReplacer');
