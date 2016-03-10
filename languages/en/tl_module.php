@@ -52,7 +52,8 @@ $GLOBALS['tl_module']['news4ward_order_ref']	= array
 	'start ASC'	=> 'start ASC',
 	'start DESC'	=> 'start DESC',
 	'title ASC'	=> 'title ASC',
-	'title DESC'	=> 'title DESC'
+	'title DESC'	=> 'title DESC',
+	'random' => 'random'
 );
 
 $GLOBALS['TL_LANG']['tl_module']['news4ward_timeConstraint_ref']['all'] = 'all entries';

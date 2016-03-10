@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['news4ward_order'] = array
 	'default'                 => 'start DESC',
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => array('start ASC', 'start DESC', 'title ASC', 'title DESC'),
+	'options'                 => array('start ASC', 'start DESC', 'title ASC', 'title DESC', 'random'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_module']['news4ward_order_ref'],
 	'eval'                    => array('tl_class'=>'w50')
 );

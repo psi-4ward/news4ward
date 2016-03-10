@@ -108,7 +108,11 @@ class Listing extends Module
 
 		/* Ordering */
 		$ordering = array('tl_news4ward_article.sticky DESC');
-        $ordering[] = 'tl_news4ward_article.'.$this->news4ward_order;
+		if($this->news4ward_order === 'random') {
+		  $ordering[] = 'RAND()';
+		} else {
+          $ordering[] = 'tl_news4ward_article.'.$this->news4ward_order;
+        }
 
 		/* Pagination */
 		$skipFirst = intval($this->news4ward_skipFirst);
