@@ -46,6 +46,7 @@ CREATE TABLE `tl_news4ward_article` (
   `alias` varbinary(128) NOT NULL default '',
   `subheadline` varchar(255) NOT NULL default '',
   `author` int(10) unsigned NOT NULL default '0',
+  `pageTitle` varchar(255) NOT NULL default '',
   `keywords` text NULL,
   `description` text NULL,
   `highlight` char(1) NOT NULL default '',

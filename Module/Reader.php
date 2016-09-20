@@ -140,6 +140,9 @@ class Reader extends Module
 
 		// Add Page Title
 		$GLOBALS['objPage']->title = $objArticle->title;
+		$GLOBALS['objPage']->pageTitle = strlen($objArticle->pageTitle)
+			? $objArticle->pageTitle
+			: $objArticle->title;
 
 		// Add facebook meta data
 		// debug with https://developers.facebook.com/tools/debug

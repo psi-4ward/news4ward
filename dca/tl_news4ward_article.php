@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 	'palettes' => array
 	(
 		'__selector__'				  => array('useFacebookImage'),
-		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},description,keywords;{teaser_legend:hide},subheadline,teaser,teaserImage,teaserImageCaption,teaserCssID;{facebook_legend},useFacebookImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
+		'default'                     => '{title_legend},title,alias,author,highlight,sticky;{layout_legend},pageTitle,description,keywords;{teaser_legend:hide},subheadline,teaser,teaserImage,teaserImageCaption,teaserCssID;{facebook_legend},useFacebookImage;{expert_legend:hide},social,cssID;{publish_legend},start,stop,status'
 	),
 
 	'subpalettes' => array
@@ -145,6 +145,14 @@ $GLOBALS['TL_DCA']['tl_news4ward_article'] = array
 			'foreignKey'              => 'tl_user.name',
 			'filter'                  => 'true',
 			'eval'                    => array('doNotCopy'=>true, 'mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50')
+		),
+		'pageTitle' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_news4ward_article']['pageTitle'],
+			'inputType'               => 'text',
+			'exclude'                 => true,
+			'search'                  => true,
+			'eval'                    => array('maxlength'=>255, 'decodeEntities'=>true, 'tl_class'=>'long'),
 		),
 		'keywords' => array
 		(

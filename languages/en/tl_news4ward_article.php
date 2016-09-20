@@ -20,6 +20,7 @@ $GLOBALS['TL_LANG']['tl_news4ward_article']['title']       = array('Title', 'Ple
 $GLOBALS['TL_LANG']['tl_news4ward_article']['subheadline'] = array('Subheadline', 'Here you can enter a subheadline.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['alias']       = array('Entry alias', 'The blog entry alias is a unique reference to the article which can be called instead of its numeric ID.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['author']      = array('Author', 'Here you can change the author of the blog entry.');
+$GLOBALS['TL_LANG']['tl_news4ward_article']['pageTitle']   = array('Page title', 'Please enter the page title.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['keywords']    = array('Meta keywords', 'Here you can enter a comma separated list of keywords for this entry. Searche engines (Google, Yahoo,...) process in general max. 800 characters.');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['description'] = array('Meta description', 'Here you can enter short description of this entry (Meta-Description).');
 $GLOBALS['TL_LANG']['tl_news4ward_article']['teaserCssID'] = array('Teaser CSS ID/class', 'Here you can set an ID and one or more classes for the teaser element.');
