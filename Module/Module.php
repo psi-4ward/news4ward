@@ -73,7 +73,7 @@ abstract class Module extends \Module
 		}
 
 		global $objPage;
-		$this->import('\String');
+		$this->import('\StringUtil');
 		$this->import('\News4ward\Helper','Helper');
 
 		$limit = count($arrArticles);
@@ -109,14 +109,14 @@ abstract class Module extends \Module
 			{
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$article['teaser'] = \String::toXhtml($article['teaser']);
+					$article['teaser'] = \StringUtil::toXhtml($article['teaser']);
 				}
 				else
 				{
-					$article['teaser'] = \String::toHtml5($article['teaser']);
+					$article['teaser'] = \StringUtil::toHtml5($article['teaser']);
 				}
 
-				$objTemplate->teaser = \String::encodeEmail($article['teaser']);
+				$objTemplate->teaser = \StringUtil::encodeEmail($article['teaser']);
 			}
 
 
@@ -134,14 +134,14 @@ abstract class Module extends \Module
 				// Clean the RTE output
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$strContent = \String::toXhtml($strContent);
+					$strContent = \StringUtil::toXhtml($strContent);
 				}
 				else
 				{
-					$strContent = \String::toHtml5($strContent);
+					$strContent = \StringUtil::toHtml5($strContent);
 				}
 
-				$strContent = \String::encodeEmail($strContent);
+				$strContent = \StringUtil::encodeEmail($strContent);
 			}
 
 			$objTemplate->content = $strContent;
