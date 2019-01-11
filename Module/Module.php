@@ -73,7 +73,6 @@ abstract class Module extends \Module
 		}
 
 		global $objPage;
-		$this->import('\StringUtil');
 		$this->import('\News4ward\Helper','Helper');
 
 		$limit = count($arrArticles);
@@ -190,7 +189,7 @@ abstract class Module extends \Module
 				foreach ($GLOBALS['TL_HOOKS']['News4wardParseArticle'] as $callback)
 				{
 					$this->import($callback[0]);
-					$this->$callback[0]->$callback[1]($this, $article, $objTemplate, $arrArticles);
+					$this->{$callback[0]}->{$callback[1]}($this, $article, $objTemplate, $arrArticles);
 				}
 			}
 

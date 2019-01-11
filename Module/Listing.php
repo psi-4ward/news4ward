@@ -92,7 +92,7 @@ class Listing extends Module
 			foreach ($GLOBALS['TL_HOOKS']['News4wardListFilter'] as $callback)
 			{
 				$this->import($callback[0]);
-				$tmp = $this->$callback[0]->$callback[1]($this);
+				$tmp = $this->{$callback[0]}->{$callback[1]}($this);
 
 				if (is_string($tmp) && !empty($tmp))
 					$where[] = $tmp;
