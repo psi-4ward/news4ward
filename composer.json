@@ -3,7 +3,7 @@
   "description": "A blogging / news system for Contao",
   "keywords": ["news", "blog"],
   "type": "contao-module",
-  "license": "LGPL-3.0+",
+  "license": "LGPL-3.0-or-later",
   "authors": [
     {
       "name": "Christoph Wiechert",
@@ -21,7 +21,8 @@
   },
   "require": {
     "php": ">=5.3",
-    "contao/core": ">=3.2.1,<5",
+    "contao/core-bundle": "^3.2.1 || ^4.4",
+    "contao-community-alliance/composer-plugin": "^2.4 || ^3.0",
     "menatwork/contao-multicolumnwizard": "~3"
   },
   "suggest": {
@@ -40,9 +41,6 @@
   },
   "replace": {
     "contao-legacy/news4ward": "self.version"
-  },
-  "conflict": {
-    "contao/core": "3.0.*"
   },
   "extra": {
     "contao": {
