@@ -13,6 +13,9 @@
 
 namespace Psi\News4ward;
 
+use Contao\System;
+use Contao\StringUtil;
+
 class Helper extends \Frontend
 {
 
@@ -402,7 +405,7 @@ class Helper extends \Frontend
 		}
 
 		// Create file
-		$objRss = new \File($strFile . '.xml');
+		$objRss = new \File(StringUtil::stripRootDir(System::getContainer()->getParameter('contao.web_dir')) . '/share/' . $strFile . '.xml');
 		$objRss->write($this->replaceInsertTags($objFeed->$strType()));
 		$objRss->close();
 	}
