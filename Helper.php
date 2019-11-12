@@ -405,7 +405,11 @@ class Helper extends \Frontend
 		}
 
 		// Create file
-		$objRss = new \File(StringUtil::stripRootDir(System::getContainer()->getParameter('contao.web_dir')) . '/share/' . $strFile . '.xml');
+		if (class_exists(\Contao\CoreBundle\ContaoCoreBundle::class)) {
+    			$objRss = new \File(StringUtil::stripRootDir(System::getContainer()->getParameter('contao.web_dir')) . '/share/' . $strFile . '.xml');
+		} else {
+    			$objRss = new \File($strFile . '.xml');
+		}
 		$objRss->write($this->replaceInsertTags($objFeed->$strType()));
 		$objRss->close();
 	}
