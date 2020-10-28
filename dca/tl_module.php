@@ -280,7 +280,7 @@ class tl_module_news4ward extends Backend
 			$intPid = Input::get('id');
 		}
 
-		return $this->getTemplateGroup('news4ward_', $intPid);
+		return $this->getTemplateGroup('news4ward_');
 	}
 
 
@@ -298,7 +298,7 @@ class tl_module_news4ward extends Backend
 			$intPid = Input::get('id');
 		}
 
-		return $this->getTemplateGroup('mod_news4ward_reader', $intPid);
+		return $this->getTemplateGroup('mod_news4ward_reader');
 	}
 }
 
