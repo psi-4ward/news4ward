@@ -310,8 +310,12 @@ class tl_news4ward_article extends Backend
 	public function listItem($arrRow)
 	{
 		// the title
-		$strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">'.$this->generateImage('articles.gif','','style="vertical-align:bottom;"').' '.$arrRow['title'].'</div>';
-
+        if(isset($strReturn)) {
+            $strReturn .= ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">' . $this->generateImage('articles.gif', '', 'style="vertical-align:bottom;"') . ' ' . $arrRow['title'] . '</div>';
+        }
+        else {
+            $strReturn = ' <div style="font-weight:bold;margin-bottom:5px;line-height:18px;height:18px;">' . $this->generateImage('articles.gif', '', 'style="vertical-align:bottom;"') . ' ' . $arrRow['title'] . '</div>';
+        }
 		// show the autor
 		if(!empty($arrRow['author']))
 		{
