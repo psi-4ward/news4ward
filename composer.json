@@ -1,5 +1,5 @@
 {
-  "name": "psi/news4ward",
+  "name": "imi/news4ward",
   "description": "A blogging / news system for Contao",
   "keywords": ["news", "blog"],
   "type": "contao-module",
@@ -10,6 +10,11 @@
       "email": "wio@psitrax.de",
       "homepage": "http://4wardmedia.de",
       "role": "Developer"
+    },
+    {
+      "name": "iMi digital GmbH",
+      "homepage": "https://www.imi-digital.de",
+      "role": "Maintainer"
     }
   ],
   "support": {
@@ -26,21 +31,22 @@
     "menatwork/contao-multicolumnwizard": "~3"
   },
   "suggest": {
-    "psi/news4ward_tags": "Provides article tagging and a tagcloud frontend module.",
-    "psi/news4ward_comments": "Let visitors comment articles",
-    "psi/news4ward_categories": "Organize articles in categories and provide a frontend filter module.",
-    "psi/news4ward_multicategories": "Organize articles in multiple categories and provide a frontend filter module.",
-    "psi/news4ward_archive-menu": "Timebased frontend filter module.",
-    "psi/news4ward_author-menu": "Frontend filter module for authors.",
-    "psi/news4ward_related": "Find similar articles to the displayed one.",
-    "psi/news4ward_mostread": "Count article read hits and display most visited articles.",
-    "psi/news4ward_newsletter": "Prepare newsltters from articles",
-    "psi/news4ward_titleSearch": "Filter listing within title searchbox",
-    "psi/news4ward_metaTitle": "Extra field for page title",
+    "imi/news4ward_tags": "Provides article tagging and a tagcloud frontend module.",
+    "imi/news4ward_comments": "Let visitors comment articles",
+    "imi/news4ward_categories": "Organize articles in categories and provide a frontend filter module.",
+    "imi/news4ward_multicategories": "Organize articles in multiple categories and provide a frontend filter module.",
+    "imi/news4ward_archive-menu": "Timebased frontend filter module.",
+    "imi/news4ward_author-menu": "Frontend filter module for authors.",
+    "imi/news4ward_related": "Find similar articles to the displayed one.",
+    "imi/news4ward_mostread": "Count article read hits and display most visited articles.",
+    "imi/news4ward_newsletter": "Prepare newsltters from articles",
+    "imi/news4ward_titleSearch": "Filter listing within title searchbox",
+    "imi/news4ward_metaTitle": "Extra field for page title",
     "christianbarkowsky/news4ward_robots": "Extra robots-tag field for SEO optimisation"
   },
   "replace": {
-    "contao-legacy/news4ward": "self.version"
+    "contao-legacy/news4ward": "self.version",
+    "psi/news4ward": "self.version"
   },
   "extra": {
     "contao": {
