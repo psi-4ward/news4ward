@@ -218,7 +218,7 @@ class Helper extends \Frontend
 	 */
 	public function generateUrl($arrArticle, $strUrl=false)
 	{
-		$strParam = (($arrArticle['alias'] != '' && !$GLOBALS['TL_CONFIG']['disableAlias']) ? $arrArticle['alias'] : $arrArticle['id']);
+		$strParam = (($arrArticle['alias'] != '' && !isset($GLOBALS['TL_CONFIG']['disableAlias'])) ? $arrArticle['alias'] : $arrArticle['id']);
 
 		if (!$GLOBALS['TL_CONFIG']['useAutoItem'] || !in_array('items', $GLOBALS['TL_AUTO_ITEM']))
 		{

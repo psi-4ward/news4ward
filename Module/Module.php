@@ -151,8 +151,8 @@ abstract class Module extends \Module
 			$objTemplate->date = $arrMeta['date'];
 			$objTemplate->hasMetaFields = count($arrMeta) ? true : false;
 			$objTemplate->timestamp = $article['start'];
-			$objTemplate->author = $arrMeta['author'];
-			$objTemplate->datetime = $arrMeta['datetime'];
+			$objTemplate->author = $arrMeta['author'] ?? '';
+			$objTemplate->datetime = $arrMeta['datetime'] ?? '';
 
 			// Resolve ID from database driven filesystem
 			if ($article['teaserImage'] && ($objImage = \FilesModel::findByPk($article['teaserImage'])) !== null)
@@ -214,7 +214,7 @@ abstract class Module extends \Module
 		}
 
 		$this->import('\FrontendUser', 'User');
-		$objArchive = $this->Database->execute("SELECT id, protected, groups FROM tl_news4ward WHERE id IN(" . implode(',', array_map('intval', $arrArchives)) . ")");
+		$objArchive = $this->Database->execute("SELECT id, protected, `groups` FROM tl_news4ward WHERE id IN(" . implode(',', array_map('intval', $arrArchives)) . ")");
 		$arrArchives = array();
 
 		while ($objArchive->next())
