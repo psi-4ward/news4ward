@@ -18,8 +18,8 @@
     }
   ],
   "support": {
-    "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
     "issues": "https://github.com/iMi-digital/news4ward/issues",
+    "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
     "irc": "irc://irc.freenode.org/contao.de",
     "source": "https://github.com/iMi-digital/news4ward"
   },
