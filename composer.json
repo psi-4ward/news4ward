@@ -18,10 +18,10 @@
     }
   ],
   "support": {
-    "email": "wio@psitrax.de",
     "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
+    "issues": "https://github.com/iMi-digital/news4ward/issues",
     "irc": "irc://irc.freenode.org/contao.de",
-    "source": "https://github.com/imi-digital/news4ward"
+    "source": "https://github.com/iMi-digital/news4ward"
   },
   "require": {
     "php": ">=5.3",
